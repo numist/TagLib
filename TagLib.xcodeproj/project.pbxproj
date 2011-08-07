@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BC236CCE13EF462A006C41C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC236CCD13EF462A006C41C0 /* Cocoa.framework */; };
+		BC236CD813EF462A006C41C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC236CD613EF462A006C41C0 /* InfoPlist.strings */; };
+		BC236CDC13EF462A006C41C0 /* TagLib.m in Sources */ = {isa = PBXBuildFile; fileRef = BC236CDB13EF462A006C41C0 /* TagLib.m */; };
+		BC236CE413EF462A006C41C0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC236CE313EF462A006C41C0 /* SenTestingKit.framework */; };
+		BC236CE513EF462A006C41C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC236CCD13EF462A006C41C0 /* Cocoa.framework */; };
+		BC236CE813EF462A006C41C0 /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC236CCA13EF462A006C41C0 /* TagLib.framework */; };
+		BC236CEE13EF462A006C41C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEC13EF462A006C41C0 /* InfoPlist.strings */; };
+		BC236CF013EF462A006C41C0 /* TagLibTests.h in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEF13EF462A006C41C0 /* TagLibTests.h */; };
+		BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC236CF113EF462A006C41C0 /* TagLibTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BC236CE613EF462A006C41C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC236CC013EF462A006C41C0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC236CC913EF462A006C41C0;
+			remoteInfo = TagLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BC236CCA13EF462A006C41C0 /* TagLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TagLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC236CCD13EF462A006C41C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		BC236CD013EF462A006C41C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		BC236CD113EF462A006C41C0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BC236CD213EF462A006C41C0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BC236CD513EF462A006C41C0 /* TagLib-Info.plist */ = {isa = PBXFileReference; path = "TagLib-Info.plist"; sourceTree = "<group>"; };
+		BC236CD713EF462A006C41C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BC236CD913EF462A006C41C0 /* TagLib-Prefix.pch */ = {isa = PBXFileReference; path = "TagLib-Prefix.pch"; sourceTree = "<group>"; };
+		BC236CDA13EF462A006C41C0 /* TagLib.h */ = {isa = PBXFileReference; path = TagLib.h; sourceTree = "<group>"; };
+		BC236CDB13EF462A006C41C0 /* TagLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagLib.m; sourceTree = "<group>"; };
+		BC236CE213EF462A006C41C0 /* TagLibTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TagLibTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC236CE313EF462A006C41C0 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		BC236CEB13EF462A006C41C0 /* TagLibTests-Info.plist */ = {isa = PBXFileReference; path = "TagLibTests-Info.plist"; sourceTree = "<group>"; };
+		BC236CED13EF462A006C41C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BC236CEF13EF462A006C41C0 /* TagLibTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagLibTests.h; sourceTree = "<group>"; };
+		BC236CF113EF462A006C41C0 /* TagLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagLibTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BC236CC613EF462A006C41C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC236CCE13EF462A006C41C0 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC236CDE13EF462A006C41C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC236CE413EF462A006C41C0 /* SenTestingKit.framework in Frameworks */,
+				BC236CE513EF462A006C41C0 /* Cocoa.framework in Frameworks */,
+				BC236CE813EF462A006C41C0 /* TagLib.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BC236CBE13EF462A006C41C0 = {
+			isa = PBXGroup;
+			children = (
+				BC236CD313EF462A006C41C0 /* TagLib */,
+				BC236CE913EF462A006C41C0 /* TagLibTests */,
+				BC236CCC13EF462A006C41C0 /* Frameworks */,
+				BC236CCB13EF462A006C41C0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BC236CCB13EF462A006C41C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CCA13EF462A006C41C0 /* TagLib.framework */,
+				BC236CE213EF462A006C41C0 /* TagLibTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BC236CCC13EF462A006C41C0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CCD13EF462A006C41C0 /* Cocoa.framework */,
+				BC236CE313EF462A006C41C0 /* SenTestingKit.framework */,
+				BC236CCF13EF462A006C41C0 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BC236CCF13EF462A006C41C0 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CD013EF462A006C41C0 /* AppKit.framework */,
+				BC236CD113EF462A006C41C0 /* CoreData.framework */,
+				BC236CD213EF462A006C41C0 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		BC236CD313EF462A006C41C0 /* TagLib */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CDA13EF462A006C41C0 /* TagLib.h */,
+				BC236CDB13EF462A006C41C0 /* TagLib.m */,
+				BC236CD413EF462A006C41C0 /* Supporting Files */,
+			);
+			path = TagLib;
+			sourceTree = "<group>";
+		};
+		BC236CD413EF462A006C41C0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CD513EF462A006C41C0 /* TagLib-Info.plist */,
+				BC236CD613EF462A006C41C0 /* InfoPlist.strings */,
+				BC236CD913EF462A006C41C0 /* TagLib-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BC236CE913EF462A006C41C0 /* TagLibTests */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CEF13EF462A006C41C0 /* TagLibTests.h */,
+				BC236CF113EF462A006C41C0 /* TagLibTests.m */,
+				BC236CEA13EF462A006C41C0 /* Supporting Files */,
+			);
+			path = TagLibTests;
+			sourceTree = "<group>";
+		};
+		BC236CEA13EF462A006C41C0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BC236CEB13EF462A006C41C0 /* TagLibTests-Info.plist */,
+				BC236CEC13EF462A006C41C0 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BC236CC713EF462A006C41C0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BC236CC913EF462A006C41C0 /* TagLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC236CF513EF462A006C41C0 /* Build configuration list for PBXNativeTarget "TagLib" */;
+			buildPhases = (
+				BC236CC513EF462A006C41C0 /* Sources */,
+				BC236CC613EF462A006C41C0 /* Frameworks */,
+				BC236CC713EF462A006C41C0 /* Headers */,
+				BC236CC813EF462A006C41C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TagLib;
+			productName = TagLib;
+			productReference = BC236CCA13EF462A006C41C0 /* TagLib.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BC236CE113EF462A006C41C0 /* TagLibTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC236CF813EF462A006C41C0 /* Build configuration list for PBXNativeTarget "TagLibTests" */;
+			buildPhases = (
+				BC236CDD13EF462A006C41C0 /* Sources */,
+				BC236CDE13EF462A006C41C0 /* Frameworks */,
+				BC236CDF13EF462A006C41C0 /* Resources */,
+				BC236CE013EF462A006C41C0 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BC236CE713EF462A006C41C0 /* PBXTargetDependency */,
+			);
+			name = TagLibTests;
+			productName = TagLibTests;
+			productReference = BC236CE213EF462A006C41C0 /* TagLibTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BC236CC013EF462A006C41C0 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = BC236CC313EF462A006C41C0 /* Build configuration list for PBXProject "TagLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BC236CBE13EF462A006C41C0;
+			productRefGroup = BC236CCB13EF462A006C41C0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BC236CC913EF462A006C41C0 /* TagLib */,
+				BC236CE113EF462A006C41C0 /* TagLibTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BC236CC813EF462A006C41C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC236CD813EF462A006C41C0 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC236CDF13EF462A006C41C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC236CEE13EF462A006C41C0 /* InfoPlist.strings in Resources */,
+				BC236CF013EF462A006C41C0 /* TagLibTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BC236CE013EF462A006C41C0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BC236CC513EF462A006C41C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC236CDC13EF462A006C41C0 /* TagLib.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC236CDD13EF462A006C41C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BC236CE713EF462A006C41C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC236CC913EF462A006C41C0 /* TagLib */;
+			targetProxy = BC236CE613EF462A006C41C0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BC236CD613EF462A006C41C0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BC236CD713EF462A006C41C0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BC236CEC13EF462A006C41C0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BC236CED13EF462A006C41C0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BC236CF313EF462A006C41C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BC236CF413EF462A006C41C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BC236CF613EF462A006C41C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
+				INFOPLIST_FILE = "TagLib/TagLib-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		BC236CF713EF462A006C41C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
+				INFOPLIST_FILE = "TagLib/TagLib-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		BC236CF913EF462A006C41C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
+				INFOPLIST_FILE = "TagLibTests/TagLibTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		BC236CFA13EF462A006C41C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
+				INFOPLIST_FILE = "TagLibTests/TagLibTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BC236CC313EF462A006C41C0 /* Build configuration list for PBXProject "TagLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC236CF313EF462A006C41C0 /* Debug */,
+				BC236CF413EF462A006C41C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC236CF513EF462A006C41C0 /* Build configuration list for PBXNativeTarget "TagLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC236CF613EF462A006C41C0 /* Debug */,
+				BC236CF713EF462A006C41C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		BC236CF813EF462A006C41C0 /* Build configuration list for PBXNativeTarget "TagLibTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC236CF913EF462A006C41C0 /* Debug */,
+				BC236CFA13EF462A006C41C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BC236CC013EF462A006C41C0 /* Project object */;
+}
