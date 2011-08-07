@@ -16,6 +16,7 @@
 		BC236CEE13EF462A006C41C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEC13EF462A006C41C0 /* InfoPlist.strings */; };
 		BC236CF013EF462A006C41C0 /* TagLibTests.h in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEF13EF462A006C41C0 /* TagLibTests.h */; };
 		BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC236CF113EF462A006C41C0 /* TagLibTests.m */; };
+		BC236CFC13EF4E8B006C41C0 /* TLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = BC236CFB13EF4E8B006C41C0 /* TLTag.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,17 +35,18 @@
 		BC236CD013EF462A006C41C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		BC236CD113EF462A006C41C0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BC236CD213EF462A006C41C0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		BC236CD513EF462A006C41C0 /* TagLib-Info.plist */ = {isa = PBXFileReference; path = "TagLib-Info.plist"; sourceTree = "<group>"; };
+		BC236CD513EF462A006C41C0 /* TagLib-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TagLib-Info.plist"; sourceTree = "<group>"; };
 		BC236CD713EF462A006C41C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BC236CD913EF462A006C41C0 /* TagLib-Prefix.pch */ = {isa = PBXFileReference; path = "TagLib-Prefix.pch"; sourceTree = "<group>"; };
-		BC236CDA13EF462A006C41C0 /* TagLib.h */ = {isa = PBXFileReference; path = TagLib.h; sourceTree = "<group>"; };
+		BC236CD913EF462A006C41C0 /* TagLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TagLib-Prefix.pch"; sourceTree = "<group>"; };
+		BC236CDA13EF462A006C41C0 /* TagLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagLib.h; sourceTree = "<group>"; };
 		BC236CDB13EF462A006C41C0 /* TagLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagLib.m; sourceTree = "<group>"; };
 		BC236CE213EF462A006C41C0 /* TagLibTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TagLibTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC236CE313EF462A006C41C0 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		BC236CEB13EF462A006C41C0 /* TagLibTests-Info.plist */ = {isa = PBXFileReference; path = "TagLibTests-Info.plist"; sourceTree = "<group>"; };
+		BC236CEB13EF462A006C41C0 /* TagLibTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TagLibTests-Info.plist"; sourceTree = "<group>"; };
 		BC236CED13EF462A006C41C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC236CEF13EF462A006C41C0 /* TagLibTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagLibTests.h; sourceTree = "<group>"; };
 		BC236CF113EF462A006C41C0 /* TagLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagLibTests.m; sourceTree = "<group>"; };
+		BC236CFB13EF4E8B006C41C0 /* TLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTag.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 		BC236CBE13EF462A006C41C0 = {
 			isa = PBXGroup;
 			children = (
+				BC236CFB13EF4E8B006C41C0 /* TLTag.h */,
 				BC236CD313EF462A006C41C0 /* TagLib */,
 				BC236CE913EF462A006C41C0 /* TagLibTests */,
 				BC236CCC13EF462A006C41C0 /* Frameworks */,
@@ -154,6 +157,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC236CFC13EF4E8B006C41C0 /* TLTag.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
