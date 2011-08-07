@@ -3,8 +3,9 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/7/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Scott Perry. All rights reserved.
 //
+//  A simple, generic interface to common audio meta data fields
 
 #import <Foundation/Foundation.h>
 
