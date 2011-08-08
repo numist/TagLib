@@ -13,3 +13,7 @@
         #define TLLog(...)
     #endif
 #endif
+
+#define ARRAYSIZE(a) sizeof(a)/sizeof(a[0])
+#define LIKELY(x) __builtin_expect(!!(x), 1)
+#define UNLIKELY(x) __builtin_expect(!!(x), 0)
