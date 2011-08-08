@@ -17,6 +17,8 @@
 		BC236CF013EF462A006C41C0 /* TagLibTests.h in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEF13EF462A006C41C0 /* TagLibTests.h */; };
 		BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC236CF113EF462A006C41C0 /* TagLibTests.m */; };
 		BC236CFC13EF4E8B006C41C0 /* TLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = BC236CFB13EF4E8B006C41C0 /* TLTag.h */; };
+		BCAE786F13EF694800F1B15A /* MP4Atom.h in Headers */ = {isa = PBXBuildFile; fileRef = BCAE786D13EF694800F1B15A /* MP4Atom.h */; };
+		BCAE787013EF694800F1B15A /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAE786E13EF694800F1B15A /* MP4Atom.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +48,9 @@
 		BC236CED13EF462A006C41C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC236CEF13EF462A006C41C0 /* TagLibTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagLibTests.h; sourceTree = "<group>"; };
 		BC236CF113EF462A006C41C0 /* TagLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagLibTests.m; sourceTree = "<group>"; };
-		BC236CFB13EF4E8B006C41C0 /* TLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTag.h; sourceTree = "<group>"; };
+		BC236CFB13EF4E8B006C41C0 /* TLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TLTag.h; sourceTree = "<group>"; };
+		BCAE786D13EF694800F1B15A /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MP4Atom.h; path = mp4/MP4Atom.h; sourceTree = "<group>"; };
+		BCAE786E13EF694800F1B15A /* MP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MP4Atom.m; path = mp4/MP4Atom.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +78,6 @@
 		BC236CBE13EF462A006C41C0 = {
 			isa = PBXGroup;
 			children = (
-				BC236CFB13EF4E8B006C41C0 /* TLTag.h */,
 				BC236CD313EF462A006C41C0 /* TagLib */,
 				BC236CE913EF462A006C41C0 /* TagLibTests */,
 				BC236CCC13EF462A006C41C0 /* Frameworks */,
@@ -114,6 +117,8 @@
 		BC236CD313EF462A006C41C0 /* TagLib */ = {
 			isa = PBXGroup;
 			children = (
+				BCAE787213EF697C00F1B15A /* MP4 */,
+				BC236CFB13EF4E8B006C41C0 /* TLTag.h */,
 				BC236CDA13EF462A006C41C0 /* TagLib.h */,
 				BC236CDB13EF462A006C41C0 /* TagLib.m */,
 				BC236CD413EF462A006C41C0 /* Supporting Files */,
@@ -150,6 +155,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BCAE787213EF697C00F1B15A /* MP4 */ = {
+			isa = PBXGroup;
+			children = (
+				BCAE786D13EF694800F1B15A /* MP4Atom.h */,
+				BCAE786E13EF694800F1B15A /* MP4Atom.m */,
+			);
+			name = MP4;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -158,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC236CFC13EF4E8B006C41C0 /* TLTag.h in Headers */,
+				BCAE786F13EF694800F1B15A /* MP4Atom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC236CDC13EF462A006C41C0 /* TagLib.m in Sources */,
+				BCAE787013EF694800F1B15A /* MP4Atom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +439,7 @@
 				BC236CF713EF462A006C41C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC236CF813EF462A006C41C0 /* Build configuration list for PBXNativeTarget "TagLibTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +448,7 @@
 				BC236CFA13EF462A006C41C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
