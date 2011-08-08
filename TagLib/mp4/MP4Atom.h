@@ -22,7 +22,6 @@
 
 - (NSDictionary *) children;
 - (MP4Atom *) initWithFile: (NSFileHandle *)file;
-- (MP4Atom*) findAtomAtPath: (NSArray *)path;
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
 - (NSArray *) findAllWithName: (NSString *)name;
 - (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive;

@@ -25,6 +25,8 @@ static NSSet *containers = nil;
 
 - (MP4Atom *) initWithFile: (NSFileHandle *)file
 {
+    NSParameterAssert(file);
+    
     [super init];
 
     if (!containers) {
@@ -41,7 +43,7 @@ static NSSet *containers = nil;
 
     NSData *header = [file readDataOfLength:8];
     if ([header length] != 8) {
-        NSLog(@"MP4: Couldn't read 8 bytes of data for atom header. (Got %lu bytes)",
+        TLLog(@"MP4: Couldn't read 8 bytes of data for atom header. (Got %lu bytes)",
               [header length]);
         self->length = 0;
         [file seekToEndOfFile];
@@ -52,7 +54,7 @@ static NSSet *containers = nil;
     if (self->length == 1) {
         [[file readDataOfLength:8] getBytes:&self->length];
         if (self->length > UINT32_MAX) {
-            NSLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)",
+            TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)",
                   self->length);
             [file seekToEndOfFile];
             return nil;
@@ -60,7 +62,7 @@ static NSSet *containers = nil;
         // The atom has a 64-bit length, but it's actually a 32-bit value
     }
     if (self->length < 8) {
-        NSLog(@"MP4: Invalid atom size: %llu", self->length);
+        TLLog(@"MP4: Invalid atom size: %llu", self->length);
         [file seekToEndOfFile];
         return nil;
     }
@@ -76,28 +78,16 @@ static NSSet *containers = nil;
 
         while ([file offsetInFile] < self->offset + self->length) {
             MP4Atom *child = [[MP4Atom alloc] initWithFile:file];
-            [self->children setValue:child forKey:[child name]];
             if (!child) {
                 [file seekToEndOfFile];
                 return nil;
             }
+            [self->children setValue:child forKey:[child name]];
         }
     }
     
     [file seekToFileOffset:self->offset + self->length];
-    
     return self;
-}
-
-- (MP4Atom *) findAtomAtPath: (NSMutableArray *)path
-{
-    MP4Atom *child = [children objectForKey:[path objectAtIndex:0]];
-    
-    [path removeObjectAtIndex:0];
-    if ([path count] == 0) {
-        return child;
-    }
-    return [child findAtomAtPath:path];
 }
 
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path

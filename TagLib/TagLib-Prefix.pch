@@ -2,6 +2,14 @@
 // Prefix header for all source files of the 'TagLib' target in the 'TagLib' project
 //
 
+#define DEBUG 1
+
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+
+    #ifdef DEBUG
+        #define TLLog(fmt, ...) NSLog(@"%s [Line %d] %@", __PRETTY_FUNCTION__, __LINE__, [NSString stringWithFormat:(fmt), ##__VA_ARGS__]);
+    #else
+        #define TLLog(...)
+    #endif
 #endif
