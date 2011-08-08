@@ -3,13 +3,24 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/7/11.
-//  Copyright 2011 Scott Perry. All rights reserved.
+//  Copyright 2011 Scott Perry.
+//  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface MP4Atom : NSObject
+@interface MP4Atom : NSObject {
+    unsigned long long offset;
+    unsigned long long length;
+    NSString *name;
+    NSMutableDictionary *children;
+}
+@property(nonatomic, readonly) unsigned long long offset;
+@property(nonatomic, readonly) unsigned long long length;
+@property(nonatomic, readonly) NSString *name;
+@property(nonatomic, readonly) NSMutableDictionary *children;
 
+- (NSDictionary *) children;
 - (MP4Atom *) initWithFile: (NSFileHandle *)file;
 - (MP4Atom*) findAtomAtPath: (NSArray *)path;
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
