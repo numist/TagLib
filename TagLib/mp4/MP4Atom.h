@@ -8,21 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MP4Atom : NSObject {
-    @protected
-        long offset;
-        long length;
-        NSString *selfName;
-        NSMutableDictionary *children;
-
-    @private
-        NSMutableArray *containers;
-}
+@interface MP4Atom : NSObject
 
 - (MP4Atom *) initWithFile: (NSFileHandle *)file;
-- (MP4Atom*) find: (NSArray *)path;
+- (MP4Atom*) findAtomAtPath: (NSArray *)path;
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
-- (NSArray *) findAll: (NSString *)name;
-- (NSArray *) findAll: (NSString *)name recursive: (BOOL)recursive;
+- (NSArray *) findAllWithName: (NSString *)name;
+- (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive;
 
 @end

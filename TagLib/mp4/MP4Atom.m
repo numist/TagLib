@@ -8,6 +8,15 @@
 
 #import "MP4Atom.h"
 
+@interface MP4Atom() {
+    long offset;
+    long length;
+    NSString *selfName;
+    NSMutableDictionary *children;
+    NSMutableArray *containers;
+}
+@end
+
 @implementation MP4Atom
 
 - (id)init
@@ -22,7 +31,7 @@
     return nil;
 }
 
-- (MP4Atom *) find: (NSMutableArray *)path
+- (MP4Atom *) findAtomAtPath: (NSMutableArray *)path
 {
     MP4Atom *child = [children objectForKey:[path objectAtIndex:0]];
     
@@ -30,7 +39,7 @@
     if ([path count] == 0) {
         return child;
     }
-    return [child find:path];
+    return [child findAtomAtPath:path];
 }
 
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path
@@ -49,24 +58,24 @@
     return [atom getAtoms:atoms withPath:path];
 }
 
-- (NSArray *) findAll: (NSString *)name
+- (NSArray *) findAllWithName: (NSString *)name
 {
-    return [self findAll:name recursive:false];
+    return [self findAllWithName:name recursive:false];
 }
 
-- (NSArray *) findAll: (NSString *)name recursive: (BOOL)recursive
+- (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive
 {
     NSMutableArray *hits = [[NSMutableArray alloc] init];
     MP4Atom *hit;
     
-    if((hit = [children objectForKey:name])) {
+    if ((hit = [children objectForKey:name])) {
         [hits addObject:hit];
     }
     
-    if(recursive) {
+    if (recursive) {
         NSEnumerator *enumerator = [children objectEnumerator];
         for (MP4Atom *child in enumerator) {
-            [hits addObjectsFromArray:[child findAll:name recursive:recursive]];
+            [hits addObjectsFromArray:[child findAllWithName:name recursive:recursive]];
         }
     }
     
