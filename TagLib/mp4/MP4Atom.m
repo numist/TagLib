@@ -44,17 +44,18 @@
 
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path
 {
-    MP4Atom *atom = [children objectForKey:[path objectAtIndex:0]];
-    
-    if (!atom) {
-        return false;
-    }
-    
-    [path removeObjectAtIndex:0];
+    MP4Atom *atom;
+
+    [atoms addObject:self];
+
     if ([path count] == 0) {
         return true;
+    } else if (!(atom = [children objectForKey:[path objectAtIndex:0]])) {
+        [atoms removeAllObjects];
+        return false;
     }
-    
+
+    [path removeObjectAtIndex:0];
     return [atom getAtoms:atoms withPath:path];
 }
 
