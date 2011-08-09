@@ -1,5 +1,5 @@
 //
-//  TLTag.h
+//  MP4Tag.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TLTag : NSObject
+@interface MP4Tag : NSObject
 
 @end

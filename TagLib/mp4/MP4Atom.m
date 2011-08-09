@@ -27,7 +27,7 @@ static NSSet *containers = nil;
 {
     NSParameterAssert(file);
     
-    [super init];
+    self = [super init];
 
     if (!containers) {
         containers = [NSSet setWithObjects:@"moov", @"udta", @"mdia", @"meta",
@@ -67,9 +67,8 @@ static NSSet *containers = nil;
         return nil;
     }
     
-    char namebuf[4];
-    [header getBytes:namebuf range:NSMakeRange(4, 4)];
-    [self->name initWithBytes:namebuf length:sizeof namebuf encoding:NSASCIIStringEncoding];
+    [self->name initWithBytes:[[header subdataWithRange:NSMakeRange(4, 4)] bytes]
+                length:4 encoding:NSMacOSRomanStringEncoding];
 
     if ([containers containsObject:self->name]) {
         if ([self->name isEqualToString:@"meta"]) {
