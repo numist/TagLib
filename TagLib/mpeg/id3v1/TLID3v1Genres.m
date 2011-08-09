@@ -7,7 +7,7 @@
 //  This file is based on LGPL/MPL code written by Scott Wheeler.
 //
 
-#import "ID3v1Genres.h"
+#import "TLID3v1Genres.h"
 
 static NSString *genres[] = {
     @"Blues",
@@ -162,13 +162,13 @@ static NSString *genres[] = {
 
 static NSDictionary *genreMap = nil;
 
-@interface ID3v1Genres ()
+@interface TLID3v1Genres ()
 
 + (void) generateGenreMap;
 
 @end
 
-@implementation ID3v1Genres
+@implementation TLID3v1Genres
 
 + (NSArray *) genreList
 {
@@ -177,7 +177,7 @@ static NSDictionary *genreMap = nil;
 
 + (NSDictionary *) genreMap
 {
-    [ID3v1Genres generateGenreMap];
+    [TLID3v1Genres generateGenreMap];
 
     return genreMap;
 }
@@ -193,7 +193,7 @@ static NSDictionary *genreMap = nil;
 
 + (uint16) indexForGenre: (NSString *)genre
 {
-    [ID3v1Genres generateGenreMap];
+    [TLID3v1Genres generateGenreMap];
     
     return [[genreMap objectForKey:genre] unsignedShortValue];
 }

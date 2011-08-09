@@ -7,9 +7,9 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "MP4Atoms.h"
+#import "TLMP4Atoms.h"
 
-@implementation MP4Atoms
+@implementation TLMP4Atoms
 
 @synthesize atoms;
 
@@ -18,7 +18,7 @@
     return self->atoms;
 }
 
-- (MP4Atoms *) initWithFile: (NSFileHandle *)file
+- (TLMP4Atoms *) initWithFile: (NSFileHandle *)file
 {
     self = [super init];
     if (!self) {
@@ -30,7 +30,7 @@
     
     // TODO: +8 isn't really necessary, is it? the MP4Atom ctor should handle it
     while ([file offsetInFile] + 8 < end) {
-        MP4Atom * atom = [[MP4Atom alloc] initWithFile:file];
+        TLMP4Atom * atom = [[TLMP4Atom alloc] initWithFile:file];
         // NOTE: in the C++ impl, returns incomplete atom set
         if ([atom length] == 0) {
             return nil;
@@ -41,7 +41,7 @@
     return self;
 }
 
-- (MP4Atom *) findAtomAtPath: (NSMutableArray *)path
+- (TLMP4Atom *) findAtomAtPath: (NSMutableArray *)path
 {
     NSParameterAssert([path count] > 0);
     
@@ -67,7 +67,7 @@
     NSParameterAssert([path count] > 0);
 
     NSMutableArray *foundAtoms = [[NSMutableArray alloc] initWithCapacity:[path count]];
-    MP4Atom *match = [self->atoms objectForKey:[path objectAtIndex:0]];
+    TLMP4Atom *match = [self->atoms objectForKey:[path objectAtIndex:0]];
     if (!match) {
         return nil;
     }

@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ID3v1Genres : NSObject
+@interface TLID3v1Genres : NSObject
 
 + (NSArray *) genreList;
 + (NSDictionary *) genreMap;

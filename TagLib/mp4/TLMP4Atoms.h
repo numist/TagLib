@@ -8,15 +8,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MP4Atom.h"
+#import "TLMP4Atom.h"
 
-@interface MP4Atoms : NSObject {
+@interface TLMP4Atoms : NSObject {
     NSMutableDictionary *atoms;
 }
 @property(nonatomic, readonly) NSMutableDictionary *atoms;
 
 - (NSDictionary *) atoms;
-- (MP4Atoms *) initWithFile: (NSFileHandle *)file;
-- (MP4Atom *) findAtomAtPath: (NSMutableArray *)path;
+- (TLMP4Atoms *) initWithFile: (NSFileHandle *)file;
+- (TLMP4Atom *) findAtomAtPath: (NSMutableArray *)path;
 - (NSArray *) getAtomsWithPath: (NSMutableArray *)path;
 @end

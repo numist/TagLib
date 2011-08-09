@@ -7,11 +7,11 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "MP4Atom.h"
+#import "TLMP4Atom.h"
 
 static NSSet *containers = nil;
 
-@implementation MP4Atom
+@implementation TLMP4Atom
 
 @synthesize offset;
 @synthesize length;
@@ -23,7 +23,7 @@ static NSSet *containers = nil;
     return self->children;
 }
 
-- (MP4Atom *) initWithFile: (NSFileHandle *)file
+- (TLMP4Atom *) initWithFile: (NSFileHandle *)file
 {
     NSParameterAssert(file);
     
@@ -78,7 +78,7 @@ static NSSet *containers = nil;
         }
 
         while ([file offsetInFile] < self->offset + self->length) {
-            MP4Atom *child = [[MP4Atom alloc] initWithFile:file];
+            TLMP4Atom *child = [[TLMP4Atom alloc] initWithFile:file];
             if (!child) {
                 [file seekToEndOfFile];
                 return nil;
@@ -93,7 +93,7 @@ static NSSet *containers = nil;
 
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path
 {
-    MP4Atom *atom;
+    TLMP4Atom *atom;
 
     [atoms addObject:self];
 
@@ -116,7 +116,7 @@ static NSSet *containers = nil;
 - (NSArray *) findAllWithName: (NSString *)findName recursive: (BOOL)recursive
 {
     NSMutableArray *hits = [[NSMutableArray alloc] init];
-    MP4Atom *hit;
+    TLMP4Atom *hit;
     
     if ((hit = [children objectForKey:findName])) {
         [hits addObject:hit];
@@ -124,7 +124,7 @@ static NSSet *containers = nil;
     
     if (recursive) {
         NSEnumerator *enumerator = [children objectEnumerator];
-        for (MP4Atom *child in enumerator) {
+        for (TLMP4Atom *child in enumerator) {
             [hits addObjectsFromArray:[child findAllWithName:findName recursive:recursive]];
         }
     }

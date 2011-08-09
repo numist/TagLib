@@ -9,15 +9,15 @@
 
 #import <Foundation/Foundation.h>
 #import "TLTag.h"
-#import "MP4Atoms.h"
+#import "TLMP4Atoms.h"
 
 
-@interface MP4Tag : TLTag {
+@interface TLMP4Tag : TLTag {
     NSMutableDictionary *itemListMap;
 }
 @property(nonatomic, readonly) NSMutableDictionary *itemListMap;
 
-- (MP4Tag *) initWithFile: (NSFileHandle *)file atoms: (MP4Atoms *)atoms;
+- (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms: (TLMP4Atoms *)atoms;
 - (BOOL) save;
 
 // NOTE:

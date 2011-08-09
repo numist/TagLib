@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MP4Atom : NSObject {
+@interface TLMP4Atom : NSObject {
     unsigned long long offset;
     unsigned long long length;
     NSString *name;
@@ -21,7 +21,7 @@
 @property(nonatomic, readonly) NSMutableDictionary *children;
 
 - (NSDictionary *) children;
-- (MP4Atom *) initWithFile: (NSFileHandle *)file;
+- (TLMP4Atom *) initWithFile: (NSFileHandle *)file;
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
 - (NSArray *) findAllWithName: (NSString *)name;
 - (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive;

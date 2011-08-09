@@ -7,38 +7,38 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "MP4Tag.h"
-#import "ID3v1Genres.h"
-#import "MP4AtomNames.h"
+#import "TLMP4Tag.h"
+#import "TLID3v1Genres.h"
+#import "TLMP4AtomNames.h"
 
-@interface MP4Tag () {
+@interface TLMP4Tag () {
     NSMutableDictionary *_items;
-    MP4Atoms *_atoms;
+    TLMP4Atoms *_atoms;
     NSFileHandle *_file;
 }
 
-- (NSArray *) parseDataForAtom: (MP4Atom *)atom;
-- (NSArray *) parseDataForAtom: (MP4Atom *)atom expectedFlags: (int32_t)flags freeForm: (BOOL)freeForm;
-- (void) parseTextForAtom: (MP4Atom *)atom;
-- (void) parseTextForAtom: (MP4Atom *)atom expectedFlags: (int32_t)flags;
-- (void) parseFreeFormForAtom: (MP4Atom *)atom;
-- (void) parseIntForAtom: (MP4Atom *)atom;
-- (void) parseGnreForAtom: (MP4Atom *)atom;
-- (void) parseIntPairForAtom: (MP4Atom *)atom;
-- (void) parseBoolForAtom: (MP4Atom *)atom;
-- (void) parseCovrForAtom: (MP4Atom *)atom;
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom;
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags freeForm: (BOOL)freeForm;
+- (void) parseTextForAtom: (TLMP4Atom *)atom;
+- (void) parseTextForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags;
+- (void) parseFreeFormForAtom: (TLMP4Atom *)atom;
+- (void) parseIntForAtom: (TLMP4Atom *)atom;
+- (void) parseGnreForAtom: (TLMP4Atom *)atom;
+- (void) parseIntPairForAtom: (TLMP4Atom *)atom;
+- (void) parseBoolForAtom: (TLMP4Atom *)atom;
+- (void) parseCovrForAtom: (TLMP4Atom *)atom;
 
 @end
 
 
-@implementation MP4Tag
+@implementation TLMP4Tag
 
 - (NSDictionary *) itemListMap
 {
     return self->itemListMap;
 }
 
-- (MP4Tag *) initWithFile: (NSFileHandle *)file atoms: (MP4Atoms *)atoms
+- (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms: (TLMP4Atoms *)atoms
 {
     self = [super init];
     if (!self) {
@@ -49,13 +49,13 @@
     self->_atoms = atoms;
     self->_file = file;
 
-    MP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
+    TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
     if (!ilst) {
         TLLog(@"%@", "Atom moov.udta.meta.ilst not found.");
         return nil;
     }
     
-    for (MP4Atom *atom in [ilst children]) {
+    for (TLMP4Atom *atom in [ilst children]) {
         [self->_file seekToFileOffset:[atom offset]];
         if ([[atom name] isEqualToString:@"----"]) {
             [self parseFreeFormForAtom:atom];
@@ -162,12 +162,12 @@
 }
 
 
-- (NSArray *) parseDataForAtom: (MP4Atom *)atom
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom
 {
     return [self parseDataForAtom:atom expectedFlags:-1 freeForm:NO];
 }
 
-- (NSArray *) parseDataForAtom: (MP4Atom *)atom expectedFlags: (int32_t)expectedFlags freeForm: (BOOL)freeForm
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)expectedFlags freeForm: (BOOL)freeForm
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
     NSData *data = [self->_file readDataOfLength:([atom length] - 8)];
@@ -210,12 +210,12 @@
     return result;
 }
 
-- (void) parseTextForAtom: (MP4Atom *)atom
+- (void) parseTextForAtom: (TLMP4Atom *)atom
 {
     [self parseTextForAtom:atom expectedFlags:-1];
 }
 
-- (void) parseTextForAtom: (MP4Atom *)atom expectedFlags: (int32_t)flags
+- (void) parseTextForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags
 {
     NSArray *data = [self parseDataForAtom:atom];
     TLCheck([data count] == 1);
@@ -228,7 +228,7 @@
     }
 }
 
-- (void) parseFreeFormForAtom: (MP4Atom *)atom
+- (void) parseFreeFormForAtom: (TLMP4Atom *)atom
 {
     NSArray *data = [self parseDataForAtom:atom expectedFlags:1 freeForm:YES];
     TLCheck([data count] > 2);
@@ -248,7 +248,7 @@
     [self->_items setValue:value forKey:name];
 }
 
-- (void) parseIntForAtom: (MP4Atom *)atom
+- (void) parseIntForAtom: (TLMP4Atom *)atom
 {
     NSArray *data = [self parseDataForAtom:atom];
     TLCheck([data count] == 1);
@@ -265,7 +265,7 @@
     }
 }
 
-- (void) parseGnreForAtom: (MP4Atom *)atom
+- (void) parseGnreForAtom: (TLMP4Atom *)atom
 {
     NSArray *data = [self parseDataForAtom:atom];
     TLCheck([data count] == 1);
@@ -276,7 +276,7 @@
         unsigned int index;
         [datum getBytes:&index];
         if (index != 0) {
-            NSString *genre = [ID3v1Genres genreForIndex:(index - 1)];
+            NSString *genre = [TLID3v1Genres genreForIndex:(index - 1)];
             if (genre) {
                 [self->_items setValue:genre forKey:[atom name]];
             }
@@ -284,7 +284,7 @@
     }
 }
 
-- (void) parseIntPairForAtom: (MP4Atom *)atom
+- (void) parseIntPairForAtom: (TLMP4Atom *)atom
 {
     NSArray *data = [self parseDataForAtom:atom];
     TLCheck([data count] == 1);
@@ -300,7 +300,7 @@
     }
 }
 
-- (void) parseBoolForAtom: (MP4Atom *)atom
+- (void) parseBoolForAtom: (TLMP4Atom *)atom
 {
     NSArray *data = [self parseDataForAtom:atom];
     TLCheck([data count] == 1);
@@ -323,7 +323,7 @@
     }
 }
 
-- (void) parseCovrForAtom: (MP4Atom *)atom
+- (void) parseCovrForAtom: (TLMP4Atom *)atom
 {
 }
 
