@@ -40,6 +40,8 @@ static NSSet *containers = nil;
     }
     
     self->offset = [file offsetInFile];
+    self->name = [NSString alloc];
+    self->children = [NSMutableDictionary alloc];
 
     NSData *header = [file readDataOfLength:8];
     if ([header length] != 8) {
