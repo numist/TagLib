@@ -20,6 +20,11 @@
 
 - (MP4Atoms *) initWithFile: (NSFileHandle *)file
 {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
     unsigned long long end = [file seekToEndOfFile];
     [file seekToFileOffset:0];
     
