@@ -28,7 +28,7 @@
     unsigned long long end = [file seekToEndOfFile];
     [file seekToFileOffset:0];
     
-    TODO(+8 isnt really necessary is it? the MP4Atom ctor should handle it);
+    TODO("+8 isn't really necessary, is it? the MP4Atom ctor should handle it");
     while ([file offsetInFile] + 8 < end) {
         TLMP4Atom * atom = [[TLMP4Atom alloc] initWithFile:file];
         // NOTE: in the C++ impl, returns incomplete atom set
