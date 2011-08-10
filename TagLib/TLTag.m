@@ -117,42 +117,49 @@
 
 - (void) setTitle: (NSString *) title
 {
+    #pragma unused(title)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }
 
 - (void) setArtist: (NSString *) artist
 {
+    #pragma unused(artist)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }
 
 - (void) setAlbum: (NSString *) album
 {
+    #pragma unused(album)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }
 
 - (void) setComment: (NSString *) comment
 {
+    #pragma unused(comment)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }
 
 - (void) setGenre: (NSString *) genre
 {
+    #pragma unused(genre)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }
 
 - (void) setYear: (NSNumber *) year
 {
+    #pragma unused(year)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }
 
 - (void) setTrack: (NSNumber *) track
 {
+    #pragma unused(track)
     [NSException raise:@"UnimplementedException" format:@"%@",
      @"Selector is not implemented in this class"];
 }

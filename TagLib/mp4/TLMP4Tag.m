@@ -18,6 +18,7 @@
 }
 
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom;
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)expectedFlags;
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags freeForm: (BOOL)freeForm;
 - (void) parseTextForAtom: (TLMP4Atom *)atom;
 - (void) parseTextForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags;
@@ -164,10 +165,15 @@
 
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom
 {
-    return [self parseDataForAtom:atom expectedFlags:-1 freeForm:NO];
+    return [self parseDataForAtom:atom expectedFlags:-1];
 }
 
-- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)expectedFlags freeForm: (BOOL)freeForm
+- (NSArray *) parseDataForAtom: (TLMP4Atom *) atom expectedFlags: (int32_t)flags
+{
+    return [self parseDataForAtom:atom expectedFlags:flags freeForm:NO];
+}
+
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags freeForm: (BOOL)freeForm
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
     NSData *data = [self->_file readDataOfLength:([atom length] - 8)];
@@ -181,8 +187,8 @@
                                                   length:4
                                                 encoding:NSMacOSRomanStringEncoding];
 
-        unsigned int flags;
-        [data getBytes:&flags range:NSMakeRange(pos + 8, 4)];
+        int32_t atomFlags;
+        [data getBytes:&atomFlags range:NSMakeRange(pos + 8, 4)];
         
         if (freeForm && i < 2) {
             if (i == 0 && ![name isEqualToString:@"mean"]) {
@@ -198,7 +204,7 @@
                 TLLog(@"MP4: Unexpected atom \"%@\", expecting \"data\"", name);
                 return nil;
             }
-            if (expectedFlags == -1 || flags == expectedFlags) {
+            if (flags == -1 || flags == atomFlags) {
                 [result addObject:[data subdataWithRange:NSMakeRange(pos + 16, length - 16)]];
             }
         }
@@ -217,7 +223,7 @@
 
 - (void) parseTextForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags
 {
-    NSArray *data = [self parseDataForAtom:atom];
+    NSArray *data = [self parseDataForAtom:atom expectedFlags:flags];
     TLCheck([data count] == 1);
     NSData *datum = [data objectAtIndex:0];
     TLLog(@"datum size: %u", [datum length]);
@@ -325,6 +331,8 @@
 
 - (void) parseCovrForAtom: (TLMP4Atom *)atom
 {
+    #pragma unused(atom)
+    TODO(implement);
 }
 
 @end
