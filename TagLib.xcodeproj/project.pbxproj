@@ -26,8 +26,10 @@
 		BCECCCA113F06AD800B8ACD7 /* TLMP4Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */; };
 		BCECCCA413F072DC00B8ACD7 /* TLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCA213F072DC00B8ACD7 /* TLTag.h */; };
 		BCECCCA513F072DC00B8ACD7 /* TLTag.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCA313F072DC00B8ACD7 /* TLTag.m */; };
-		BCECCCC713F1A03300B8ACD7 /* TLMP4AtomNames.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCC513F1A03300B8ACD7 /* TLMP4AtomNames.h */; };
-		BCECCCC813F1A03300B8ACD7 /* TLMP4AtomNames.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCC613F1A03300B8ACD7 /* TLMP4AtomNames.m */; };
+		BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */; };
+		BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */; };
+		BCECCCCF13F3837100B8ACD7 /* TLMP4Tag+FileParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCCD13F3837000B8ACD7 /* TLMP4Tag+FileParser.h */; };
+		BCECCCD013F3837100B8ACD7 /* TLMP4Tag+FileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCCE13F3837000B8ACD7 /* TLMP4Tag+FileParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +69,10 @@
 		BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4Tag.m; path = mp4/TLMP4Tag.m; sourceTree = "<group>"; };
 		BCECCCA213F072DC00B8ACD7 /* TLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTag.h; sourceTree = "<group>"; };
 		BCECCCA313F072DC00B8ACD7 /* TLTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTag.m; sourceTree = "<group>"; };
-		BCECCCC513F1A03300B8ACD7 /* TLMP4AtomNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4AtomNames.h; path = mp4/TLMP4AtomNames.h; sourceTree = "<group>"; };
-		BCECCCC613F1A03300B8ACD7 /* TLMP4AtomNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4AtomNames.m; path = mp4/TLMP4AtomNames.m; sourceTree = "<group>"; };
+		BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4AtomInfo.h; path = mp4/TLMP4AtomInfo.h; sourceTree = "<group>"; };
+		BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4AtomInfo.m; path = mp4/TLMP4AtomInfo.m; sourceTree = "<group>"; };
+		BCECCCCD13F3837000B8ACD7 /* TLMP4Tag+FileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TLMP4Tag+FileParser.h"; path = "mp4/TLMP4Tag+FileParser.h"; sourceTree = "<group>"; };
+		BCECCCCE13F3837000B8ACD7 /* TLMP4Tag+FileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TLMP4Tag+FileParser.m"; path = "mp4/TLMP4Tag+FileParser.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,14 +182,16 @@
 		BCAE787213EF697C00F1B15A /* mp4 */ = {
 			isa = PBXGroup;
 			children = (
+				BCECCCCD13F3837000B8ACD7 /* TLMP4Tag+FileParser.h */,
+				BCECCCCE13F3837000B8ACD7 /* TLMP4Tag+FileParser.m */,
 				BCAE786D13EF694800F1B15A /* TLMP4Atom.h */,
 				BCAE786E13EF694800F1B15A /* TLMP4Atom.m */,
 				BCAE787313F04F9900F1B15A /* TLMP4Atoms.h */,
 				BCAE787413F04F9900F1B15A /* TLMP4Atoms.m */,
 				BCECCC9E13F06AD800B8ACD7 /* TLMP4Tag.h */,
 				BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */,
-				BCECCCC513F1A03300B8ACD7 /* TLMP4AtomNames.h */,
-				BCECCCC613F1A03300B8ACD7 /* TLMP4AtomNames.m */,
+				BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */,
+				BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */,
 			);
 			name = mp4;
 			sourceTree = "<group>";
@@ -219,7 +225,8 @@
 				BCECCC9913F063F100B8ACD7 /* TLID3v1Genres.h in Headers */,
 				BCECCCA013F06AD800B8ACD7 /* TLMP4Tag.h in Headers */,
 				BCECCCA413F072DC00B8ACD7 /* TLTag.h in Headers */,
-				BCECCCC713F1A03300B8ACD7 /* TLMP4AtomNames.h in Headers */,
+				BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */,
+				BCECCCCF13F3837100B8ACD7 /* TLMP4Tag+FileParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,7 +340,8 @@
 				BCECCC9A13F063F100B8ACD7 /* TLID3v1Genres.m in Sources */,
 				BCECCCA113F06AD800B8ACD7 /* TLMP4Tag.m in Sources */,
 				BCECCCA513F072DC00B8ACD7 /* TLTag.m in Sources */,
-				BCECCCC813F1A03300B8ACD7 /* TLMP4AtomNames.m in Sources */,
+				BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */,
+				BCECCCD013F3837100B8ACD7 /* TLMP4Tag+FileParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

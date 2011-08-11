@@ -13,16 +13,21 @@
 
 
 @interface TLMP4Tag : TLTag {
-    NSMutableDictionary *itemListMap;
+@private
+    NSMutableDictionary *_items;
+    TLMP4Atoms *_atoms;
+    NSFileHandle *_file;
 }
-@property(nonatomic, readonly) NSMutableDictionary *itemListMap;
 
+- (NSDictionary *) items;
 - (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms: (TLMP4Atoms *)atoms;
 - (BOOL) save;
 
 // NOTE:
 // - (NSString *) albumArtist;
 // - (void) setAlbumArtist: (NSString *)albumArtist;
+// - (NSNumber *) totalTracks;
+// - (void) setTotalTracks: (NSNumber *)totalTracks;
 // etc.
 
 @end
