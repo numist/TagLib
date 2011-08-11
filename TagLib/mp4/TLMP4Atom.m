@@ -103,21 +103,23 @@ static NSSet *containers = nil;
     [atoms addObject:self];
 
     if ([path count] == 0) {
-        return true;
+        return YES;
     } else if (!(atom = [children objectForKey:[path objectAtIndex:0]])) {
         [atoms removeAllObjects];
-        return false;
+        return NO;
     }
 
     [path removeObjectAtIndex:0];
     return [atom getAtoms:atoms withPath:path];
 }
 
+TODO("This is not yet called anywhere")
 - (NSArray *) findAllWithName: (NSString *)findName
 {
     return [self findAllWithName:findName recursive:false];
 }
 
+TODO("This is not yet called anywhere")
 - (NSArray *) findAllWithName: (NSString *)findName recursive: (BOOL)recursive
 {
     NSMutableArray *hits = [[NSMutableArray alloc] init];

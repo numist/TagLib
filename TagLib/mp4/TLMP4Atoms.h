@@ -17,6 +17,6 @@
 
 - (NSDictionary *) atoms;
 - (TLMP4Atoms *) initWithFile: (NSFileHandle *)file;
-- (TLMP4Atom *) findAtomAtPath: (NSMutableArray *)path;
-- (NSArray *) getAtomsWithPath: (NSMutableArray *)path;
+- (TLMP4Atom *) findAtomAtPath: (NSArray *)path;
+- (NSArray *) getAtomsWithPath: (NSArray *)path;
 @end

@@ -9,6 +9,10 @@
 
 #import "TLMP4Atoms.h"
 
+@interface TLMP4Atoms ()
+    - (NSArray *) _getAtomsWithPath: (NSMutableArray *)path;
+@end
+
 @implementation TLMP4Atoms
 
 @synthesize atoms;
@@ -41,7 +45,7 @@
     return self;
 }
 
-- (TLMP4Atom *) findAtomAtPath: (NSMutableArray *)path
+- (TLMP4Atom *) findAtomAtPath: (NSArray *)path
 {
     NSParameterAssert([path count] > 0);
     
@@ -62,17 +66,22 @@
     return [[self getAtomsWithPath:path] lastObject];
 }
 
-- (NSArray *) getAtomsWithPath: (NSMutableArray *)path
+- (NSArray *) getAtomsWithPath: (NSArray *)path
+{
+    NSMutableArray *writablePath = [NSMutableArray arrayWithArray:path];
+    return [self _getAtomsWithPath:writablePath];
+}
+
+- (NSArray *) _getAtomsWithPath: (NSMutableArray *)path
 {
     NSParameterAssert([path count] > 0);
-
+    
     NSMutableArray *foundAtoms = [[NSMutableArray alloc] initWithCapacity:[path count]];
     TLMP4Atom *match = [self->atoms objectForKey:[path objectAtIndex:0]];
     if (!match) {
         return nil;
     }
     
-    [foundAtoms addObject:match];
     [path removeObjectAtIndex:0];
     if (![match getAtoms:foundAtoms withPath:path]) {
         return nil;
