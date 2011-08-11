@@ -29,8 +29,7 @@
         while ([file offsetInFile] + 8 < end) {
             TLMP4Atom *atom = [(TLMP4Atom *)[TLMP4Atom alloc] initWithFile:file];
             // NOTE: in the C++ impl, returns incomplete atom set
-            TLCheck([atom length] <= (end - [atom offset]));
-            if ([atom length] == 0) {
+            if (!atom) {
                 return nil;
             }
             [self->atoms setValue:atom forKey:[atom name]];

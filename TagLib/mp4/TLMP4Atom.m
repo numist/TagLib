@@ -65,7 +65,7 @@ static NSSet *containers = nil;
         }
         // The atom has a 64-bit length, but it's actually a 32-bit value
     }
-    if (self->length < 8 || self->length > totalLength) {
+    if (self->length < 8 || self->length + self->offset > totalLength) {
         TLLog(@"MP4: Invalid atom size: %llu", self->length);
         [file seekToEndOfFile];
         return nil;
@@ -81,7 +81,10 @@ static NSSet *containers = nil;
 
         while ([file offsetInFile] < self->offset + self->length) {
             TLMP4Atom *child = [[TLMP4Atom alloc] initWithFile:file];
-            if (!child) {
+            if (!child || [file offsetInFile] > self->offset + self->length) {
+                if (child) {
+                    TLLog(@"child atom exceededs boundary of parent", [child name]);
+                }
                 [file seekToEndOfFile];
                 return nil;
             }
