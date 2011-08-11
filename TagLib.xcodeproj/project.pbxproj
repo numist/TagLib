@@ -30,6 +30,14 @@
 		BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */; };
 		BCECCCCF13F3837100B8ACD7 /* TLMP4Tag+FileParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCCD13F3837000B8ACD7 /* TLMP4Tag+FileParser.h */; };
 		BCECCCD013F3837100B8ACD7 /* TLMP4Tag+FileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCCE13F3837000B8ACD7 /* TLMP4Tag+FileParser.m */; };
+		BCECCCDA13F436D600B8ACD7 /* covr-junk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD513F436D500B8ACD7 /* covr-junk.m4a */; };
+		BCECCCDB13F436D600B8ACD7 /* gnre.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD613F436D500B8ACD7 /* gnre.m4a */; };
+		BCECCCDC13F436D600B8ACD7 /* has-tags.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD713F436D500B8ACD7 /* has-tags.m4a */; };
+		BCECCCDD13F436D600B8ACD7 /* ilst-is-last.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD813F436D500B8ACD7 /* ilst-is-last.m4a */; };
+		BCECCCDE13F436D600B8ACD7 /* no-tags.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD913F436D500B8ACD7 /* no-tags.m4a */; };
+		BCECCCE213F4554B00B8ACD7 /* NSData+Swapped.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */; };
+		BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */; };
+		BCECCCE513F46B9600B8ACD7 /* empty.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCE413F46B9600B8ACD7 /* empty.aiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +81,14 @@
 		BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4AtomInfo.m; path = mp4/TLMP4AtomInfo.m; sourceTree = "<group>"; };
 		BCECCCCD13F3837000B8ACD7 /* TLMP4Tag+FileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TLMP4Tag+FileParser.h"; path = "mp4/TLMP4Tag+FileParser.h"; sourceTree = "<group>"; };
 		BCECCCCE13F3837000B8ACD7 /* TLMP4Tag+FileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TLMP4Tag+FileParser.m"; path = "mp4/TLMP4Tag+FileParser.m"; sourceTree = "<group>"; };
+		BCECCCD513F436D500B8ACD7 /* covr-junk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "covr-junk.m4a"; path = "data/covr-junk.m4a"; sourceTree = "<group>"; };
+		BCECCCD613F436D500B8ACD7 /* gnre.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = gnre.m4a; path = data/gnre.m4a; sourceTree = "<group>"; };
+		BCECCCD713F436D500B8ACD7 /* has-tags.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "has-tags.m4a"; path = "data/has-tags.m4a"; sourceTree = "<group>"; };
+		BCECCCD813F436D500B8ACD7 /* ilst-is-last.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ilst-is-last.m4a"; path = "data/ilst-is-last.m4a"; sourceTree = "<group>"; };
+		BCECCCD913F436D500B8ACD7 /* no-tags.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "no-tags.m4a"; path = "data/no-tags.m4a"; sourceTree = "<group>"; };
+		BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Swapped.h"; path = "lib/NSData+Swapped.h"; sourceTree = "<group>"; };
+		BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Swapped.m"; path = "lib/NSData+Swapped.m"; sourceTree = "<group>"; };
+		BCECCCE413F46B9600B8ACD7 /* empty.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = empty.aiff; path = data/empty.aiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,9 +155,9 @@
 		BC236CD313EF462A006C41C0 /* TagLib */ = {
 			isa = PBXGroup;
 			children = (
+				BCECCCDF13F454E600B8ACD7 /* lib */,
 				BCECCC9C13F069C600B8ACD7 /* mpeg */,
 				BCAE787213EF697C00F1B15A /* mp4 */,
-				BC236CDA13EF462A006C41C0 /* TagLib.h */,
 				BC236CDB13EF462A006C41C0 /* TagLib.m */,
 				BC236CD413EF462A006C41C0 /* Supporting Files */,
 				BCECCCA213F072DC00B8ACD7 /* TLTag.h */,
@@ -173,6 +189,12 @@
 		BC236CEA13EF462A006C41C0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BCECCCE413F46B9600B8ACD7 /* empty.aiff */,
+				BCECCCD513F436D500B8ACD7 /* covr-junk.m4a */,
+				BCECCCD613F436D500B8ACD7 /* gnre.m4a */,
+				BCECCCD713F436D500B8ACD7 /* has-tags.m4a */,
+				BCECCCD813F436D500B8ACD7 /* ilst-is-last.m4a */,
+				BCECCCD913F436D500B8ACD7 /* no-tags.m4a */,
 				BC236CEB13EF462A006C41C0 /* TagLibTests-Info.plist */,
 				BC236CEC13EF462A006C41C0 /* InfoPlist.strings */,
 			);
@@ -190,8 +212,9 @@
 				BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */,
 				BCECCCCD13F3837000B8ACD7 /* TLMP4Tag+FileParser.h */,
 				BCECCCCE13F3837000B8ACD7 /* TLMP4Tag+FileParser.m */,
-				BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */,
 				BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */,
+				BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */,
+				BC236CDA13EF462A006C41C0 /* TagLib.h */,
 			);
 			name = mp4;
 			sourceTree = "<group>";
@@ -213,6 +236,15 @@
 			name = id3v1;
 			sourceTree = "<group>";
 		};
+		BCECCCDF13F454E600B8ACD7 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */,
+				BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -227,6 +259,7 @@
 				BCECCCA413F072DC00B8ACD7 /* TLTag.h in Headers */,
 				BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */,
 				BCECCCCF13F3837100B8ACD7 /* TLMP4Tag+FileParser.h in Headers */,
+				BCECCCE213F4554B00B8ACD7 /* NSData+Swapped.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +341,12 @@
 			files = (
 				BC236CEE13EF462A006C41C0 /* InfoPlist.strings in Resources */,
 				BC236CF013EF462A006C41C0 /* TagLibTests.h in Resources */,
+				BCECCCDA13F436D600B8ACD7 /* covr-junk.m4a in Resources */,
+				BCECCCDB13F436D600B8ACD7 /* gnre.m4a in Resources */,
+				BCECCCDC13F436D600B8ACD7 /* has-tags.m4a in Resources */,
+				BCECCCDD13F436D600B8ACD7 /* ilst-is-last.m4a in Resources */,
+				BCECCCDE13F436D600B8ACD7 /* no-tags.m4a in Resources */,
+				BCECCCE513F46B9600B8ACD7 /* empty.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +381,7 @@
 				BCECCCA513F072DC00B8ACD7 /* TLTag.m in Sources */,
 				BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */,
 				BCECCCD013F3837100B8ACD7 /* TLMP4Tag+FileParser.m in Sources */,
+				BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,8 +520,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = "TagLibTests/TagLibTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -492,8 +547,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_PEDANTIC = NO;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = "TagLibTests/TagLibTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;

@@ -21,22 +21,24 @@
 - (TLMP4Atoms *) initWithFile: (NSFileHandle *)file
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
+    if (self) {
+        self->atoms = [[NSMutableDictionary alloc] init];
+        unsigned long long end = [file seekToEndOfFile];
+        [file seekToFileOffset:0];
     
-    unsigned long long end = [file seekToEndOfFile];
-    [file seekToFileOffset:0];
-    
-    while ([file offsetInFile] + 8 < end) {
-        TLMP4Atom * atom = [[TLMP4Atom alloc] initWithFile:file];
-        // NOTE: in the C++ impl, returns incomplete atom set
-        if ([atom length] == 0) {
+        while ([file offsetInFile] + 8 < end) {
+            TLMP4Atom *atom = [(TLMP4Atom *)[TLMP4Atom alloc] initWithFile:file];
+            // NOTE: in the C++ impl, returns incomplete atom set
+            TLCheck([atom length] <= (end - [atom offset]));
+            if ([atom length] == 0) {
+                return nil;
+            }
+            [self->atoms setValue:atom forKey:[atom name]];
+        }
+        if ([self->atoms count] == 0) {
             return nil;
         }
-        [self->atoms setValue:atom forKey:[atom name]];
     }
-
     return self;
 }
 
@@ -79,5 +81,18 @@
     return foundAtoms;
 }
 
+- (NSString *) description
+{
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atoms(%u)", [self->atoms count]];
+    
+    if ([self->atoms count]) {
+        [result appendString:@": {\n"];
+        for (TLMP4Atom *atom in [self->atoms objectEnumerator]) {
+            [result appendFormat:@"%@\n", [atom descriptionWithIndent:@"\t"]];
+        }
+        [result appendString:@"} End of atoms"];
+    }
+    return result;
+}
 
 @end

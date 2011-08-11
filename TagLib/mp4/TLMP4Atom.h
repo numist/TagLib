@@ -25,5 +25,5 @@
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
 - (NSArray *) findAllWithName: (NSString *)name;
 - (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive;
-
+- (NSString *) descriptionWithIndent:(NSString *)indent;
 @end

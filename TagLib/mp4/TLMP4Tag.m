@@ -22,42 +22,39 @@
 - (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms: (TLMP4Atoms *)atoms
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    self->_items = [[NSMutableDictionary alloc] init];
-    self->_atoms = atoms;
-    self->_file = file;
+    if (self) {
+        self->_items = [[NSMutableDictionary alloc] init];
+        self->_atoms = atoms;
+        self->_file = file;
 
-    TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
-    if (!ilst) {
-        TLLog(@"%@", "Atom moov.udta.meta.ilst not found.");
-        return nil;
-    }
+        TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
+        if (!ilst) {
+            TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
+            return nil;
+        }
     
-    for (TLMP4Atom *atom in [ilst children]) {
-        [self->_file seekToFileOffset:[atom offset]];
-        if ([[atom name] isEqualToString:@"----"]) {
-            [self parseFreeFormForAtom:atom];
-        } else if ([[atom name] isEqualToString:kTrackNumber] ||
-                   [[atom name] isEqualToString:kDiskNumber]) {
-            [self parseIntPairForAtom:atom];
-        } else if ([[atom name] isEqualToString:kCompilation] ||
-                   [[atom name] isEqualToString:kGaplessPlayback] ||
-                   [[atom name] isEqualToString:kPodcast]) {
-            [self parseBoolForAtom:atom];
-        } else if ([[atom name] isEqualToString:kBPM]) {
-            [self parseIntForAtom:atom];
-        } else if ([[atom name] isEqualToString:kGenreCode]) {
-            [self parseGnreForAtom:atom];
-        } else if ([[atom name] isEqualToString:kArtwork]) {
-            [self parseCovrForAtom:atom];
-        } else {
-            [self parseTextForAtom:atom];
+        for (TLMP4Atom *atom in [ilst children]) {
+            [self->_file seekToFileOffset:[atom offset]];
+            if ([[atom name] isEqualToString:@"----"]) {
+                [self parseFreeFormForAtom:atom];
+            } else if ([[atom name] isEqualToString:kTrackNumber] ||
+                       [[atom name] isEqualToString:kDiskNumber]) {
+                [self parseIntPairForAtom:atom];
+            } else if ([[atom name] isEqualToString:kCompilation] ||
+                       [[atom name] isEqualToString:kGaplessPlayback] ||
+                       [[atom name] isEqualToString:kPodcast]) {
+                [self parseBoolForAtom:atom];
+            } else if ([[atom name] isEqualToString:kBPM]) {
+                [self parseIntForAtom:atom];
+            } else if ([[atom name] isEqualToString:kGenreCode]) {
+                [self parseGnreForAtom:atom];
+            } else if ([[atom name] isEqualToString:kArtwork]) {
+                [self parseCovrForAtom:atom];
+            } else {
+                [self parseTextForAtom:atom];
+            }
         }
     }
-
     return self;
 }
 
