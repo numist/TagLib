@@ -38,7 +38,7 @@
 		BCECCCE213F4554B00B8ACD7 /* NSData+Swapped.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */; };
 		BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */; };
 		BCECCCE513F46B9600B8ACD7 /* empty.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCE413F46B9600B8ACD7 /* empty.aiff */; };
-		BCECCCE813F47ED400B8ACD7 /* TLMP4AtomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE713F47ED400B8ACD7 /* TLMP4AtomTests.m */; };
+		BCECCCE813F47ED400B8ACD7 /* TLMP4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,8 +90,8 @@
 		BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Swapped.h"; path = "lib/NSData+Swapped.h"; sourceTree = "<group>"; };
 		BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Swapped.m"; path = "lib/NSData+Swapped.m"; sourceTree = "<group>"; };
 		BCECCCE413F46B9600B8ACD7 /* empty.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = empty.aiff; path = data/empty.aiff; sourceTree = "<group>"; };
-		BCECCCE613F47ED400B8ACD7 /* TLMP4AtomTests.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TLMP4AtomTests.h; sourceTree = "<group>"; };
-		BCECCCE713F47ED400B8ACD7 /* TLMP4AtomTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLMP4AtomTests.m; sourceTree = "<group>"; };
+		BCECCCE613F47ED400B8ACD7 /* TLMP4Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TLMP4Tests.h; sourceTree = "<group>"; };
+		BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLMP4Tests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +185,8 @@
 				BC236CEF13EF462A006C41C0 /* TagLibTests.h */,
 				BC236CF113EF462A006C41C0 /* TagLibTests.m */,
 				BC236CEA13EF462A006C41C0 /* Supporting Files */,
-				BCECCCE613F47ED400B8ACD7 /* TLMP4AtomTests.h */,
-				BCECCCE713F47ED400B8ACD7 /* TLMP4AtomTests.m */,
+				BCECCCE613F47ED400B8ACD7 /* TLMP4Tests.h */,
+				BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */,
 			);
 			path = TagLibTests;
 			sourceTree = "<group>";
@@ -395,7 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */,
-				BCECCCE813F47ED400B8ACD7 /* TLMP4AtomTests.m in Sources */,
+				BCECCCE813F47ED400B8ACD7 /* TLMP4Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
