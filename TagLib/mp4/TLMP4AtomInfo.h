@@ -8,35 +8,44 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kAlbum;
-extern NSString * const kArtist;
-extern NSString * const kAlbumArtist;
-extern NSString * const kComment;
-extern NSString * const kYear;
-extern NSString * const kTitle;
-extern NSString * const kGenre;
-extern NSString * const kGenreCode;
-extern NSString * const kTrackNumber;
-extern NSString * const kDiskNumber;
-extern NSString * const kComposer;
-extern NSString * const kEncoder;
-extern NSString * const kBPM;
-extern NSString * const kCopyright;
-extern NSString * const kCompilation;
-extern NSString * const kArtwork;
-extern NSString * const kRating;
-extern NSString * const kGrouping;
-extern NSString * const kPodcast;
-extern NSString * const kCategory;
-extern NSString * const kKeyword;
-extern NSString * const kPodcastURL;
-extern NSString * const kEpisodeGUID;
-extern NSString * const kDescription;
-extern NSString * const kLyrics;
-extern NSString * const kTVNetworkName;
-extern NSString * const kTVShowName;
-extern NSString * const kTVEpisodeNumber;
-extern NSString * const kTVSeason;
-extern NSString * const kTVEpisode;
-extern NSString * const kPurchaseDate;
-extern NSString * const kGaplessPlayback;
+extern NSString * const kAlbum;				// flags: 1 type: text
+extern NSString * const kArtist;            // flags: 1 type: text
+extern NSString * const kAlbumArtist;       // flags: 1 type: text
+extern NSString * const kComment;           // flags: 1 type: text
+extern NSString * const kYear;              // flags: 1 type: text
+extern NSString * const kTitle;             // flags: 1 type: text
+extern NSString * const kGenre;             // flags: 1 type: text
+extern NSString * const kGenreCode;         // flags: 0 type: uint8
+extern NSString * const kTrackNumber;       // flags: 0 type: uint8
+extern NSString * const kDiskNumber;        // flags: 0 type: uint8
+extern NSString * const kComposer;          // flags: 1 type: text
+extern NSString * const kEncoder;           // flags: 1 type: text
+extern NSString * const kBPM;               // flags: 21 type: uint8
+extern NSString * const kCopyright;         // flags: 1 type: text
+extern NSString * const kCompilation;       // flags: 21 type: uint8
+extern NSString * const kArtwork;           // flags: 13 type: jpeg | flags: 14 type: png
+extern NSString * const kRating;            // flags: 21 type: uint8
+extern NSString * const kGrouping;          // flags: 1 type: text
+extern NSString * const kPodcast;           // flags: 21 type: uint8
+extern NSString * const kCategory;          // flags: 1 type: text
+extern NSString * const kKeyword;           // flags: 1 type: text
+extern NSString * const kPodcastURL;        // flags: 21 | 0 (Apple changed from 21 to the current 0 around iTunes 6.0.3) type: uint8
+extern NSString * const kEpisodeGUID;       // flags: 21 | 0 (Apple changed from 21 to the current 0 around iTunes 6.0.3) type: uint8
+extern NSString * const kDescription;       // flags: 1 type: text
+extern NSString * const kLyrics;            // flags: 1 type: text (Lyrics is the only text atom that doesnt't fall under a 255byte limit)
+extern NSString * const kTVNetworkName;     // flags: 1 type: text
+extern NSString * const kTVShowName;        // flags: 1 type: text
+extern NSString * const kTVEpisodeNumber;   // flags: 1 type: text
+extern NSString * const kTVSeason;          // flags: 21 type: uint8
+extern NSString * const kTVEpisode;         // flags: 21 type: uint8
+extern NSString * const kPurchaseDate;      // flags: 1 type: text
+extern NSString * const kGaplessPlayback;   // flags: 21 type: uint8
+
+enum Flags {
+    FlagsAll = -1,
+    FlagsNumber = 0,
+    FlagsText = 1,
+    FlagsJPEG = 13,
+    FlagsPNG = 14,
+    FlagsNewNumber = 21
+};

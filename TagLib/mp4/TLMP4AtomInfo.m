@@ -7,7 +7,7 @@
 //  Tag information from: http://atomicparsley.sourceforge.net/mpeg-4files.html
 //
 
-#import "TLMP4AtomNames.h"
+#import "TLMP4AtomInfo.h"
 
 NSString * const kAlbum = @"©alb";           // flags: 1 type: text
 NSString * const kArtist = @"©art";          // flags: 1 type: text
@@ -24,7 +24,7 @@ NSString * const kEncoder = @"©too";         // flags: 1 type: text
 NSString * const kBPM = @"tmpo";             // flags: 21 type: uint8
 NSString * const kCopyright = @"cprt";       // flags: 1 type: text
 NSString * const kCompilation = @"cpil";     // flags: 21 type: uint8
-NSString * const kArtwork = @"covr";         // flags: ≥ 13 type: jpeg | png
+NSString * const kArtwork = @"covr";         // flags: 13 type: jpeg | flags: 14 type: png
 NSString * const kRating = @"rtng";          // flags: 21 type: uint8
 NSString * const kGrouping = @"©grp";        // flags: 1 type: text
 NSString * const kPodcast = @"pcst";         // flags: 21 type: uint8
