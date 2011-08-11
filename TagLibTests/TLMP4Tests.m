@@ -6,10 +6,10 @@
 //  Copyright 2011 Scott Perry. All rights reserved.
 //
 
-#import "TLMP4AtomTests.h"
+#import "TLMP4Tests.h"
 #import "TLMP4Atoms.h"
 
-@implementation TLMP4AtomTests
+@implementation TLMP4Tests
 
 - (void)setUp
 {

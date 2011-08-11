@@ -8,6 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface TLMP4AtomTests : SenTestCase
+@interface TLMP4Tests : SenTestCase
 
 @end
