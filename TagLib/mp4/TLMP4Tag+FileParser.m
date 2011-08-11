@@ -8,6 +8,7 @@
 
 #import "TLMP4Tag+FileParser.h"
 #import "TLMP4AtomInfo.h"
+#import "TLID3v1Genres.h"
 
 @implementation TLMP4Tag (FileParser)
 
