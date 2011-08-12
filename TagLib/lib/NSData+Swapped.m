@@ -9,6 +9,12 @@
 #import "NSData+Swapped.h"
 
 @implementation NSData (Swapped)
+
+- (void)getSwappedBytes:(void *)buffer
+{
+    [self getSwappedBytes:buffer length:[self length]];
+}
+
 - (void)getSwappedBytes:(void *)buffer length:(NSUInteger)length
 {
     [self getSwappedBytes:buffer range:NSMakeRange(0, length)];
@@ -17,9 +23,10 @@
 - (void)getSwappedBytes:(void *)buffer range:(NSRange)range
 {
     [self getBytes:buffer range:range];
-    TLAssert(((long)buffer & 1) == 0);
+    TLCheck(((long)buffer & 1) == 0 || range.length <= 1);
 
     switch (range.length) {
+        case 0:
         case 1:
             // what I don't even…
             return;

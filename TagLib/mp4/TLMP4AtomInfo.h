@@ -40,6 +40,7 @@ extern NSString * const kTVSeason;          // flags: 21 type: uint8
 extern NSString * const kTVEpisode;         // flags: 21 type: uint8
 extern NSString * const kPurchaseDate;      // flags: 1 type: text
 extern NSString * const kGaplessPlayback;   // flags: 21 type: uint8
+extern NSString * const kStik;              // flags: 21 type: uint8
 
 enum Flags {
     FlagsAll = -1,
@@ -49,3 +50,5 @@ enum Flags {
     FlagsPNG = 14,
     FlagsNewNumber = 21
 };
+
+BOOL TLMP4AtomIsValid(NSString *name);

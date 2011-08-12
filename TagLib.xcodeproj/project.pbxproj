@@ -39,6 +39,9 @@
 		BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */; };
 		BCECCCE513F46B9600B8ACD7 /* empty.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCE413F46B9600B8ACD7 /* empty.aiff */; };
 		BCECCCE813F47ED400B8ACD7 /* TLMP4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */; };
+		BCECCCEA13F4B6FF00B8ACD7 /* debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE913F4B6FF00B8ACD7 /* debugger.c */; };
+		BCECCCEC13F4BED300B8ACD7 /* debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCEB13F4BED300B8ACD7 /* debugger.h */; };
+		BCECCCEF13F4CDE700B8ACD7 /* LocalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCEE13F4CDE700B8ACD7 /* LocalTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,8 +93,12 @@
 		BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Swapped.h"; path = "lib/NSData+Swapped.h"; sourceTree = "<group>"; };
 		BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Swapped.m"; path = "lib/NSData+Swapped.m"; sourceTree = "<group>"; };
 		BCECCCE413F46B9600B8ACD7 /* empty.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = empty.aiff; path = data/empty.aiff; sourceTree = "<group>"; };
-		BCECCCE613F47ED400B8ACD7 /* TLMP4Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TLMP4Tests.h; sourceTree = "<group>"; };
+		BCECCCE613F47ED400B8ACD7 /* TLMP4Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLMP4Tests.h; sourceTree = "<group>"; };
 		BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLMP4Tests.m; sourceTree = "<group>"; };
+		BCECCCE913F4B6FF00B8ACD7 /* debugger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = debugger.c; path = lib/debugger.c; sourceTree = "<group>"; };
+		BCECCCEB13F4BED300B8ACD7 /* debugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debugger.h; path = lib/debugger.h; sourceTree = "<group>"; };
+		BCECCCED13F4CDE600B8ACD7 /* LocalTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalTests.h; sourceTree = "<group>"; };
+		BCECCCEE13F4CDE700B8ACD7 /* LocalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +194,8 @@
 				BC236CEA13EF462A006C41C0 /* Supporting Files */,
 				BCECCCE613F47ED400B8ACD7 /* TLMP4Tests.h */,
 				BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */,
+				BCECCCED13F4CDE600B8ACD7 /* LocalTests.h */,
+				BCECCCEE13F4CDE700B8ACD7 /* LocalTests.m */,
 			);
 			path = TagLibTests;
 			sourceTree = "<group>";
@@ -246,6 +255,8 @@
 			children = (
 				BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */,
 				BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */,
+				BCECCCE913F4B6FF00B8ACD7 /* debugger.c */,
+				BCECCCEB13F4BED300B8ACD7 /* debugger.h */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -265,6 +276,7 @@
 				BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */,
 				BCECCCCF13F3837100B8ACD7 /* TLMP4Tag+FileParser.h in Headers */,
 				BCECCCE213F4554B00B8ACD7 /* NSData+Swapped.h in Headers */,
+				BCECCCEC13F4BED300B8ACD7 /* debugger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +399,7 @@
 				BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */,
 				BCECCCD013F3837100B8ACD7 /* TLMP4Tag+FileParser.m in Sources */,
 				BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */,
+				BCECCCEA13F4B6FF00B8ACD7 /* debugger.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +409,7 @@
 			files = (
 				BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */,
 				BCECCCE813F47ED400B8ACD7 /* TLMP4Tests.m in Sources */,
+				BCECCCEF13F4CDE700B8ACD7 /* LocalTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

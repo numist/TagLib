@@ -42,7 +42,7 @@ static NSSet *containers = nil;
     
     self->offset = [file offsetInFile];
     self->children = [[NSMutableDictionary alloc] init];
-    unsigned long totalLength = [file seekToEndOfFile];
+    unsigned long long totalLength = [file seekToEndOfFile];
     [file seekToFileOffset:self->offset];
 
     NSData *header = [file readDataOfLength:8];
@@ -56,8 +56,9 @@ static NSSet *containers = nil;
     
     [header getSwappedBytes:&self->length length:4];
     if (self->length == 1) {
-        [[file readDataOfLength:8] getBytes:&self->length];
+        [[file readDataOfLength:8] getSwappedBytes:&self->length];
         if (self->length > UINT32_MAX) {
+            TLCheck(self->length <= UINT32_MAX);
             TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)",
                   self->length);
             [file seekToEndOfFile];

@@ -1,5 +1,2 @@
 # spurious.
 .DS_Store
-
-# ignore Xcode's user-specific bits
-numist.xcuserdatad

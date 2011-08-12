@@ -11,6 +11,7 @@
 #import "TLMP4Tag+FileParser.h"
 #import "TLID3v1Genres.h"
 #import "TLMP4AtomInfo.h"
+#import "NSData+Swapped.h"
 
 @implementation TLMP4Tag
 
@@ -32,9 +33,14 @@
             TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
             return nil;
         }
-    
-        for (TLMP4Atom *atom in [ilst children]) {
-            [self->_file seekToFileOffset:[atom offset]];
+        
+        for (TLMP4Atom *atom in [[ilst children] objectEnumerator]) {
+            if (!TLMP4AtomIsValid([atom name])) {
+                TLLog(@"discarded invalid atom %@", [atom name]);
+                continue;
+            }
+
+            [self->_file seekToFileOffset:[atom offset] + 8];
             if ([[atom name] isEqualToString:@"----"]) {
                 [self parseFreeFormForAtom:atom];
             } else if ([[atom name] isEqualToString:kTrackNumber] ||
@@ -44,7 +50,11 @@
                        [[atom name] isEqualToString:kGaplessPlayback] ||
                        [[atom name] isEqualToString:kPodcast]) {
                 [self parseBoolForAtom:atom];
-            } else if ([[atom name] isEqualToString:kBPM]) {
+            } else if ([[atom name] isEqualToString:kBPM] ||
+                       [[atom name] isEqualToString:kStik] ||
+                       [[atom name] isEqualToString:kTVSeason] ||
+                       [[atom name] isEqualToString:kTVEpisode] ||
+                       [[atom name] isEqualToString:kRating]) {
                 [self parseIntForAtom:atom];
             } else if ([[atom name] isEqualToString:kGenreCode]) {
                 [self parseGnreForAtom:atom];
@@ -60,6 +70,7 @@
 
 - (BOOL) save
 {
+    TLNotTested();
     return NO;
 }
 
@@ -78,6 +89,11 @@
 {
     NSArray *result = [self->_items objectForKey:kArtist];
     TLCheck(!result || [result count] == 1);
+    if (!result) {
+        TLLog(@"%@", @"failing over to ©art in search for artist");
+        result = [self->_items objectForKey:@"©art"];
+        TLCheck(!result || [result count] == 1);
+    }
     return [result objectAtIndex:0];
 }
 
@@ -123,8 +139,8 @@
 - (NSNumber *) track
 {
     NSArray *result = [self->_items objectForKey:kTrackNumber];
-    TLCheck(!result || [result count] == 1);
-    return [result objectAtIndex:0];
+    TLCheck(!result || ([result count] == 1 && [[result objectAtIndex:0] count] == 2));
+    return [[result objectAtIndex:0] objectAtIndex:0];
 }
 
 /*
