@@ -19,6 +19,7 @@
 
 - (NSDictionary *) atoms
 {
+    TLNotTested();
     return self->atoms;
 }
 

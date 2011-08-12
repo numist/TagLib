@@ -129,11 +129,18 @@
 
 - (NSNumber *) year
 {
-    // NOTE: kYear (©dat) is a string, so convert to number before return.
+    NSString *result = [self yearAsString];
+    TLCheck(result);
+    return result ? [NSNumber numberWithLong:[result integerValue]] : nil;
+}
+
+- (NSString *) yearAsString
+{
     NSArray *values = [self->_items objectForKey:kYear];
     TLCheck(!values || [values count] == 1);
-    NSNumber *result = [values objectAtIndex:0];
-    return result ? [NSNumber numberWithLong:[result integerValue]] : nil;
+    NSString *result = [values objectAtIndex:0];
+    TLCheck(result);
+    return result;
 }
 
 - (NSNumber *) track
@@ -149,40 +156,53 @@
 
 - (void) setTitle: (NSString *) title
 {
+    TLNotTested();
     [self->_items setObject:[NSArray arrayWithObject:title] forKey:kTitle];
 }
 
 - (void) setArtist: (NSString *) artist
 {
+    TLNotTested();
     [self->_items setObject:[NSArray arrayWithObject:artist] forKey:kArtist];
 }
 
 - (void) setAlbum: (NSString *) album
 {
+    TLNotTested();
     [self->_items setObject:[NSArray arrayWithObject:album] forKey:kAlbum];
 }
 
 - (void) setComment: (NSString *) comment
 {
+    TLNotTested();
     [self->_items setObject:[NSArray arrayWithObject:comment] forKey:kComment];
 }
 
 - (void) setGenre: (NSString *) genre
 {
+    TLNotTested();
     [self->_items setObject:[NSArray arrayWithObject:genre] forKey:kGenre];
 }
 
 - (void) setYear: (NSNumber *) year
 {
+    TLNotTested();
     if (![year isEqualToNumber:[NSNumber numberWithLong:0]]) {
-        [self->_items setObject:[NSArray arrayWithObject:[NSString stringWithFormat:@"%@", year]] forKey:kYear];
+        [self setYearAsString:[NSString stringWithFormat:@"%@", year]];
     } else {
-        [self->_items setObject:[NSArray arrayWithObject:@""] forKey:kYear];
+        [self setYearAsString:@""];
     }
+}
+
+- (void) setYearAsString: (NSString *) date
+{
+    TLNotTested();
+    [self->_items setObject:[NSArray arrayWithObject:date] forKey:kYear];
 }
 
 - (void) setTrack: (NSNumber *) track
 {
+    TLNotTested();
     [self->_items setObject:[NSArray arrayWithObject:[NSArray arrayWithObjects:track, [NSNumber numberWithInt:0], nil]]
                   forKey:kTrackNumber];
 }

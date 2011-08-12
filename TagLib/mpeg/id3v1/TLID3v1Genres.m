@@ -172,11 +172,13 @@ static NSDictionary *genreMap = nil;
 
 + (NSArray *) genreList
 {
+    TLNotTested();
     return [NSArray arrayWithObjects:genres count:ARRAYSIZE(genres)];
 }
 
 + (NSDictionary *) genreMap
 {
+    TLNotTested();
     [TLID3v1Genres generateGenreMap];
 
     return genreMap;
@@ -193,6 +195,7 @@ static NSDictionary *genreMap = nil;
 
 + (uint16) indexForGenre: (NSString *)genre
 {
+    TLNotTested();
     [TLID3v1Genres generateGenreMap];
     
     return [[genreMap objectForKey:genre] unsignedShortValue];
@@ -200,6 +203,7 @@ static NSDictionary *genreMap = nil;
 
 + (void) generateGenreMap
 {
+    TLNotTested();
     if (LIKELY(genreMap)) {
         return;
     }

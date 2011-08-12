@@ -84,6 +84,22 @@
     STAssertEqualObjects([[result objectAtIndex:3] name], @"ilst", @"Returned array has %@ as the fourth element", [[result objectAtIndex:3] name]);
 }
 
+- (void)testFindAll
+{
+    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
+    STAssertNotNil(file, @"%@", @"Could not open file for testing");
+    
+    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
+    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
+    
+    TLMP4Atom *moov = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", nil]];
+    STAssertNotNil(moov, @"%@", @"Atom moov not found");
+    
+    STAssertTrue([[moov findAllWithName:@"tvsh" recursive:YES] count] == 0, @"%@", @"shouldn't have found nested atom tvsh");
+    STAssertTrue([[moov findAllWithName:@"stsz"] count] == 0, @"%@", @"shouldn't have found nested atom stsz");
+    STAssertTrue([[moov findAllWithName:@"stsz" recursive:YES] count] == 1, @"%@", @"should have found nested atom stsz");
+}
+
 - (void)testBasicTagParsing
 {
     NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];

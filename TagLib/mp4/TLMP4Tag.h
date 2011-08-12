@@ -30,4 +30,7 @@
 // - (void) setTotalTracks: (NSNumber *)totalTracks;
 // etc.
 
+- (NSString *) yearAsString;
+- (void) setYearAsString: (NSString *)date;
+
 @end

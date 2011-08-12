@@ -114,13 +114,11 @@ static NSSet *containers = nil;
     return [atom getAtoms:atoms withPath:path];
 }
 
-TODO("This is not yet called anywhere")
 - (NSArray *) findAllWithName: (NSString *)findName
 {
-    return [self findAllWithName:findName recursive:false];
+    return [self findAllWithName:findName recursive:NO];
 }
 
-TODO("This is not yet called anywhere")
 - (NSArray *) findAllWithName: (NSString *)findName recursive: (BOOL)recursive
 {
     NSMutableArray *hits = [[NSMutableArray alloc] init];
@@ -131,8 +129,7 @@ TODO("This is not yet called anywhere")
     }
     
     if (recursive) {
-        NSEnumerator *enumerator = [children objectEnumerator];
-        for (TLMP4Atom *child in enumerator) {
+        for (TLMP4Atom *child in [children objectEnumerator]) {
             [hits addObjectsFromArray:[child findAllWithName:findName recursive:recursive]];
         }
     }

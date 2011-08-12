@@ -40,9 +40,9 @@
     TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     
-    for (NSString *name in [tag items]) {
-        TLLog(@"%@ -> %@", name, [[tag items] objectForKey:name]);
-    }
+//    for (NSString *name in [tag items]) {
+//        TLLog(@"%@ -> %@", name, [[tag items] objectForKey:name]);
+//    }
 }
 
 - (void)testFireflyTagParsing
@@ -59,9 +59,29 @@
     TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     
-    for (NSString *name in [tag items]) {
-        TLLog(@"%@ -> %@", name, [[tag items] objectForKey:name]);
+//    for (NSString *name in [tag items]) {
+//        TLLog(@"%@ -> %@", name, [[tag items] objectForKey:name]);
+//    }
+}
+
+- (void)testStringYear
+{
+    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/Local-horrible.m4a"];
+    if (file == nil) {
+        TLLog(@"%@", @"sorry, you don't have the file required to run this test");
+        return;
     }
+    
+    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
+    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
+    
+    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
+    
+    NSString *year = [tag yearAsString];
+    STAssertTrue([year isEqualToString:@"2008-09-02T07:00:00Z"], @"tag had unexpected year %@", year);
+
+    STAssertTrue([[tag year] isEqual:[NSNumber numberWithInt:2008]], @"tag reporting incorrect year %@", [tag year]);
 }
 
 @end
