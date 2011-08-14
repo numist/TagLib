@@ -9,6 +9,7 @@
 #import "TLMP4Tests.h"
 #import "TLMP4Atoms.h"
 #import "TLMP4Tag.h"
+#import "TLMP4Properties.h"
 
 @implementation TLMP4Tests
 
@@ -108,9 +109,27 @@
     TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
     STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
     
-    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertEqualObjects([tag artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [tag artist]);
+}
+
+- (void)testBasicProperties
+{
+    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
+    STAssertNotNil(file, @"%@", @"Could not open file for testing");
+    
+    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
+    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
+    
+    TLMP4Properties *properties = [(TLMP4Properties *)[TLMP4Properties alloc] initWithFile:file atoms:atoms];
+    STAssertNotNil(properties, @"%@", @"Failed to parse properties from file");
+    
+    STAssertTrue([properties length] == 3, @"test file has unexpected length %u", [properties length]);
+    STAssertTrue([properties bitrate] == 3, @"test file has unexpected bitrate %u", [properties bitrate]);
+    STAssertTrue([properties sampleRate] == 44100, @"test file has unexpected sample rate %u", [properties sampleRate]);
+    STAssertTrue([properties channels] == 2, @"test file has unexpected channels %u", [properties channels]);
+    STAssertTrue([properties bitsPerSample] == 16, @"test file has unexpected bitsPerSample %u", [properties bitsPerSample]);
 }
 
 @end

@@ -104,6 +104,29 @@ static NSSet *containers = nil;
     return self;
 }
 
+- (TLMP4Atom *) getAtomWithPath: (NSArray *)path
+{
+    NSParameterAssert([path count] > 0);
+    
+    /*
+     * NOTE: if this is too slow, implement MP4Atom findAtomAtPath:
+     *
+     *  - (MP4Atom *) findAtomAtPath: (NSMutableArray *)path
+     *  {
+     *      if ([path count] == 0) {
+     *          return self;
+     *      }
+     *    
+     *      MP4Atom *child = [children objectForKey:[path objectAtIndex:0]];
+     *      [path removeObjectAtIndex:0];
+     *      return [child findAtomAtPath:path];
+     *  }
+     */
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    [self getAtoms:result withPath:[NSMutableArray arrayWithArray:path]];
+    return [result lastObject];
+}
+
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path
 {
     TLMP4Atom *atom;

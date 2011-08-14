@@ -37,7 +37,7 @@
     TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
     STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
     
-    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     
 //    for (NSString *name in [tag items]) {
@@ -56,7 +56,7 @@
     TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
     STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
     
-    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     
 //    for (NSString *name in [tag items]) {
@@ -73,10 +73,10 @@
     }
     
     TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
+    STAssertNotNil(atoms, @"Failed to parse atoms from file");
+        
     TLMP4Tag *tag = [[TLMP4Tag alloc] initWithFile:file atoms:atoms];
-    STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
+    STAssertNotNil(tag, @"Failed to parse tags from file");
     
     NSString *year = [tag yearAsString];
     STAssertTrue([year isEqualToString:@"2008-09-02T07:00:00Z"], @"tag had unexpected year %@", year);

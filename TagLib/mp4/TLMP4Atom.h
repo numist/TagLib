@@ -22,6 +22,7 @@
 
 - (NSDictionary *) children;
 - (TLMP4Atom *) initWithFile: (NSFileHandle *)file;
+- (TLMP4Atom *) getAtomWithPath: (NSArray *)path;
 - (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
 - (NSArray *) findAllWithName: (NSString *)name;
 - (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive;
