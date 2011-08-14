@@ -20,6 +20,13 @@
     return self->_items;
 }
 
+- (TLMP4Tag *) init
+{
+    [NSException raise:@"UnimplementedException" format:@"%@",
+     @"Selector is not implemented in this class"];
+    return nil;
+}
+
 - (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms: (TLMP4Atoms *)atoms
 {
     self = [super init];

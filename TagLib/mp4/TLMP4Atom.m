@@ -24,6 +24,13 @@ static NSSet *containers = nil;
     return self->children;
 }
 
+- (TLMP4Atom *) init
+{
+    [NSException raise:@"UnimplementedException" format:@"%@",
+     @"Selector is not implemented in this class"];
+    return nil;
+}
+
 - (TLMP4Atom *) initWithFile: (NSFileHandle *)file
 {
     NSParameterAssert(file);

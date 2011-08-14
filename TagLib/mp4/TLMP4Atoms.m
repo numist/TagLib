@@ -23,6 +23,13 @@
     return self->atoms;
 }
 
+- (TLMP4Atoms *) init
+{
+    [NSException raise:@"UnimplementedException" format:@"%@",
+     @"Selector is not implemented in this class"];
+    return nil;
+}
+
 - (TLMP4Atoms *) initWithFile: (NSFileHandle *)file
 {
     self = [super init];

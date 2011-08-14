@@ -80,7 +80,6 @@
     
     NSString *year = [tag yearAsString];
     STAssertTrue([year isEqualToString:@"2008-09-02T07:00:00Z"], @"tag had unexpected year %@", year);
-
     STAssertTrue([[tag year] isEqual:[NSNumber numberWithInt:2008]], @"tag reporting incorrect year %@", [tag year]);
 }
 
