@@ -16,6 +16,8 @@
 		BC236CEE13EF462A006C41C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEC13EF462A006C41C0 /* InfoPlist.strings */; };
 		BC236CF013EF462A006C41C0 /* TagLibTests.h in Resources */ = {isa = PBXBuildFile; fileRef = BC236CEF13EF462A006C41C0 /* TagLibTests.h */; };
 		BC236CF213EF462A006C41C0 /* TagLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC236CF113EF462A006C41C0 /* TagLibTests.m */; };
+		BC3F80C113F78570005676C2 /* TLMP4File.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3F80BF13F78570005676C2 /* TLMP4File.h */; };
+		BC3F80C213F78570005676C2 /* TLMP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3F80C013F78570005676C2 /* TLMP4File.m */; };
 		BC7DEB3413F75DFB004C24E8 /* TLMP4Properties.h in Headers */ = {isa = PBXBuildFile; fileRef = BC7DEB3213F75DFB004C24E8 /* TLMP4Properties.h */; };
 		BC7DEB3513F75DFB004C24E8 /* TLMP4Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DEB3313F75DFB004C24E8 /* TLMP4Properties.m */; };
 		BC7DEB3913F76BAA004C24E8 /* NSData+GetTypedData.h in Headers */ = {isa = PBXBuildFile; fileRef = BC7DEB3713F76BAA004C24E8 /* NSData+GetTypedData.h */; };
@@ -75,6 +77,8 @@
 		BC236CED13EF462A006C41C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC236CEF13EF462A006C41C0 /* TagLibTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagLibTests.h; sourceTree = "<group>"; };
 		BC236CF113EF462A006C41C0 /* TagLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagLibTests.m; sourceTree = "<group>"; };
+		BC3F80BF13F78570005676C2 /* TLMP4File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4File.h; path = mp4/TLMP4File.h; sourceTree = "<group>"; };
+		BC3F80C013F78570005676C2 /* TLMP4File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4File.m; path = mp4/TLMP4File.m; sourceTree = "<group>"; };
 		BC7DEB3213F75DFB004C24E8 /* TLMP4Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Properties.h; path = mp4/TLMP4Properties.h; sourceTree = "<group>"; };
 		BC7DEB3313F75DFB004C24E8 /* TLMP4Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4Properties.m; path = mp4/TLMP4Properties.m; sourceTree = "<group>"; };
 		BC7DEB3713F76BAA004C24E8 /* NSData+GetTypedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+GetTypedData.h"; path = "lib/NSData+GetTypedData.h"; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 		BCAE787213EF697C00F1B15A /* mp4 */ = {
 			isa = PBXGroup;
 			children = (
+				BC3F80BF13F78570005676C2 /* TLMP4File.h */,
+				BC3F80C013F78570005676C2 /* TLMP4File.m */,
 				BCAE786D13EF694800F1B15A /* TLMP4Atom.h */,
 				BCAE786E13EF694800F1B15A /* TLMP4Atom.m */,
 				BCAE787313F04F9900F1B15A /* TLMP4Atoms.h */,
@@ -291,6 +297,7 @@
 				BCECCCEC13F4BED300B8ACD7 /* debugger.h in Headers */,
 				BC7DEB3413F75DFB004C24E8 /* TLMP4Properties.h in Headers */,
 				BC7DEB3913F76BAA004C24E8 /* NSData+GetTypedData.h in Headers */,
+				BC3F80C113F78570005676C2 /* TLMP4File.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +423,7 @@
 				BCECCCEA13F4B6FF00B8ACD7 /* debugger.c in Sources */,
 				BC7DEB3513F75DFB004C24E8 /* TLMP4Properties.m in Sources */,
 				BC7DEB3A13F76BAA004C24E8 /* NSData+GetTypedData.m in Sources */,
+				BC3F80C213F78570005676C2 /* TLMP4File.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

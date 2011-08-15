@@ -7,9 +7,13 @@
 //
 
 #import "TLMP4Tests.h"
-#import "TLMP4Atoms.h"
-#import "TLMP4Tag.h"
-#import "TLMP4Properties.h"
+#import "TLMP4File.h"
+
+@interface TLMP4Tests () {
+@private
+    TLMP4File *has_tags;
+}
+@end
 
 @implementation TLMP4Tests
 
@@ -17,7 +21,7 @@
 {
     [super setUp];
     
-    // Set-up code here.
+    self->has_tags = [(TLMP4File *)[TLMP4File alloc] initWithPath:@"TagLibTests/data/has-tags.m4a"];
 }
 
 - (void)tearDown
@@ -37,45 +41,28 @@
 
 - (void)testBasicAtomParsing
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
+    STAssertNotNil(self->has_tags, @"%@", @"failed to parse atoms from file");
 }
 
 - (void)testBadFile
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/empty.aiff"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    if (atoms) {
-        TLLog(@"%@", [atoms description]);
+    TLMP4File *mp4file = [(TLMP4File *)[TLMP4File alloc] initWithPath:@"TagLibTests/data/empty.aiff"];
+    if (mp4file) {
+        TLLog(@"%@", [mp4file description]);
     }
-    STAssertNil(atoms, @"%@", @"Found atoms in a non-MPEG-4 file");
+    STAssertNil(mp4file, @"%@", @"Found atoms in a non-MPEG-4 file");
 }
 
 - (void)testFindIlst
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-
+    TLMP4Atoms *atoms = [self->has_tags atoms];
     TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
     STAssertNotNil(ilst, @"%@", @"Atom moov.udta.meta.ilst not found");
 }
 
 - (void)testFindIlstPath
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
+    TLMP4Atoms *atoms = [self->has_tags atoms];
     NSArray *result = [atoms getAtomsWithPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
     STAssertNotNil(result, @"%@", @"Atom moov.udta.meta.ilst not found");
     STAssertTrue([result count] == 4, @"Returned array has %u elements", [result count]);
@@ -87,12 +74,7 @@
 
 - (void)testFindAll
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
+    TLMP4Atoms *atoms = [self->has_tags atoms];
     TLMP4Atom *moov = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", nil]];
     STAssertNotNil(moov, @"%@", @"Atom moov not found");
     
@@ -103,27 +85,20 @@
 
 - (void)testBasicTagParsing
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
-    TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    TLMP4Tag *tag = [self->has_tags tag];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertEqualObjects([tag artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [tag artist]);
 }
 
-- (void)testBasicProperties
+- (void)testNoReadProperties
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertNotNil(file, @"%@", @"Could not open file for testing");
-    
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
-    TLMP4Properties *properties = [(TLMP4Properties *)[TLMP4Properties alloc] initWithFile:file atoms:atoms];
-    STAssertNotNil(properties, @"%@", @"Failed to parse properties from file");
+    TLMP4File *file = [(TLMP4File *)[TLMP4File alloc] initWithPath:@"TagLibTests/data/has-tags.m4a" readProperties:NO];
+    STAssertNil([file properties], @"%@", @"shouldn't have read properties when told");
+}
+
+- (void)testBasicProperties
+{    
+    TLMP4Properties *properties = [self->has_tags properties];
     
     STAssertTrue([properties length] == 3, @"test file has unexpected length %u", [properties length]);
     STAssertTrue([properties bitrate] == 3, @"test file has unexpected bitrate %u", [properties bitrate]);
