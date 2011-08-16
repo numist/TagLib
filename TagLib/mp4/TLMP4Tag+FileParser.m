@@ -9,7 +9,7 @@
 #import "TLMP4Tag+FileParser.h"
 #import "TLMP4AtomInfo.h"
 #import "TLID3v1Genres.h"
-#import "NSData+Swapped.h"
+#import "NSData+GetTypedData.h"
 
 @implementation TLMP4Tag (FileParser)
 
@@ -30,15 +30,9 @@
     int i = 0;
     uint32 pos = 0;
     while (pos < [data length]) {
-        uint32 length;
-        [data getSwappedBytes:&length range:NSMakeRange(pos, 4)];
-        
-        NSString *name = [[NSString alloc] initWithBytes:[[data subdataWithRange:NSMakeRange(pos + 4, 4)] bytes]
-                                                  length:4
-                                                encoding:NSMacOSRomanStringEncoding];
-        
-        uint32 atomFlags;
-        [data getSwappedBytes:&atomFlags range:NSMakeRange(pos + 8, 4)];
+        uint32 length = [data unsignedIntAtOffset:pos swapped:YES];        
+        NSString *name = [data stringWithRange:NSMakeRange(pos + 4, 4) encoding:NSMacOSRomanStringEncoding];
+        uint32 atomFlags = [data unsignedIntAtOffset:(pos + 8) swapped:YES];
         
         if (freeForm && i < 2) {
             if (i == 0 && ![name isEqualToString:@"mean"]) {
@@ -81,7 +75,7 @@
     for (NSData *datum in data) {
         TLCheck([datum length] >= 2);
         if ([datum length] >= 1) {
-            [result addObject:[NSString stringWithCString:[datum bytes] encoding:NSUTF8StringEncoding]];
+            [result addObject:[datum stringWithEncoding:NSUTF8StringEncoding]];
         }
     }
     
@@ -97,14 +91,11 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
     NSString *name = [NSString stringWithFormat:@"----:%@:%@",
-                      [NSString stringWithCString:[[data objectAtIndex:0] bytes]
-                                         encoding:NSMacOSRomanStringEncoding],
-                      [NSString stringWithCString:[[data objectAtIndex:1] bytes]
-                                         encoding:NSMacOSRomanStringEncoding]];
+                      [[data objectAtIndex:0] stringWithEncoding:NSMacOSRomanStringEncoding],
+                      [[data objectAtIndex:1] stringWithEncoding:NSMacOSRomanStringEncoding]];
     
     for (unsigned int i = 2; i < [data count]; ++i) {
-        [result addObject:[NSString stringWithCString:[[data objectAtIndex:i] bytes]
-                                             encoding:NSUTF8StringEncoding]];
+        [result addObject:[[data objectAtIndex:i] stringWithEncoding:NSMacOSRomanStringEncoding]];
     }
     
     if ([result count]) {
@@ -120,13 +111,12 @@
     
     for (NSData *datum in data) {
         TLCheck([datum length] == 1 || [datum length] == 4);
-        if ([datum length] >= 1) {
-            uint32 value;
-            [datum getSwappedBytes:&value];
-            if (value > UINT8_MAX) {
+        if ([datum length]) {
+            NSNumber *value = [datum numberSwapped:YES];
+            if ([value isGreaterThan:[NSNumber numberWithUnsignedInt:UINT8_MAX]]) {
                 TLNotTested();
             }
-            [result addObject:[NSNumber numberWithUnsignedInt:value]];
+            [result addObject:value];
         }
     }
     
@@ -143,12 +133,11 @@
     
     for (NSData *datum in data) {
         TLCheck([datum length] == 2);
-        if ([datum length] >= 2) {
-            uint32 index;
-            [datum getSwappedBytes:&index length:2];
+        if ([datum length]) {
+            NSNumber *index = [datum numberSwapped:YES];
             // NOTE: index of 0 is "unset" in ID3/MP4. lookups shift by 1.
-            if (index != 0 && [TLID3v1Genres genreForIndex:(index - 1)]) {
-                [result addObject:[NSNumber numberWithUnsignedChar:index]];
+            if (index != 0 && [TLID3v1Genres genreForIndex:([index integerValue] - 1)]) {
+                [result addObject:index];
             }
         }
     }
@@ -165,12 +154,10 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
     for (NSData *datum in data) {
-        TLCheck([datum length] >= 6);
+        TLCheck([datum length] == 6 || [datum length] == 8);
         if ([datum length] >= 6) {
-            unsigned short a, b;
-            [datum getSwappedBytes:&a range:NSMakeRange(2, 2)];
-            [datum getSwappedBytes:&b range:NSMakeRange(4, 2)];
-            [result addObject:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedShort:a], [NSNumber numberWithUnsignedShort:b], nil]];
+            [result addObject:[NSArray arrayWithObjects:[datum numberWithRange:NSMakeRange(2, 2) swapped:YES],
+                                                        [datum numberWithRange:NSMakeRange(4, 2) swapped:YES], nil]];
         }
     }
     
@@ -187,10 +174,10 @@
     
     for (NSData *datum in data) {
         TLCheck([datum length] >= 1);
-        if ([datum length] >= 1) {
+        if ([datum length]) {
             uint8 value = 0;
             if ([datum length]) {
-                [datum getSwappedBytes:&value length:1];
+                value = [datum unsignedCharAtOffset:0];
                 if (value == 1) {
                     [result addObject:[NSNumber numberWithBool:YES]];
                 }
@@ -213,12 +200,10 @@
     
     uint32 pos = 0;
     while (pos < [data length]) {
-        uint32 length;
-        [data getSwappedBytes:&length range:NSMakeRange(pos, 4)];
+        uint32 length = [data unsignedIntAtOffset:pos swapped:YES];
         NSString *name = [[NSString alloc] initWithCString:[[data subdataWithRange:NSMakeRange(pos + 4, 4)] bytes]
                                                   encoding:NSMacOSRomanStringEncoding];
-        uint32 flags;
-        [data getSwappedBytes:&flags range:NSMakeRange(pos + 8, 4)];
+        uint32 flags = [data unsignedIntAtOffset:(pos + 8) swapped:YES];
         
         if (![name isEqualToString:@"data"]) {
             TLLog(@"MP4: Unexpected atom \"%@\", expecting \"data\"", name);

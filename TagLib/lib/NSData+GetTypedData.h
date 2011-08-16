@@ -13,6 +13,8 @@
 - (NSString *)stringWithLength:(NSUInteger)length encoding:(NSStringEncoding)enc;
 - (NSString *)stringWithRange:(NSRange)range encoding:(NSStringEncoding)enc;
 
+- (NSNumber *)number;
+- (NSNumber *)numberSwapped:(BOOL)swapped;
 - (NSNumber *)numberWithLength:(NSUInteger)length;
 - (NSNumber *)numberWithLength:(NSUInteger)length swapped:(BOOL)swapped;
 - (NSNumber *)numberWithRange:(NSRange)range;

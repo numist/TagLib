@@ -25,6 +25,15 @@
     return [NSString stringWithCString:[[self subdataWithRange:range] bytes] encoding:enc];
 }
 
+- (NSNumber *)number
+{
+    return [self numberSwapped:NO];
+}
+
+- (NSNumber *)numberSwapped:(BOOL)swapped
+{
+    return [self numberWithLength:[self length] swapped:swapped];
+}
 
 - (NSNumber *)numberWithLength:(NSUInteger)length
 {
@@ -44,7 +53,7 @@
 - (NSNumber *)numberWithRange:(NSRange)range swapped: (BOOL)swapped
 {
     // only accept data sizes that fit in an NSNumber
-    TLAssert(0 < range.length &&
+    TLCheck(0 < range.length &&
              range.length <= 8 &&
              (range.length & (range.length - 1)) == 0);
 
