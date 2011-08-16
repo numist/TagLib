@@ -237,11 +237,11 @@
             if ([datum length]) {
                 value = [datum unsignedCharAtOffset:0];
                 if (value == 1) {
-                    [result addObject:[NSNumber numberWithBool:YES]];
+                    [result addObject:[NSNumber numberWithBool:1]];
                 }
             }
             if (!value) {
-                [result addObject:[NSNumber numberWithBool:NO]];
+                [result addObject:[NSNumber numberWithBool:0]];
             }
         }
     }
