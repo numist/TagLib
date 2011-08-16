@@ -3,7 +3,8 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/13/11.
-//  Copyright 2011 Scott Perry. All rights reserved.
+//  Copyright 2011 Scott Perry.
+//  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
 #import "TLMP4File.h"
