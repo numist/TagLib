@@ -72,4 +72,18 @@
 
 }
 
+- (NSString *)description
+{
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4File {\n"];
+    if (self->properties) {
+        [result appendFormat:@"properties: %@\n", self->properties];
+    } else {
+        [result appendString:@"(properties not read)\n"];
+    }
+    [result appendFormat:@"atoms: %@\n", self->atoms];
+    [result appendFormat:@"tags: %@\n}", self->tag];
+    return result;
+
+}
+
 @end
