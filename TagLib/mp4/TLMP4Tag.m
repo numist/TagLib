@@ -34,43 +34,14 @@
         self->_items = [[NSMutableDictionary alloc] init];
         self->_atoms = atoms;
         self->_file = file;
-
+        
+        // sanity check before handing off control to the parser
         TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
         if (!ilst) {
             TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
             return nil;
         }
-        
-        for (TLMP4Atom *atom in [[ilst children] objectEnumerator]) {
-            if (!TLMP4AtomIsValid([atom name])) {
-                TLLog(@"discarded invalid atom %@", [atom name]);
-                continue;
-            }
-
-            [self->_file seekToFileOffset:[atom offset] + 8];
-            if ([[atom name] isEqualToString:@"----"]) {
-                [self parseFreeFormForAtom:atom];
-            } else if ([[atom name] isEqualToString:kTrackNumber] ||
-                       [[atom name] isEqualToString:kDiskNumber]) {
-                [self parseIntPairForAtom:atom];
-            } else if ([[atom name] isEqualToString:kCompilation] ||
-                       [[atom name] isEqualToString:kGaplessPlayback] ||
-                       [[atom name] isEqualToString:kPodcast]) {
-                [self parseBoolForAtom:atom];
-            } else if ([[atom name] isEqualToString:kBPM] ||
-                       [[atom name] isEqualToString:kStik] ||
-                       [[atom name] isEqualToString:kTVSeason] ||
-                       [[atom name] isEqualToString:kTVEpisode] ||
-                       [[atom name] isEqualToString:kRating]) {
-                [self parseIntForAtom:atom];
-            } else if ([[atom name] isEqualToString:kGenreCode]) {
-                [self parseGnreForAtom:atom];
-            } else if ([[atom name] isEqualToString:kArtwork]) {
-                [self parseCovrForAtom:atom];
-            } else {
-                [self parseTextForAtom:atom];
-            }
-        }
+        [self parseFile:file withAtoms:atoms];
     }
     return self;
 }

@@ -11,7 +11,60 @@
 #import "TLID3v1Genres.h"
 #import "NSData+GetTypedData.h"
 
+@interface TLMP4Tag ()
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom;
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)expectedFlags;
+- (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags freeForm: (BOOL)freeForm;
+- (void) parseTextForAtom: (TLMP4Atom *)atom;
+- (void) parseTextForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags;
+- (void) parseFreeFormForAtom: (TLMP4Atom *)atom;
+- (void) parseIntForAtom: (TLMP4Atom *)atom;
+- (void) parseGnreForAtom: (TLMP4Atom *)atom;
+- (void) parseIntPairForAtom: (TLMP4Atom *)atom;
+- (void) parseBoolForAtom: (TLMP4Atom *)atom;
+- (void) parseCovrForAtom: (TLMP4Atom *)atom;
+@end
+
 @implementation TLMP4Tag (FileParser)
+
+- (void) parseFile:(NSFileHandle *)file withAtoms:(TLMP4Atoms *)atoms
+{
+    TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
+    if (!ilst) {
+        return;
+    }
+    
+    for (TLMP4Atom *atom in [[ilst children] objectEnumerator]) {
+        if (!TLMP4AtomIsValid([atom name])) {
+            TLLog(@"discarded invalid atom %@", [atom name]);
+            continue;
+        }
+        
+        [self->_file seekToFileOffset:[atom offset] + 8];
+        if ([[atom name] isEqualToString:@"----"]) {
+            [self parseFreeFormForAtom:atom];
+        } else if ([[atom name] isEqualToString:kTrackNumber] ||
+                   [[atom name] isEqualToString:kDiskNumber]) {
+            [self parseIntPairForAtom:atom];
+        } else if ([[atom name] isEqualToString:kCompilation] ||
+                   [[atom name] isEqualToString:kGaplessPlayback] ||
+                   [[atom name] isEqualToString:kPodcast]) {
+            [self parseBoolForAtom:atom];
+        } else if ([[atom name] isEqualToString:kBPM] ||
+                   [[atom name] isEqualToString:kStik] ||
+                   [[atom name] isEqualToString:kTVSeason] ||
+                   [[atom name] isEqualToString:kTVEpisode] ||
+                   [[atom name] isEqualToString:kRating]) {
+            [self parseIntForAtom:atom];
+        } else if ([[atom name] isEqualToString:kGenreCode]) {
+            [self parseGnreForAtom:atom];
+        } else if ([[atom name] isEqualToString:kArtwork]) {
+            [self parseCovrForAtom:atom];
+        } else {
+            [self parseTextForAtom:atom];
+        }
+    }
+}
 
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom
 {
