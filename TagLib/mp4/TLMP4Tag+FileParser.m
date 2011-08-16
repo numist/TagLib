@@ -236,6 +236,7 @@
             uint8 value = 0;
             if ([datum length]) {
                 value = [datum unsignedCharAtOffset:0];
+                TLCheck(value <= 1);
                 if (value == 1) {
                     [result addObject:[NSNumber numberWithBool:1]];
                 }
