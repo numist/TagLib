@@ -34,6 +34,8 @@
         return;
     }
     
+    self->_file = file;
+    
     for (TLMP4Atom *atom in [[ilst children] objectEnumerator]) {
         if (!TLMP4AtomIsValid([atom name])) {
             TLLog(@"discarded invalid atom %@", [atom name]);
@@ -64,6 +66,8 @@
             [self parseTextForAtom:atom];
         }
     }
+    
+    self->_file = nil;
 }
 
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom
@@ -264,8 +268,8 @@
             break;
         }
         
-        TLCheck((flags == FlagsJPEG || flags == FlagsPNG) && length > 16);
-        if ((flags == FlagsJPEG || flags == FlagsPNG) && length > 16) {
+        TLCheck((flags == TLMP4AtomFlagsJPEG || flags == TLMP4AtomFlagsPNG) && length > 16);
+        if ((flags == TLMP4AtomFlagsJPEG || flags == TLMP4AtomFlagsPNG) && length > 16) {
             NSImage *art = [[NSImage alloc] initWithData:[data subdataWithRange:NSMakeRange(pos + 16, length - 16)]];
             TLCheck([art isValid]);
             [result addObject:art];

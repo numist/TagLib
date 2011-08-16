@@ -33,7 +33,6 @@
     if (self) {
         self->_items = [[NSMutableDictionary alloc] init];
         self->_atoms = atoms;
-        self->_file = file;
         
         // sanity check before handing off control to the parser
         TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];

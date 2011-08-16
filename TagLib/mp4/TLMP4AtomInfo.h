@@ -42,13 +42,13 @@ extern NSString * const kPurchaseDate;      // flags: 1 type: text
 extern NSString * const kGaplessPlayback;   // flags: 21 type: uint8
 extern NSString * const kStik;              // flags: 21 type: uint8
 
-enum Flags {
-    FlagsAll = -1,
-    FlagsNumber = 0,
-    FlagsText = 1,
-    FlagsJPEG = 13,
-    FlagsPNG = 14,
-    FlagsNewNumber = 21
+enum TLMP4AtomFlags {
+    TLMP4AtomFlagsAll = -1,
+    TLMP4AtomFlagsNewNumber = 0,
+    TLMP4AtomFlagsText = 1,
+    TLMP4AtomFlagsJPEG = 13,
+    TLMP4AtomFlagsPNG = 14,
+    TLMP4AtomFlagsNumber = 21
 };
 
 BOOL TLMP4AtomIsValid(NSString *name);
