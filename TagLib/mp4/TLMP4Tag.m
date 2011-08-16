@@ -214,7 +214,17 @@
                   forKey:kTrackNumber];
 }
 
-
+- (NSString *) description
+{
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tag(%u)", [self->_items count]];
+    
+    if ([self->_items count]) {
+        [result appendString:@": {"];
+        [result appendString:[self->_items description]];
+        [result appendString:@"} End of tags"];
+    }
+    return result;
+}
 
 
 @end

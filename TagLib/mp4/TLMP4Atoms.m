@@ -99,7 +99,7 @@
 
 - (NSString *) description
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atoms(%u)", [self->atoms count]];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Atoms(%u)", [self->atoms count]];
     
     if ([self->atoms count]) {
         [result appendString:@": {\n"];

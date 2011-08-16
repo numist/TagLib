@@ -42,7 +42,6 @@
 - (void)testBasicAtomParsing
 {
     STAssertNotNil(self->has_tags, @"%@", @"failed to parse atoms from file");
-    //TLLog(@"%@", [self->has_tags atoms]);
 }
 
 - (void)testBadFile
@@ -89,7 +88,6 @@
     TLMP4Tag *tag = [self->has_tags tag];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertEqualObjects([tag artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [tag artist]);
-    //TLLog(@"%@", [self->has_tags tag]);
 }
 
 - (void)testNoReadProperties

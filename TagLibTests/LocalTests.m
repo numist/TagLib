@@ -40,9 +40,7 @@
     TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     
-//    for (NSString *name in [tag items]) {
-//        TLLog(@"%@ -> %@", name, [[tag items] objectForKey:name]);
-//    }
+    //TLLog(@"%@", tag);
 }
 
 - (void)testFireflyTagParsing
@@ -58,10 +56,8 @@
     
     TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
-    
-//    for (NSString *name in [tag items]) {
-//        TLLog(@"%@ -> %@", name, [[tag items] objectForKey:name]);
-//    }
+
+    //TLLog(@"%@", tag);
 }
 
 - (void)testStringYear
