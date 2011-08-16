@@ -43,9 +43,9 @@ NSString * const kPurchaseDate = @"purd";    // flags: 1 type: text
 NSString * const kGaplessPlayback = @"pgap"; // flags: 21 type: uint8
 NSString * const kStik = @"stik";            // flags: 21 type: uint8
 
-static NSSet *validAtoms = nil;
-
 BOOL TLMP4AtomIsValid(NSString *name) {
+    static NSSet *validAtoms = nil;
+    
     if (!validAtoms) {
         validAtoms = [NSSet setWithObjects:@"----", kAlbum, kArtist, kAlbumArtist, kComment, kYear, kTitle, kGenre, kGenreCode, kTrackNumber, kDiskNumber, kComposer, kEncoder, kBPM, kCopyright, kCompilation, kArtwork, kRating, kGrouping, kPodcast, kCategory, kKeyword, kPodcastURL, kEpisodeGUID, kDescription, kLyrics, kTVNetworkName, kTVShowName, kTVEpisodeNumber, kTVSeason, kTVEpisode, kPurchaseDate, kGaplessPlayback, kStik, nil]; 
     }
