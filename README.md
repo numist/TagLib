@@ -3,7 +3,7 @@ TagLib
 
 TagLib is a port-in-progress of the same-named C++ library [TagLib](http://developer.kde.org/~wheeler/taglib.html) written by Scott Wheeler et al. At the moment it duplicates the tag reading capabilities for MP4 files.
 
-The project is currently written in/for Xcode 4.1 with garbage collection, with the intention of moving to ARC once Xcode 4.2 is more stable (and perhaps more commonly available).
+More to come…
 
 Licensing
 -------------------------
