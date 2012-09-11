@@ -23,7 +23,6 @@
 - (TLMP4File *) initWithURL:(NSURL *)url readProperties:(BOOL)props
 {
     if (!url) {
-        [self release];
         return nil;
     }
     

@@ -12,16 +12,20 @@
 #import "TLID3v1Genres.h"
 #import "NSData+GetTypedData.h"
 
+@interface TLMP4Tag ()
+@property (assign, nonatomic, readwrite) NSFileHandle *file;
+@end
+
 @implementation TLMP4Tag (FileParser)
 
-- (void) parseFile:(NSFileHandle *)file withAtoms:(TLMP4Atoms *)atoms
+- (void) parseFile:(NSFileHandle *)handle withAtoms:(TLMP4Atoms *)atoms
 {
     TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
     if (!ilst) {
         return;
     }
     
-    self->_file = file;
+    self.file = handle;
     
     for (TLMP4Atom *atom in [[ilst children] objectEnumerator]) {
         if (!TLMP4AtomIsValid([atom name])) {
@@ -29,7 +33,7 @@
             continue;
         }
         
-        [self->_file seekToFileOffset:[atom offset] + 8];
+        [self.file seekToFileOffset:[atom offset] + 8];
         if ([[atom name] isEqualToString:@"----"]) {
             [self parseFreeFormForAtom:atom];
         } else if ([[atom name] isEqualToString:kTrackNumber] ||
@@ -54,7 +58,7 @@
         }
     }
     
-    self->_file = nil;
+    self.file = nil;
 }
 
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom
@@ -70,7 +74,7 @@
 - (NSArray *) parseDataForAtom: (TLMP4Atom *)atom expectedFlags: (int32_t)flags freeForm: (BOOL)freeForm
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
-    NSData *data = [self->_file readDataOfLength:([atom length] - 8)];
+    NSData *data = [self.file readDataOfLength:([atom length] - 8)];
     int i = 0;
     uint32 pos = 0;
     while (pos < [data length]) {
@@ -124,7 +128,7 @@
     }
     
     if ([result count]) {
-        [self->_items setValue:result forKey:[atom name]];
+        [self.items setValue:result forKey:[atom name]];
     }
 }
 
@@ -143,7 +147,7 @@
     }
     
     if ([result count]) {
-        [self->_items setValue:result forKey:name];
+        [self.items setValue:result forKey:name];
     }
 }
 
@@ -165,7 +169,7 @@
     }
     
     if ([result count]) {
-        [self->_items setValue:result forKey:[atom name]];
+        [self.items setValue:result forKey:[atom name]];
     }
 }
 
@@ -187,7 +191,7 @@
     }
     
     if ([result count]) {
-        [self->_items setValue:result forKey:[atom name]];
+        [self.items setValue:result forKey:[atom name]];
     }
 }
 
@@ -206,7 +210,7 @@
     }
     
     if ([result count]) {
-        [self->_items setValue:result forKey:[atom name]];
+        [self.items setValue:result forKey:[atom name]];
     }
 }
 
@@ -234,13 +238,13 @@
     }
     
     if ([result count]) {
-        [self->_items setValue:result forKey:[atom name]];
+        [self.items setValue:result forKey:[atom name]];
     }
 }
 
 - (void) parseCovrForAtom: (TLMP4Atom *)atom
 {
-    NSData *data = [self->_file readDataOfLength:[atom length] - 8];
+    NSData *data = [self.file readDataOfLength:[atom length] - 8];
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
     uint32 pos = 0;
@@ -268,7 +272,7 @@
     TLAssert(pos == [data length]);
     
     if ([result count]) {
-        [self->_items setValue:result forKey:[atom name]];
+        [self.items setValue:result forKey:[atom name]];
     }
 }
 
