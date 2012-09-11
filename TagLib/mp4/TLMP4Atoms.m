@@ -23,21 +23,19 @@
     return self->atoms;
 }
 
-- (TLMP4Atoms *) init
-{
-    [NSException raise:@"UnimplementedException" format:@"%@",
-     @"Selector is not implemented in this class"];
-    return nil;
-}
-
 - (TLMP4Atoms *) initWithFile: (NSFileHandle *)file
 {
+    if (!file) {
+        [self release];
+        return nil;
+    }
+
     self = [super init];
     if (self) {
         self->atoms = [[NSMutableDictionary alloc] init];
         unsigned long long end = [file seekToEndOfFile];
         [file seekToFileOffset:0];
-    
+        
         while ([file offsetInFile] + 8 < end) {
             TLMP4Atom *atom = [(TLMP4Atom *)[TLMP4Atom alloc] initWithFile:file];
             // NOTE: in the C++ impl, returns incomplete atom set
@@ -51,6 +49,11 @@
         }
     }
     return self;
+}
+
+- (TLMP4Atoms *) init
+{
+    return [self initWithFile:nil];
 }
 
 - (TLMP4Atom *) findAtomAtPath: (NSArray *)path

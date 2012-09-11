@@ -22,9 +22,9 @@
 @property(nonatomic, readonly) TLMP4Properties *properties;
 @property(nonatomic, readonly) TLMP4Tag *tag;
 
+- (TLMP4File *) initWithURL:(NSURL *)url readProperties:(BOOL)props;
 - (TLMP4File *) initWithPath:(NSString *)path;
 - (TLMP4File *) initWithURL:(NSURL *)url;
 - (TLMP4File *) initWithPath:(NSString *)path readProperties:(BOOL)props;
-- (TLMP4File *) initWithURL:(NSURL *)url readProperties:(BOOL)props;
 
 @end

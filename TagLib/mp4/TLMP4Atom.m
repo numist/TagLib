@@ -24,16 +24,12 @@ static NSSet *containers = nil;
     return self->children;
 }
 
-- (TLMP4Atom *) init
-{
-    [NSException raise:@"UnimplementedException" format:@"%@",
-     @"Selector is not implemented in this class"];
-    return nil;
-}
-
 - (TLMP4Atom *) initWithFile: (NSFileHandle *)file
 {
-    NSParameterAssert(file);
+    if (!file) {
+        [self release];
+        return nil;
+    }
     
     self = [super init];
 
@@ -102,6 +98,11 @@ static NSSet *containers = nil;
     
     [file seekToFileOffset:self->offset + self->length];
     return self;
+}
+
+- (TLMP4Atom *) init
+{
+    return [self initWithFile:nil];
 }
 
 - (TLMP4Atom *) getAtomWithPath: (NSArray *)path

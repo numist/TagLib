@@ -20,30 +20,13 @@
 @synthesize properties;
 @synthesize tag;
 
-- (id)init
-{
-    [NSException raise:@"UnimplementedException" format:@"%@",
-     @"Selector is not implemented in this class"];
-    return nil;
-}
-
-- (TLMP4File *) initWithPath:(NSString *)path
-{
-    return [self initWithPath:path readProperties:YES];
-}
-
-- (TLMP4File *) initWithURL:(NSURL *)url
-{
-    return [self initWithURL:url readProperties:YES];
-}
-
-- (TLMP4File *) initWithPath:(NSString *)path readProperties:(BOOL)props
-{
-    return [self initWithURL:[NSURL fileURLWithPath:path] readProperties:props];
-}
-
 - (TLMP4File *) initWithURL:(NSURL *)url readProperties:(BOOL)props
 {
+    if (!url) {
+        [self release];
+        return nil;
+    }
+    
     self = [super init];
     if (self) {
         self->filePath = url;
@@ -70,7 +53,27 @@
     }
     
     return self;
+    
+}
 
+- (id)init
+{
+    return [self initWithURL:nil];
+}
+
+- (TLMP4File *) initWithPath:(NSString *)path
+{
+    return [self initWithPath:path readProperties:YES];
+}
+
+- (TLMP4File *) initWithURL:(NSURL *)url
+{
+    return [self initWithURL:url readProperties:YES];
+}
+
+- (TLMP4File *) initWithPath:(NSString *)path readProperties:(BOOL)props
+{
+    return [self initWithURL:[NSURL fileURLWithPath:path] readProperties:props];
 }
 
 - (NSString *)description
