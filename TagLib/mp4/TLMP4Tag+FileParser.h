@@ -10,5 +10,5 @@
 #import "TLMP4Tag.h"
 
 @interface TLMP4Tag (FileParser)
-- (void) parseFile:(NSFileHandle *)file withAtoms:(TLMP4Atoms *)atoms;
+- (void) parseFile:(NSFileHandle *)handle withAtoms:(TLMP4Atoms *)atoms;
 @end

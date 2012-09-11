@@ -12,15 +12,10 @@
 #import "TLMP4Atoms.h"
 
 
-@interface TLMP4Tag : TLTag {
-@private
-    NSMutableDictionary *_items;
-    TLMP4Atoms *_atoms;
-    NSFileHandle *_file;
-}
+@interface TLMP4Tag : TLTag
+@property (retain, nonatomic, readwrite) NSMutableDictionary *items;
 
-- (NSDictionary *) items;
-- (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms: (TLMP4Atoms *)atoms;
+- (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms:(TLMP4Atoms *)atoms;
 - (BOOL) save;
 
 // NOTE:
