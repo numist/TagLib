@@ -6,8 +6,8 @@
 //  Copyright 2011 Scott Perry. All rights reserved.
 //
 
-#import "NSData+Endian.h"
 #import "debugger.h"
+#import "NSData+Endian.h"
 
 @implementation NSData (Endian)
 

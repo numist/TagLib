@@ -6,6 +6,7 @@
 //  Copyright 2011 Scott Perry. All rights reserved.
 //
 
+#import "debugger.h"
 #import "LocalTests.h"
 #import "TLMP4Atoms.h"
 #import "TLMP4Tag.h"

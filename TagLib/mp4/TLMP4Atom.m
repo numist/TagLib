@@ -7,8 +7,9 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "TLMP4Atom.h"
+#import "debugger.h"
 #import "NSData+Endian.h"
+#import "TLMP4Atom.h"
 
 static NSSet *containers = nil;
 

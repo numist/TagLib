@@ -6,8 +6,9 @@
 //  Copyright 2011 Scott Perry. All rights reserved.
 //
 
-#import "TLMP4Tests.h"
+#import "debugger.h"
 #import "TLMP4File.h"
+#import "TLMP4Tests.h"
 
 @interface TLMP4Tests () {
 @private

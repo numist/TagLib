@@ -7,8 +7,9 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "TLMP4Properties.h"
+#import "debugger.h"
 #import "NSData+GetTypedData.h"
+#import "TLMP4Properties.h"
 
 @implementation TLMP4Properties
 @synthesize length;

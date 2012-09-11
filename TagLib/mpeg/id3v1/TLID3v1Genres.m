@@ -7,6 +7,7 @@
 //  This file is based on LGPL/MPL code written by Scott Wheeler.
 //
 
+#import "debugger.h"
 #import "TLID3v1Genres.h"
 
 static NSString *genres[] = {

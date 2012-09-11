@@ -8,8 +8,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TLMP4Properties.h"
+
 #import "TLMP4Atoms.h"
+#import "TLMP4Properties.h"
 #import "TLMP4Tag.h"
 
 @interface TLMP4File : NSObject {

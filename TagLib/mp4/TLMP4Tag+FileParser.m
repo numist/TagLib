@@ -7,10 +7,10 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "TLMP4Tag+FileParser.h"
-#import "TLMP4AtomInfo.h"
-#import "TLID3v1Genres.h"
 #import "NSData+GetTypedData.h"
+#import "TLID3v1Genres.h"
+#import "TLMP4AtomInfo.h"
+#import "TLMP4Tag+FileParser.h"
 
 @interface TLMP4Tag ()
 @property (assign, nonatomic, readwrite) NSFileHandle *file;

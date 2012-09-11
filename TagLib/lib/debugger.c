@@ -8,11 +8,17 @@
 
 #if defined(DEBUG)
 
-#include "debugger.h"
 #include <assert.h>
+#include <stdbool.h>
+#include <sys/sysctl.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <sys/sysctl.h>
+
+/*
+ * NOTE: Forward decl of AmIBeingDebugged since this file is built without platform flags
+ * (resulting in a warning when including debugger.h directly)
+ */
+bool AmIBeingDebugged(void);
 
 /*
  * This function provided by Apple TechNote QA1361:

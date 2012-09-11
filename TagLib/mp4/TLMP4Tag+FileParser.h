@@ -7,6 +7,7 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
+#import "debugger.h"
 #import "TLMP4Tag.h"
 
 @interface TLMP4Tag (FileParser)

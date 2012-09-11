@@ -7,11 +7,12 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
-#import "TLMP4Tag.h"
-#import "TLMP4Tag+FileParser.h"
+#import "debugger.h"
+#import "NSData+Endian.h"
 #import "TLID3v1Genres.h"
 #import "TLMP4AtomInfo.h"
-#import "NSData+Endian.h"
+#import "TLMP4Tag.h"
+#import "TLMP4Tag+FileParser.h"
 
 @interface TLMP4Tag ()
 @property (retain, nonatomic, readwrite) TLMP4Atoms *atoms;

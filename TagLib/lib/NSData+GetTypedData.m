@@ -6,8 +6,9 @@
 //  Copyright 2011 Scott Perry. All rights reserved.
 //
 
-#import "NSData+GetTypedData.h"
+#import "debugger.h"
 #import "NSData+Endian.h"
+#import "NSData+GetTypedData.h"
 
 @implementation NSData (NSData_GetTypedData)
 
