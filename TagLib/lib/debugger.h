@@ -55,6 +55,7 @@
                 if (exp); \
                 else { \
                     TLLog(@"Failed assertion `%s`", #exp); \
+                    DebugBreak(); \
                     abort(); \
                 } \
             } while(0)
@@ -65,7 +66,11 @@
     #define DO_PRAGMA(x) _Pragma (#x)
     #define TODO(x) DO_PRAGMA(message ("TODO - " x))
 
-
+    #define TLNotReached() do { \
+                TLLog(@"%@", @"Entered THE TWILIGHT ZONE"); \
+                DebugBreak(); \
+                abort(); \
+            } while(0)
 
 #else
     #define DebugBreak()
@@ -74,6 +79,7 @@
     #define TLAssert(exp)
     #define TLNotTested()
     #define TODO(x)
+    #define TLNotReached()
 #endif
 
 
