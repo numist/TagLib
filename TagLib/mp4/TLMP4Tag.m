@@ -186,7 +186,7 @@
 
 - (NSString *) description
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tag(%u)", [self->_items count]];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tag(%lu)", [self->_items count]];
     
     if ([self->_items count]) {
         [result appendString:@": {"];

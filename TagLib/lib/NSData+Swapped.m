@@ -45,7 +45,7 @@
             
         default:
             TLAssert(range.length % 2 == 0);
-            TLLog(@"Swapping %u bytes the slow way", range.length);
+            TLLog(@"Swapping %lu bytes the slow way", range.length);
             uint8 *workingBuf = buffer;
             for (unsigned long early = 0, late = range.length - 1;
                  early < late; ++early, --late) {

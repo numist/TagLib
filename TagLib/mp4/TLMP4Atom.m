@@ -91,7 +91,7 @@ static NSSet *containers = nil;
             TLMP4Atom *child = [[TLMP4Atom alloc] initWithFile:file];
             if (!child || [file offsetInFile] > self->offset + self->length) {
                 if (child) {
-                    TLLog(@"child atom exceededs boundary of parent", [child name]);
+                    TLLog(@"child atom(%@) exceededs boundary of parent", [child name]);
                 }
                 [file seekToEndOfFile];
                 return nil;
@@ -169,10 +169,10 @@ static NSSet *containers = nil;
 
 - (NSString *) description
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atom: %@, length %u, offset %u", self->name, self->length, self->offset];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atom: %@, length %llu, offset %llu", self->name, self->length, self->offset];
     
     if ([self->children count]) {
-        [result appendFormat:@" has %u children: {\n", [self->children count]];
+        [result appendFormat:@" has %lu children: {\n", [self->children count]];
         for (TLMP4Atom *child in [self->children objectEnumerator]) {
             [result appendFormat:@"%@\n", [child descriptionWithIndent:@"\t"]];
         }
@@ -183,10 +183,10 @@ static NSSet *containers = nil;
 
 - (NSString *) descriptionWithIndent:(NSString *)indent
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"%@Atom: %@, length %u, offset %u", indent, self->name, self->length, self->offset];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"%@Atom: %@, length %llu, offset %llu", indent, self->name, self->length, self->offset];
     
     if ([self->children count]) {
-        [result appendFormat:@" has %u children: {\n", [self->children count]];
+        [result appendFormat:@" has %lu children: {\n", [self->children count]];
         NSString *newIndent = [NSString stringWithFormat:@"%@%@", @"\t", indent];
         for (TLMP4Atom *child in [self->children objectEnumerator]) {
             [result appendFormat:@"%@\n", [child descriptionWithIndent:newIndent]];

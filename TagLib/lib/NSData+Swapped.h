@@ -12,5 +12,4 @@
 - (void)getSwappedBytes:(void *)buffer;
 - (void)getSwappedBytes:(void *)buffer length:(NSUInteger)length;
 - (void)getSwappedBytes:(void *)buffer range:(NSRange)range;
-//- (NSData *)swappedSubdataWithRange:(NSRange)range;
 @end
