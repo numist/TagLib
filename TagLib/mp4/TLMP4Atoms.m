@@ -26,7 +26,6 @@
 - (TLMP4Atoms *) initWithFile: (NSFileHandle *)file
 {
     if (!file) {
-        [self release];
         return nil;
     }
 

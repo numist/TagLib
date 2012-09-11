@@ -27,7 +27,6 @@ static NSSet *containers = nil;
 - (TLMP4Atom *) initWithFile: (NSFileHandle *)file
 {
     if (!file) {
-        [self release];
         return nil;
     }
     
