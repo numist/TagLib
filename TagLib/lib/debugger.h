@@ -24,8 +24,10 @@
                 __asm__("li r0, 20\nsc\nnop\nli r0, 37\nli r4, 2\nsc\nnop\n" \
                     : : : "memory","r0","r3","r4" ); \
             }
-    #else
+    #elif __x86_64__ || __i386__
         #define DebugBreak() if(AmIBeingDebugged()) {__asm__("int $3\n" : : );}
+    #else
+        #warning Current architecture not supported by AmIBeingDebugged
     #endif
 
     /*
