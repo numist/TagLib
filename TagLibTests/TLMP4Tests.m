@@ -32,14 +32,6 @@
     [super tearDown];
 }
 
-/*
- * XXX: At the moment, this library is only expected to work on little-endian machines.
- */
-- (void)testMachineEndianness
-{
-    STAssertTrue(NSHostByteOrder() == NS_LittleEndian, @"%@", @"TagLib MPEG-4 support does not support big-endian machines right now");
-}
-
 - (void)testBasicAtomParsing
 {
     STAssertNotNil(self->has_tags, @"%@", @"failed to parse atoms from file");
