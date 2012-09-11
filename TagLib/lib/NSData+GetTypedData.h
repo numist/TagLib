@@ -14,19 +14,19 @@
 - (NSString *)stringWithRange:(NSRange)range encoding:(NSStringEncoding)enc;
 
 - (NSNumber *)number;
-- (NSNumber *)numberSwapped:(BOOL)swapped;
+- (NSNumber *)numberWithEndianness:(int32_t)endianness;
 - (NSNumber *)numberWithLength:(NSUInteger)length;
-- (NSNumber *)numberWithLength:(NSUInteger)length swapped:(BOOL)swapped;
+- (NSNumber *)numberWithLength:(NSUInteger)length endianness:(int32_t)endianness;
 - (NSNumber *)numberWithRange:(NSRange)range;
-- (NSNumber *)numberWithRange:(NSRange)range swapped: (BOOL)swapped;
+- (NSNumber *)numberWithRange:(NSRange)range endianness:(int32_t)endianness;
 
 - (uint8) unsignedCharAtOffset:(NSUInteger)offset;
-- (uint16) unsignedShortAtOffset:(NSUInteger)offset;
-- (uint32) unsignedIntAtOffset:(NSUInteger)offset;
-- (uint64) unsignedLongLongAtOffset:(NSUInteger)offset;
+- (uint16) unsignedShortAtOffset:(NSUInteger)offset __attribute__((deprecated));
+- (uint32) unsignedIntAtOffset:(NSUInteger)offset __attribute__((deprecated));
+- (uint64) unsignedLongLongAtOffset:(NSUInteger)offset __attribute__((deprecated));
 
-- (uint16) unsignedShortAtOffset:(NSUInteger)offset swapped:(BOOL)swapped;
-- (uint32) unsignedIntAtOffset:(NSUInteger)offset swapped:(BOOL)swapped;
-- (uint64) unsignedLongLongAtOffset:(NSUInteger)offset swapped:(BOOL)swapped;
+- (uint16) unsignedShortAtOffset:(NSUInteger)offset endianness:(int32_t)endianness;
+- (uint32) unsignedIntAtOffset:(NSUInteger)offset endianness:(int32_t)endianness;
+- (uint64) unsignedLongLongAtOffset:(NSUInteger)offset endianness:(int32_t)endianness;
 
 @end

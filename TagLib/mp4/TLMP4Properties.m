@@ -67,12 +67,12 @@
     NSData *data = [file readDataOfLength:[mdhd length]];
     
     if ([data unsignedCharAtOffset:8] == 0) {
-        uint32 unit = [data unsignedIntAtOffset:20 swapped:YES];
-        uint32 totalLength = [data unsignedIntAtOffset:24 swapped:YES];
+        uint32 unit = [data unsignedIntAtOffset:20 endianness:OSBigEndian];
+        uint32 totalLength = [data unsignedIntAtOffset:24 endianness:OSBigEndian];
         self->length = totalLength / unit;
     } else {
-        uint64 unit = [data unsignedLongLongAtOffset:28 swapped:YES];
-        uint64 totalLength = [data unsignedLongLongAtOffset:36 swapped:YES];
+        uint64 unit = [data unsignedLongLongAtOffset:28 endianness:OSBigEndian];
+        uint64 totalLength = [data unsignedLongLongAtOffset:36 endianness:OSBigEndian];
         self->length = (uint32)(totalLength / unit);
     }
     
@@ -84,9 +84,9 @@
     [file seekToFileOffset:[atom offset]];
     data = [file readDataOfLength:[atom length]];
     if ([[data stringWithRange:NSMakeRange(20, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"mp4a"]) {
-        self->channels = [data unsignedShortAtOffset:40 swapped:YES];
-        self->bitsPerSample = [data unsignedShortAtOffset:42 swapped:YES];
-        self->sampleRate = [data unsignedIntAtOffset:46 swapped:YES];
+        self->channels = [data unsignedShortAtOffset:40 endianness:OSBigEndian];
+        self->bitsPerSample = [data unsignedShortAtOffset:42 endianness:OSBigEndian];
+        self->sampleRate = [data unsignedIntAtOffset:46 endianness:OSBigEndian];
         if ([[data stringWithRange:NSMakeRange(56, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"esds"] &&
             [data unsignedCharAtOffset:64] == 0x03) {
             uint32 pos = 65;
@@ -101,7 +101,7 @@
                     pos +=3;
                 }
                 pos += 10;
-                self->bitrate = ([data unsignedIntAtOffset:pos swapped:YES] + 500) / 1000;
+                self->bitrate = ([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000;
             }
         }
     }
