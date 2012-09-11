@@ -41,8 +41,8 @@
 		BCECCCDC13F436D600B8ACD7 /* has-tags.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD713F436D500B8ACD7 /* has-tags.m4a */; };
 		BCECCCDD13F436D600B8ACD7 /* ilst-is-last.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD813F436D500B8ACD7 /* ilst-is-last.m4a */; };
 		BCECCCDE13F436D600B8ACD7 /* no-tags.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD913F436D500B8ACD7 /* no-tags.m4a */; };
-		BCECCCE213F4554B00B8ACD7 /* NSData+Swapped.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */; };
-		BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */; };
+		BCECCCE213F4554B00B8ACD7 /* NSData+Endian.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCE013F4554B00B8ACD7 /* NSData+Endian.h */; };
+		BCECCCE313F4554B00B8ACD7 /* NSData+Endian.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE113F4554B00B8ACD7 /* NSData+Endian.m */; };
 		BCECCCE513F46B9600B8ACD7 /* empty.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCE413F46B9600B8ACD7 /* empty.aiff */; };
 		BCECCCE813F47ED400B8ACD7 /* TLMP4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */; };
 		BCECCCEA13F4B6FF00B8ACD7 /* debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCE913F4B6FF00B8ACD7 /* debugger.c */; };
@@ -102,8 +102,8 @@
 		BCECCCD713F436D500B8ACD7 /* has-tags.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "has-tags.m4a"; path = "data/has-tags.m4a"; sourceTree = "<group>"; };
 		BCECCCD813F436D500B8ACD7 /* ilst-is-last.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ilst-is-last.m4a"; path = "data/ilst-is-last.m4a"; sourceTree = "<group>"; };
 		BCECCCD913F436D500B8ACD7 /* no-tags.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "no-tags.m4a"; path = "data/no-tags.m4a"; sourceTree = "<group>"; };
-		BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Swapped.h"; path = "lib/NSData+Swapped.h"; sourceTree = "<group>"; };
-		BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Swapped.m"; path = "lib/NSData+Swapped.m"; sourceTree = "<group>"; };
+		BCECCCE013F4554B00B8ACD7 /* NSData+Endian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Endian.h"; path = "lib/NSData+Endian.h"; sourceTree = "<group>"; };
+		BCECCCE113F4554B00B8ACD7 /* NSData+Endian.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Endian.m"; path = "lib/NSData+Endian.m"; sourceTree = "<group>"; };
 		BCECCCE413F46B9600B8ACD7 /* empty.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = empty.aiff; path = data/empty.aiff; sourceTree = "<group>"; };
 		BCECCCE613F47ED400B8ACD7 /* TLMP4Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLMP4Tests.h; sourceTree = "<group>"; };
 		BCECCCE713F47ED400B8ACD7 /* TLMP4Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLMP4Tests.m; sourceTree = "<group>"; };
@@ -271,8 +271,8 @@
 			children = (
 				BC7DEB3713F76BAA004C24E8 /* NSData+GetTypedData.h */,
 				BC7DEB3813F76BAA004C24E8 /* NSData+GetTypedData.m */,
-				BCECCCE013F4554B00B8ACD7 /* NSData+Swapped.h */,
-				BCECCCE113F4554B00B8ACD7 /* NSData+Swapped.m */,
+				BCECCCE013F4554B00B8ACD7 /* NSData+Endian.h */,
+				BCECCCE113F4554B00B8ACD7 /* NSData+Endian.m */,
 				BCECCCE913F4B6FF00B8ACD7 /* debugger.c */,
 				BCECCCEB13F4BED300B8ACD7 /* debugger.h */,
 			);
@@ -293,7 +293,7 @@
 				BCECCCA413F072DC00B8ACD7 /* TLTag.h in Headers */,
 				BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */,
 				BCECCCCF13F3837100B8ACD7 /* TLMP4Tag+FileParser.h in Headers */,
-				BCECCCE213F4554B00B8ACD7 /* NSData+Swapped.h in Headers */,
+				BCECCCE213F4554B00B8ACD7 /* NSData+Endian.h in Headers */,
 				BCECCCEC13F4BED300B8ACD7 /* debugger.h in Headers */,
 				BC7DEB3413F75DFB004C24E8 /* TLMP4Properties.h in Headers */,
 				BC7DEB3913F76BAA004C24E8 /* NSData+GetTypedData.h in Headers */,
@@ -422,7 +422,7 @@
 				BCECCCA513F072DC00B8ACD7 /* TLTag.m in Sources */,
 				BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */,
 				BCECCCD013F3837100B8ACD7 /* TLMP4Tag+FileParser.m in Sources */,
-				BCECCCE313F4554B00B8ACD7 /* NSData+Swapped.m in Sources */,
+				BCECCCE313F4554B00B8ACD7 /* NSData+Endian.m in Sources */,
 				BCECCCEA13F4B6FF00B8ACD7 /* debugger.c in Sources */,
 				BC7DEB3513F75DFB004C24E8 /* TLMP4Properties.m in Sources */,
 				BC7DEB3A13F76BAA004C24E8 /* NSData+GetTypedData.m in Sources */,

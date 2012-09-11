@@ -7,12 +7,13 @@
 //
 
 #import "NSData+GetTypedData.h"
-#import "NSData+Swapped.h"
+#import "NSData+Endian.h"
 
 @implementation NSData (NSData_GetTypedData)
 
 #pragma mark -
 #pragma mark String creation from data
+// Note: safe for character and char-multibyte encodings only. Not UTF-16 safe.
 
 - (NSString *)stringWithEncoding:(NSStringEncoding) enc
 {
@@ -32,29 +33,14 @@
 #pragma mark -
 #pragma mark Number creation from data
 
-- (NSNumber *)number
-{
-    return [self numberWithEndianness:OSUnknownByteOrder];
-}
-
 - (NSNumber *)numberWithEndianness:(int32_t)endianness
 {
     return [self numberWithLength:[self length] endianness:endianness];
 }
 
-- (NSNumber *)numberWithLength:(NSUInteger)length
-{
-    return [self numberWithLength:length endianness:OSUnknownByteOrder];
-}
-
 - (NSNumber *)numberWithLength:(NSUInteger)length endianness:(int32_t)endianness
 {
     return [self numberWithRange:NSMakeRange(0, length) endianness:endianness];
-}
-
-- (NSNumber *)numberWithRange:(NSRange)range
-{
-    return [self numberWithRange:range endianness:OSUnknownByteOrder];
 }
 
 - (NSNumber *)numberWithRange:(NSRange)range endianness:(int32_t)endianness
@@ -79,7 +65,7 @@
 }
 
 #pragma mark -
-#pragma mark Actual byte twiddling
+#pragma mark Size-sensitive data getters
 
 - (uint8) unsignedCharAtOffset:(NSUInteger)offset
 {
@@ -88,63 +74,24 @@
     return value;
 }
 
-- (uint16) unsignedShortAtOffset:(NSUInteger)offset
-{
-    return [self unsignedShortAtOffset:offset endianness:OSUnknownByteOrder];
-}
-
-- (uint32) unsignedIntAtOffset:(NSUInteger)offset
-{
-    return [self unsignedIntAtOffset:offset endianness:OSUnknownByteOrder];
-}
-
-- (uint64) unsignedLongLongAtOffset:(NSUInteger)offset
-{
-    return [self unsignedLongLongAtOffset:offset endianness:OSUnknownByteOrder];
-}
-
 - (uint16) unsignedShortAtOffset:(NSUInteger)offset endianness:(int32_t)endianness
 {
-    if (endianness == OSUnknownByteOrder) {
-        TLAssert(OSHostByteOrder() == OSLittleEndian || OSHostByteOrder() == OSBigEndian);
-        TLLog(@"Unknown byte order while requesting multibyte data, assuming OSHostByteOrder(%@)",
-              (OSHostByteOrder() == OSLittleEndian ? @"little" : @"big"));
-    }
-
     uint16 value;
-    endianness == OSHostByteOrder()
-    ? [self getBytes:&value range:NSMakeRange(offset, sizeof(uint16))]
-    : [self getSwappedBytes:&value range:NSMakeRange(offset, sizeof(uint16))];
+    [self getBytes:&value range:NSMakeRange(offset, sizeof(uint16)) endianness:endianness];
     return value;
 }
 
 - (uint32) unsignedIntAtOffset:(NSUInteger)offset endianness:(int32_t)endianness
 {
-    if (endianness == OSUnknownByteOrder) {
-        TLAssert(OSHostByteOrder() == OSLittleEndian || OSHostByteOrder() == OSBigEndian);
-        TLLog(@"Unknown byte order while requesting multibyte data, assuming OSHostByteOrder(%@)",
-              (OSHostByteOrder() == OSLittleEndian ? @"little" : @"big"));
-    }
-
     uint32 value;
-    endianness == OSHostByteOrder()
-    ? [self getBytes:&value range:NSMakeRange(offset, sizeof(uint32))]
-    : [self getSwappedBytes:&value range:NSMakeRange(offset, sizeof(uint32))];
+    [self getBytes:&value range:NSMakeRange(offset, sizeof(uint32)) endianness:endianness];
     return value;
 }
 
 - (uint64) unsignedLongLongAtOffset:(NSUInteger)offset endianness:(int32_t)endianness
 {
-    if (endianness == OSUnknownByteOrder) {
-        TLAssert(OSHostByteOrder() == OSLittleEndian || OSHostByteOrder() == OSBigEndian);
-        TLLog(@"Unknown byte order while requesting multibyte data, assuming OSHostByteOrder(%@)",
-              (OSHostByteOrder() == OSLittleEndian ? @"little" : @"big"));
-    }
-
     uint64 value;
-    endianness == OSHostByteOrder()
-    ? [self getBytes:&value range:NSMakeRange(offset, sizeof(uint64))]
-    : [self getSwappedBytes:&value range:NSMakeRange(offset, sizeof(uint64))];
+    [self getBytes:&value range:NSMakeRange(offset, sizeof(uint64)) endianness:endianness];
     return value;
 }
 

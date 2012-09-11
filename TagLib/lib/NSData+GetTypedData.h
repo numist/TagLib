@@ -9,22 +9,16 @@
 #import <Foundation/Foundation.h>
 
 @interface NSData (NSData_GetTypedData)
+
 - (NSString *)stringWithEncoding:(NSStringEncoding)enc;
 - (NSString *)stringWithLength:(NSUInteger)length encoding:(NSStringEncoding)enc;
 - (NSString *)stringWithRange:(NSRange)range encoding:(NSStringEncoding)enc;
 
-- (NSNumber *)number;
 - (NSNumber *)numberWithEndianness:(int32_t)endianness;
-- (NSNumber *)numberWithLength:(NSUInteger)length;
 - (NSNumber *)numberWithLength:(NSUInteger)length endianness:(int32_t)endianness;
-- (NSNumber *)numberWithRange:(NSRange)range;
 - (NSNumber *)numberWithRange:(NSRange)range endianness:(int32_t)endianness;
 
-- (uint8) unsignedCharAtOffset:(NSUInteger)offset;
-- (uint16) unsignedShortAtOffset:(NSUInteger)offset __attribute__((deprecated));
-- (uint32) unsignedIntAtOffset:(NSUInteger)offset __attribute__((deprecated));
-- (uint64) unsignedLongLongAtOffset:(NSUInteger)offset __attribute__((deprecated));
-
+- (uint8)  unsignedCharAtOffset:(NSUInteger)offset;
 - (uint16) unsignedShortAtOffset:(NSUInteger)offset endianness:(int32_t)endianness;
 - (uint32) unsignedIntAtOffset:(NSUInteger)offset endianness:(int32_t)endianness;
 - (uint64) unsignedLongLongAtOffset:(NSUInteger)offset endianness:(int32_t)endianness;

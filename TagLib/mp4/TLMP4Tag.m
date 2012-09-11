@@ -11,7 +11,7 @@
 #import "TLMP4Tag+FileParser.h"
 #import "TLID3v1Genres.h"
 #import "TLMP4AtomInfo.h"
-#import "NSData+Swapped.h"
+#import "NSData+Endian.h"
 
 @implementation TLMP4Tag
 

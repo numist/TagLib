@@ -8,7 +8,7 @@
 //
 
 #import "TLMP4Atom.h"
-#import "NSData+Swapped.h"
+#import "NSData+Endian.h"
 
 static NSSet *containers = nil;
 
@@ -61,9 +61,9 @@ static NSSet *containers = nil;
         return nil;
     }
     
-    [header getSwappedBytes:&self->length length:4];
+    [header getBytes:&self->length length:4 endianness:OSBigEndian];
     if (self->length == 1) {
-        [[file readDataOfLength:8] getSwappedBytes:&self->length];
+        [[file readDataOfLength:8] getBytes:&self->length endianness:OSBigEndian];
         if (self->length > UINT32_MAX) {
             TLCheck(self->length <= UINT32_MAX);
             TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)",
