@@ -312,6 +312,7 @@
 				BC236CC613EF462A006C41C0 /* Frameworks */,
 				BC236CC713EF462A006C41C0 /* Headers */,
 				BC236CC813EF462A006C41C0 /* Resources */,
+				BCB5547815FFD26800FC4B2D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -406,6 +407,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		BCB5547815FFD26800FC4B2D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# from: http://www.benzado.com/blog/post/329/make-xcode-nag-you-about-unfinished-todos\nKEYWORDS=\"TODO:|FIXME:|XXX:|\\?\\?\\?:|\\!\\!\\!:\"\nfind ${SRCROOT} \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.c\" \\) -print0 | \\\nxargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | \\\nperl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
