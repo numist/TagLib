@@ -18,9 +18,9 @@
 @end
 
 @implementation TLMP4Atom
-@synthesize offset, length, name, children;
+@synthesize offset, length, name, children, parent;
 
-- (id)initWithOffset:(uint64_t)offsetArg length:(uint64_t)lengthArg name:(NSString *)nameArg;
+- (id)initWithOffset:(uint64_t)offsetArg length:(uint64_t)lengthArg name:(NSString *)nameArg parent:(TLMP4Tag *)parentArg;
 {
     self = [super init];
     if (!self || !lengthArg || !nameArg) return nil;
@@ -28,23 +28,24 @@
     offset = offsetArg;
     length = lengthArg;
     name = nameArg;
-    children = [[NSMutableDictionary alloc] init];
+    parent = parentArg;
     
     return self;
 }
 
-- (void)addChild:(TLMP4Atom *)child;
-{
-    [[self children] setValue:child forKey:[child name]];
-}
-
 - (NSDictionary *) children;
 {
+    // Pointless call to make sure we've loaded children.
+    (void)[self getChild:@""];
     return [children copy];
 }
 
 - (TLMP4Atom *)getChild:(NSString *)nameArg;
 {
+    if (!children) {
+        // TODO: Get children of this atom!
+        children = [[NSMutableDictionary alloc] init];
+    }
     return [children objectForKey:nameArg];
 }
 

@@ -9,6 +9,9 @@
 
 #import <Foundation/Foundation.h>
 
+// Forward declare parent type
+@class TLMP4Tag;
+
 typedef enum {
     TLMP4DataTypeUnknown,
     TLMP4DataTypeAuto,
@@ -26,8 +29,10 @@ typedef enum {
 @property(nonatomic, readonly) uint64_t length;
 @property(nonatomic, readonly) NSString *name;
 
-- (id)initWithOffset:(uint64_t)offset length:(uint64_t)length name:(NSString *)name;
-- (void)addChild:(TLMP4Atom *)child;
+- (id)initWithOffset:(uint64_t)offset
+              length:(uint64_t)length
+                name:(NSString *)name
+              parent:(TLMP4Tag *)parent;
 
 - (NSDictionary *) children;
 - (TLMP4Atom *)getChild:(NSString *)name;
