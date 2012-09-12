@@ -27,7 +27,7 @@ TODO("There is be a better way to do this that doesn't involved persistent objec
 - (id)initWithFile: (NSFileHandle *)fileArg atoms:(TLMP4Atoms *)atomsArg
 {
     self = [super init];
-    if (!self || !fileArg || !atomsArg) return;
+    if (!self || !fileArg || !atomsArg) return nil;
 
     self.items = [[NSMutableDictionary alloc] init];
     self.atoms = atomsArg;
