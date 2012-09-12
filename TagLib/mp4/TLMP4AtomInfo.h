@@ -1,5 +1,5 @@
 //
-//  TLMP4AtomNames.h
+//  TLMP4AtomInfo.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/9/11.
