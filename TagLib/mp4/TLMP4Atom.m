@@ -37,7 +37,7 @@
 {
     // Pointless call to make sure we've loaded children.
     (void)[self getChild:@""];
-    return [children copy];
+    return children;
 }
 
 - (TLMP4Atom *)getChild:(NSString *)nameArg;
