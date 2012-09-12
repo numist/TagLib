@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "debugger.h"
 
 extern NSString * const kAlbum;				// flags: 1 type: text
 extern NSString * const kArtist;            // flags: 1 type: text
@@ -43,6 +44,7 @@ extern NSString * const kPurchaseDate;      // flags: 1 type: text
 extern NSString * const kGaplessPlayback;   // flags: 21 type: uint8
 extern NSString * const kStik;              // flags: 21 type: uint8
 
+// TODO: This should be improved, it's basically deprecated against the enum TLMP4DataType
 enum TLMP4AtomFlags {
     TLMP4AtomFlagsAll = -1,
     TLMP4AtomFlagsNewNumber = 0,

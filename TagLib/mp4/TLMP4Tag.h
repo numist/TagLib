@@ -9,22 +9,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TLMP4Atoms.h"
+#import "TLMP4Atom.h"
 #import "TLTag.h"
 
 @interface TLMP4Tag : TLTag
-@property (retain, nonatomic, readwrite) NSMutableDictionary *items;
+@property (copy, nonatomic, readonly) NSString *path;
 
-- (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms:(TLMP4Atoms *)atoms;
-
-// NOTE:
-// - (NSString *) albumArtist;
-// - (void) setAlbumArtist: (NSString *)albumArtist;
-// - (NSNumber *) totalTracks;
-// - (void) setTotalTracks: (NSNumber *)totalTracks;
-// etc.
-
-- (NSString *) yearAsString;
-- (void) setYearAsString: (NSString *)date;
+// Public class methods
+#include "TLMP4Tag_Methods.h"
 
 @end

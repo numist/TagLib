@@ -9,22 +9,32 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TLMP4Atom : NSObject {
-    unsigned long long offset;
-    unsigned long long length;
-    NSString *name;
-    NSMutableDictionary *children;
-}
-@property(nonatomic, readonly) unsigned long long offset;
-@property(nonatomic, readonly) unsigned long long length;
+typedef enum {
+    TLMP4DataTypeUnknown,
+    TLMP4DataTypeAuto,
+    TLMP4DataTypeFreeForm,
+    TLMP4DataTypeIntPair,
+    TLMP4DataTypeBool,
+    TLMP4DataTypeInt,
+    TLMP4DataTypeGenre,     // Int -> string, looked up in ID3 table
+    TLMP4DataTypeImage,
+    TLMP4DataTypeText
+} TLMP4DataType;
+
+@interface TLMP4Atom : NSObject
+@property(nonatomic, readonly) uint64_t offset;
+@property(nonatomic, readonly) uint64_t length;
 @property(nonatomic, readonly) NSString *name;
-@property(nonatomic, readonly) NSMutableDictionary *children;
+
+- (id)initWithOffset:(uint64_t)offset length:(uint64_t)length name:(NSString *)name;
+- (void)addChild:(TLMP4Atom *)child;
 
 - (NSDictionary *) children;
-- (TLMP4Atom *) initWithFile: (NSFileHandle *)file;
-- (TLMP4Atom *) getAtomWithPath: (NSArray *)path;
-- (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path;
-- (NSArray *) findAllWithName: (NSString *)name;
-- (NSArray *) findAllWithName: (NSString *)name recursive: (BOOL)recursive;
+- (TLMP4Atom *)getChild:(NSString *)name;
+
+- (TLMP4DataType)dataType;
+- (id)getDataWithType:(TLMP4DataType)expectedType;
+- (id)getData;
+
 - (NSString *) descriptionWithIndent:(NSString *)indent;
 @end

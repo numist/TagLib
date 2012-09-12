@@ -3,12 +3,17 @@
 //  TagLib
 //
 //  Created by Scott Perry on 09/12/12.
+//  This file is intended to be #included within an @interface block for TLMP4Tag
 //
-//
 
-#ifndef TagLib_TLMP4Tag_Methods_h
-#define TagLib_TLMP4Tag_Methods_h
+- (id)initWithPath:(NSString *)path;
 
+- (TLMP4Atom *)findAtom:(NSArray *)path;
 
-
-#endif
+#pragma mark -
+#pragma mark Extra item types on top of TLTag's standard getters/setters.
+// - (NSString *) albumArtist;
+// - (void) setAlbumArtist: (NSString *)albumArtist;
+// - (NSNumber *) totalTracks;
+// - (void) setTotalTracks: (NSNumber *)totalTracks;
+// etc.

@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSMutableArray (StackOps)
-
+- (id)popObjectAtIndex:(NSUInteger)index;
+- (id)popLastObject;
+- (id)popFirstObject;
 @end

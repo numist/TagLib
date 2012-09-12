@@ -7,168 +7,75 @@
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
+#import "TLMP4Atom.h"
 #import "debugger.h"
 #import "NSData+Endian.h"
-#import "TLMP4Atom.h"
+#import "TLMP4Tag_Private.h"
 
-static NSSet *containers = nil;
+@interface TLMP4Atom ()
+@property (nonatomic, readonly) NSMutableDictionary *children;
+@property (weak, nonatomic, readwrite) TLMP4Tag *parent;
+@end
 
 @implementation TLMP4Atom
+@synthesize offset, length, name, children;
 
-@synthesize offset;
-@synthesize length;
-@synthesize name;
-@synthesize children;
-
-- (NSDictionary *) children
+- (id)initWithOffset:(uint64_t)offsetArg length:(uint64_t)lengthArg name:(NSString *)nameArg;
 {
-    return self->children;
-}
-
-- (TLMP4Atom *) initWithFile: (NSFileHandle *)file
-{
-    if (!file) {
-        return nil;
-    }
-    
     self = [super init];
-
-    if (!containers) {
-        containers = [NSSet setWithObjects:@"moov", @"udta", @"mdia", @"meta",
-                      @"ilst", @"stbl", @"minf", @"moof", @"traf", @"trak",
-                      nil];
-    }
-
-    if (!self) {
-        return nil;
-    }
+    if (!self || !lengthArg || !nameArg) return nil;
     
-    self->offset = [file offsetInFile];
-    self->children = [[NSMutableDictionary alloc] init];
-    unsigned long long totalLength = [file seekToEndOfFile];
-    [file seekToFileOffset:self->offset];
-
-    NSData *header = [file readDataOfLength:8];
-    if ([header length] != 8) {
-        TLLog(@"MP4: Couldn't read 8 bytes of data for atom header. (Got %lu bytes)",
-              [header length]);
-        self->length = 0;
-        [file seekToEndOfFile];
-        return nil;
-    }
+    offset = offsetArg;
+    length = lengthArg;
+    name = nameArg;
+    children = [[NSMutableDictionary alloc] init];
     
-    [header getBytes:&self->length length:4 endianness:OSBigEndian];
-    if (self->length == 1) {
-        [[file readDataOfLength:8] getBytes:&self->length endianness:OSBigEndian];
-        if (self->length > UINT32_MAX) {
-            TLCheck(self->length <= UINT32_MAX);
-            TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)",
-                  self->length);
-            [file seekToEndOfFile];
-            return nil;
-        }
-        // The atom has a 64-bit length, but it's actually a 32-bit value
-    }
-    if (self->length < 8 || self->length + self->offset > totalLength) {
-        TLLog(@"MP4: Invalid atom size: %llu", self->length);
-        [file seekToEndOfFile];
-        return nil;
-    }
-    
-    self->name = [[NSString alloc] initWithBytes:[[header subdataWithRange:NSMakeRange(4, 4)] bytes]
-                length:4 encoding:NSMacOSRomanStringEncoding];
-
-    if ([containers containsObject:self->name]) {
-        if ([self->name isEqualToString:@"meta"]) {
-            [file seekToFileOffset:[file offsetInFile] + 4];
-        }
-
-        while ([file offsetInFile] < self->offset + self->length) {
-            TLMP4Atom *child = [[TLMP4Atom alloc] initWithFile:file];
-            if (!child || [file offsetInFile] > self->offset + self->length) {
-                if (child) {
-                    TLLog(@"child atom(%@) exceededs boundary of parent", [child name]);
-                }
-                [file seekToEndOfFile];
-                return nil;
-            }
-            [self->children setValue:child forKey:[child name]];
-        }
-    }
-    
-    [file seekToFileOffset:self->offset + self->length];
     return self;
 }
 
-- (TLMP4Atom *) init
+- (void)addChild:(TLMP4Atom *)child;
 {
-    return [self initWithFile:nil];
+    [[self children] setValue:child forKey:[child name]];
 }
 
-- (TLMP4Atom *) getAtomWithPath: (NSArray *)path
+- (NSDictionary *) children;
 {
-    NSParameterAssert([path count] > 0);
-    
-    /*
-     * NOTE: if this is too slow, implement MP4Atom findAtomAtPath:
-     *
-     *  - (MP4Atom *) findAtomAtPath: (NSMutableArray *)path
-     *  {
-     *      if ([path count] == 0) {
-     *          return self;
-     *      }
-     *    
-     *      MP4Atom *child = [children objectForKey:[path objectAtIndex:0]];
-     *      [path removeObjectAtIndex:0];
-     *      return [child findAtomAtPath:path];
-     *  }
-     */
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    [self getAtoms:result withPath:[NSMutableArray arrayWithArray:path]];
-    return [result lastObject];
+    return [children copy];
 }
 
-- (BOOL) getAtoms: (NSMutableArray *)atoms withPath: (NSMutableArray *)path
+- (TLMP4Atom *)getChild:(NSString *)nameArg;
 {
-    TLMP4Atom *atom;
-
-    [atoms addObject:self];
-
-    if ([path count] == 0) {
-        return YES;
-    } else if (!(atom = [children objectForKey:[path objectAtIndex:0]])) {
-        [atoms removeAllObjects];
-        return NO;
-    }
-
-    [path removeObjectAtIndex:0];
-    return [atom getAtoms:atoms withPath:path];
+    return [children objectForKey:nameArg];
 }
 
-- (NSArray *) findAllWithName: (NSString *)findName
+- (TLMP4DataType)dataType;
 {
-    return [self findAllWithName:findName recursive:NO];
+    // TODO: get dataType from flags
+    TLAssert(0);
 }
 
-- (NSArray *) findAllWithName: (NSString *)findName recursive: (BOOL)recursive
+- (id)getDataWithType:(TLMP4DataType)expectedType;
 {
-    NSMutableArray *hits = [[NSMutableArray alloc] init];
-    TLMP4Atom *hit;
-    
-    if ((hit = [children objectForKey:findName])) {
-        [hits addObject:hit];
+    id data = nil;
+
+    if (!expectedType) {
+        expectedType = [self dataType];
+        TLLog(@"Assuming type %d", expectedType);
+        TLNotTested();
     }
     
-    if (recursive) {
-        for (TLMP4Atom *child in [children objectEnumerator]) {
-            [hits addObjectsFromArray:[child findAllWithName:findName recursive:recursive]];
-        }
-    }
-    
-    return hits;
+    // TODO: implement
+    TLAssert(0);
+    return data;
 }
 
-- (NSString *) description
+- (id)getData;
+{
+    return [self getDataWithType:TLMP4DataTypeAuto];
+}
+
+// TODO: check
+- (NSString *)description
 {
     NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atom: %@, length %llu, offset %llu", self->name, self->length, self->offset];
     
@@ -182,7 +89,8 @@ static NSSet *containers = nil;
     return result;
 }
 
-- (NSString *) descriptionWithIndent:(NSString *)indent
+// TODO: check
+- (NSString *)descriptionWithIndent:(NSString *)indent
 {
     NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"%@Atom: %@, length %llu, offset %llu", indent, self->name, self->length, self->offset];
     
