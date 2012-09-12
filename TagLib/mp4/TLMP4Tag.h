@@ -1,5 +1,5 @@
 //
-//  MP4Tag.h
+//  TLMP4Tag.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.
@@ -16,7 +16,6 @@
 @property (retain, nonatomic, readwrite) NSMutableDictionary *items;
 
 - (TLMP4Tag *) initWithFile: (NSFileHandle *)file atoms:(TLMP4Atoms *)atoms;
-- (BOOL) save;
 
 // NOTE:
 // - (NSString *) albumArtist;

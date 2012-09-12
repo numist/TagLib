@@ -24,35 +24,28 @@ TODO("There is be a better way to do this that doesn't involved persistent objec
 @implementation TLMP4Tag
 @synthesize atoms, items, file;
 
-- (TLMP4Tag *) init
-{
-    [NSException raise:@"UnimplementedException" format:@"%@",
-     @"Selector is not implemented in this class"];
-    return nil;
-}
-
-- (TLMP4Tag *) initWithFile: (NSFileHandle *)fileArg atoms:(TLMP4Atoms *)atomsArg
+- (id)initWithFile: (NSFileHandle *)fileArg atoms:(TLMP4Atoms *)atomsArg
 {
     self = [super init];
-    if (self) {
-        self.items = [[NSMutableDictionary alloc] init];
-        self.atoms = atomsArg;
+    if (!self || !fileArg || !atomsArg) return;
+
+    self.items = [[NSMutableDictionary alloc] init];
+    self.atoms = atomsArg;
         
-        // sanity check before handing off control to the parser
-        TLMP4Atom *ilst = [self.atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
-        if (!ilst) {
-            TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
-            return nil;
-        }
-        [self parseFile:fileArg withAtoms:self.atoms];
+    // sanity check before handing off control to the parser
+    TLMP4Atom *ilst = [self.atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
+    if (!ilst) {
+        TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
+        return nil;
     }
+    [self parseFile:fileArg withAtoms:self.atoms];
+
     return self;
 }
 
-- (BOOL) save
+- (id)init;
 {
-    TLNotTested();
-    return NO;
+    return [self initWithFile:nil atoms:nil];
 }
 
 /*
