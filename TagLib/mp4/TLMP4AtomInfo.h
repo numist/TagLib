@@ -73,3 +73,4 @@ extern TLMP4AtomInfo *kTVEpisode;
 extern TLMP4AtomInfo *kPurchaseDate;
 extern TLMP4AtomInfo *kGaplessPlayback;
 extern TLMP4AtomInfo *kStik;
+extern TLMP4AtomInfo *kPurchaserID;

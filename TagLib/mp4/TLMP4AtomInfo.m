@@ -47,6 +47,7 @@ TLMP4AtomInfo *kTVEpisode;
 TLMP4AtomInfo *kPurchaseDate;
 TLMP4AtomInfo *kGaplessPlayback;
 TLMP4AtomInfo *kStik;
+TLMP4AtomInfo *kPurchaserID;
 
 @interface TLMP4AtomInfo ()
 - (id)initWithName:(NSString *)name flags:(TLMP4AtomFlags)flags type:(TLMP4DataType)type;
@@ -175,6 +176,9 @@ static NSMutableArray *atoms = nil;
     kStik = [[TLMP4AtomInfo alloc] initWithName:@"stik"
                                           flags:TLMP4AtomFlagsOldNumber
                                            type:TLMP4DataTypeInt];
+    kPurchaserID = [[TLMP4AtomInfo alloc] initWithName:@"apID"
+                                                 flags:TLMP4AtomFlagsText
+                                                  type:TLMP4DataTypeText];
     
     // Differing kArtwork image formats
     (void)[[TLMP4AtomInfo alloc] initWithName:@"covr"
@@ -231,6 +235,11 @@ static NSMutableArray *atoms = nil;
         case TLMP4AtomFlagsAll:
             return TLMP4DataTypeUnknown;
     }
+}
+
+- (NSString *)description;
+{
+    return [NSString stringWithFormat:@"ItemInfo(%@) flags:%u type:%u", [self name], [self flags], [self type]];
 }
 
 @end

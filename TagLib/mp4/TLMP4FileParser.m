@@ -253,6 +253,11 @@ static const uint64_t kWorryLength = 255;
     if (data) {
         [self.tag setStik:[(NSNumber *)data integerValue]];
     }
+
+    data = [self.tag getILSTData:kPurchaserID];
+    if (data) {
+        [self.tag setPurchaserID:(NSString *)data];
+    }
     
     [self getProperties];
     

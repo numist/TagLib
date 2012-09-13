@@ -28,3 +28,4 @@
 @property (assign,nonatomic,readwrite) NSInteger stik;
 @property (assign,nonatomic,readwrite) NSInteger rating;
 @property (copy,nonatomic,readwrite) NSDate *purchaseDate;
+@property (copy,nonatomic,readwrite) NSString *purchaserID;

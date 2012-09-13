@@ -37,6 +37,7 @@
 @synthesize stik = _stik;
 @synthesize rating = _rating;
 @synthesize purchaseDate = _purchaseDate;
+@synthesize purchaserID = _purchaserID;
 
 // Properties
 @synthesize channels = _channels;
