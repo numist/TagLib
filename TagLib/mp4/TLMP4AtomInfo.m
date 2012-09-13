@@ -91,7 +91,7 @@ static NSMutableArray *atoms = nil;
                                               type:TLMP4DataTypeText];
     kYear = [[TLMP4AtomInfo alloc] initWithName:@"©day"
                                           flags:TLMP4AtomFlagsText
-                                           type:TLMP4DataTypeYear];
+                                           type:TLMP4DataTypeDate];
     kTitle = [[TLMP4AtomInfo alloc] initWithName:@"©nam"
                                            flags:TLMP4AtomFlagsText
                                             type:TLMP4DataTypeText];

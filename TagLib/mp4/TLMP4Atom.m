@@ -31,8 +31,6 @@
 - (NSImage *)parseCovr;
 - (NSString *)parseTextWithFlags:(TLMP4AtomFlags)flags;
 - (NSDate *)parseDateWithFlags:(TLMP4AtomFlags)flags;
-- (NSDate *)parseYearWithFlags:(TLMP4AtomFlags)flags;
-
 @end
 
 @implementation TLMP4Atom
@@ -183,8 +181,6 @@
             return [self parseTextWithFlags:flags];
         case TLMP4DataTypeDate:
             return [self parseDateWithFlags:flags];
-        case TLMP4DataTypeYear:
-            return [self parseYearWithFlags:flags];
         default:
             TLNotReached();
             return nil;
@@ -419,15 +415,6 @@
 
     [NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
     ISO8601DateFormatter *format = [[ISO8601DateFormatter alloc] init];
-    
-    return [format dateFromString:text];
-}
-
-- (NSDate *)parseYearWithFlags:(TLMP4AtomFlags)flags;
-{
-    NSString *text = [self parseTextWithFlags:flags];
-    
-    NSDateFormatter *format = [[NSDateFormatter alloc] initWithDateFormat:@"%Y" allowNaturalLanguage:NO];
     
     return [format dateFromString:text];
 }
