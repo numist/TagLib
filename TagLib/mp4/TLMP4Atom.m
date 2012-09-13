@@ -417,12 +417,9 @@
 {
     NSString *text = [self parseTextWithFlags:flags];
 
-    NSLog(@"called for %@", self.name);
-    
     [NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
     ISO8601DateFormatter *format = [[ISO8601DateFormatter alloc] init];
     
-    NSLog(@"%s:%d: %@ -> %@", __FILE__, __LINE__, text, [format dateFromString:text]);
     return [format dateFromString:text];
 }
 
