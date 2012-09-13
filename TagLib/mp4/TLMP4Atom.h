@@ -22,10 +22,7 @@
 
 - (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tag *)parent;
 
-- (TLMP4AtomFlags)flags;
-
 - (TLMP4Atom *)getChild:(NSString *)name;
-- (TLMP4DataType)likelyDataType;
 
 - (id)getDataWithType:(TLMP4DataType)type checkFlags:(TLMP4AtomFlags)flags;
 - (id)getDataWithType:(TLMP4DataType)type;

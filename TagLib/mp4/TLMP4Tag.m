@@ -23,10 +23,24 @@
 @synthesize path = _path;
 @synthesize atoms = _atoms;
 @synthesize ready = _ready;
+@synthesize encoder = _encoder;
+@synthesize artwork = _artwork;
+@synthesize TVShowName = _TVShowName;
+@synthesize TVEpisodeID = _TVEpisodeID;
+@synthesize TVSeason = _TVSeason;
+@synthesize TVEpisode = _TVEpisode;
+@synthesize albumArtist = _albumArtist;
+@synthesize totalTracks = _totalTracks;
+@synthesize totalDisks = _totalDisks;
+@synthesize copyright = _copyright;
+@synthesize compilation = _compilation;
+@synthesize gaplessPlayback = _gaplessPlayback;
+@synthesize stik = _stik;
+@synthesize rating = _rating;
 
 - (TLMP4Tag *)initWithPath:(NSString *)pathArg;
 {
-    self = [super init];
+    self = [super initWithPath:pathArg];
     if (!self || !pathArg) return nil;
 
     _path = pathArg;
@@ -120,15 +134,22 @@
     TLMP4Atom *atom = [self findAtom:@[@"moov", @"udta", @"meta", @"ilst", [atomInfo name]]];
     if (!atom) return nil;
     
-    return [atom getDataWithType:[atomInfo type] checkFlags:[atomInfo flags]];
+    // Could use stricter flags later, but this is what TagLib(C++) used…
+    return [atom getDataWithType:[atomInfo type]];
 }
 
 #pragma mark -
 
-// TODO: rewrite
 - (NSString *)description
 {
-    return @"";
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tag"];
+    
+    if ([self.atoms count]) {
+        [result appendString:@": {\n"];
+        [result appendString:[self.atoms description]];
+        [result appendString:@"\n} End of atoms"];
+    }
+    return result;
 }
 
 @end

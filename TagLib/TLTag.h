@@ -17,12 +17,12 @@
 @property (copy,nonatomic,readwrite) NSString *comment;
 @property (copy,nonatomic,readwrite) NSString *genre;
 @property (copy,nonatomic,readwrite) NSDate *year;
-@property (copy,nonatomic,readwrite) NSNumber *track;
+@property (nonatomic,readwrite) NSInteger trackNumber;
+@property (nonatomic,readwrite) NSInteger diskNumber;
 
-// TODO: Initializer(s)
+- (id)initWithPath:(NSString *)path;
 
 - (BOOL) isEmpty;
-+ (void) copy: (TLTag *)source to: (TLTag *) target overwrite: (BOOL)overwrite;
 
 + (void)setLoadingQueue:(NSOperationQueue *)queue;
 + (NSOperationQueue *)loadingQueue;

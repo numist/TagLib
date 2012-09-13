@@ -33,22 +33,23 @@
     
     if (![self.tag findAtom:@[@"moov", @"udta", @"meta", @"ilst"]]) {
         [self finished];
+        TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
         return;
     }
     
     data = [self.tag getILSTData:kAlbum];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
         [self.tag setAlbum:(NSString *)data];
+    }
+    
+    data = [self.tag getILSTData:kArtist];
+    if (data) {
+        [self.tag setArtist:(NSString *)data];
     }
     
     data = [self.tag getILSTData:kAlbumArtist];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setAlbumArtist:(NSString *)data];
+        [self.tag setAlbumArtist:(NSString *)data];
     }
     
     data = [self.tag getILSTData:kComment];
@@ -60,24 +61,16 @@
     
     data = [self.tag getILSTData:kYear];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: Convert to an NSDate!
-        // [tag setYear:(NSString *)data];
+        [self.tag setYear:(NSDate *)data];
     }
     
     data = [self.tag getILSTData:kTitle];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
         [self.tag setTitle:(NSString *)data];
     }
     
-    // TODO: atom getData must do genre conversion itself
     data = [self.tag getILSTData:kGenreCode];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
         [self.tag setGenre:(NSString *)data];
     }
     
@@ -89,23 +82,21 @@
     }
     
     data = [self.tag getILSTData:kTrackNumber];
-    // TODO:
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        //[tag setTrackNumber:(NSNumber *)…];
-        // TODO: mp4-specific tag
-        //[tag setTotalTracks:(NSNumber *)…]
+        NSArray *arr = (NSArray *)data;
+        if ([arr count] == 2) {
+            [self.tag setTrackNumber:[(NSNumber *)arr[0] integerValue]];
+            [self.tag setTotalTracks:[(NSNumber *)arr[1] integerValue]];
+        }
     }
     
     data = [self.tag getILSTData:kDiskNumber];
-    // TODO:
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        //[tag setDiskNumber:(NSNumber *)…];
-        // TODO: mp4-specific tag
-        //[tag setTotalDisks:(NSNumber *)…];
+        NSArray *arr = (NSArray *)data;
+        if ([arr count] == 2) {
+            [self.tag setDiskNumber:[(NSNumber *)arr[0] integerValue]];
+            [self.tag setTotalDisks:[(NSNumber *)arr[1] integerValue]];
+        }
     }
     
     data = [self.tag getILSTData:kComposer];
@@ -118,10 +109,7 @@
     
     data = [self.tag getILSTData:kEncoder];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setEncoder:(NSString *)data];
+        [self.tag setEncoder:(NSString *)data];
     }
     
     data = [self.tag getILSTData:kBPM];
@@ -134,34 +122,22 @@
     
     data = [self.tag getILSTData:kCopyright];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setCopyright:(NSString *)data];
+        [self.tag setCopyright:(NSString *)data];
     }
     
     data = [self.tag getILSTData:kCompilation];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setCompilation:(NSNumber *)data];
+        [self.tag setCompilation:[(NSNumber *)data boolValue]];
     }
     
     data = [self.tag getILSTData:kArtwork];
-    // TODO: data is probably a collection of images
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        //[tag setArtwork:(NSImage *)data];
+        [self.tag setArtwork:(NSImage *)data];
     }
     
     data = [self.tag getILSTData:kRating];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setRating:(NSNumber *)data];
+        [self.tag setRating:[(NSNumber *)data integerValue]];
     }
     
     data = [self.tag getILSTData:kGrouping];
@@ -238,34 +214,22 @@
     
     data = [self.tag getILSTData:kTVShowName];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setTVShowName:(NSString *)data];
+        [self.tag setTVShowName:(NSString *)data];
     }
     
-    data = [self.tag getILSTData:kTVEpisodeNumber];
+    data = [self.tag getILSTData:kTVEpisodeID];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setTVEpisodeNumber:(NSString *)data];
+        [self.tag setTVEpisodeID:(NSString *)data];
     }
     
     data = [self.tag getILSTData:kTVSeason];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setTVSeason:(NSNumber *)data];
+        [self.tag setTVSeason:[(NSNumber *)data integerValue]];
     }
     
     data = [self.tag getILSTData:kTVEpisode];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setTVEpisode:(NSNumber *)data];
+        [self.tag setTVEpisode:[(NSNumber *)data integerValue]];
     }
     
     data = [self.tag getILSTData:kPurchaseDate];
@@ -279,18 +243,12 @@
     
     data = [self.tag getILSTData:kGaplessPlayback];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setGaplessPlayback:(NSNumber *)data];
+        [self.tag setGaplessPlayback:[(NSNumber *)data boolValue]];
     }
     
     data = [self.tag getILSTData:kStik];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setStik:(NSNumber *)data];
+        [self.tag setStik:[(NSNumber *)data integerValue]];
     }
     
     // TODO: Also set properties: length, bitrate, sampleRate, channels, bitsPerSample.
@@ -304,16 +262,5 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TLTagDidFinishLoading"
                                                         object:self.tag];
 }
-
-#if 0
-{
-    // sanity check before handing off control to the parser
-    TLMP4Atom *ilst = [self.atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
-    if (!ilst) {
-        TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
-        return nil;
-    }
-}
-#endif
 
 @end

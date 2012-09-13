@@ -10,6 +10,10 @@
 #import "LocalTests.h"
 #import "TLMP4Tag.h"
 
+@interface LocalTests ()
++ (TLMP4Tag *)blockingMP4TagWithPath:(NSString *)path;
+@end
+
 @implementation LocalTests
 
 - (void)setUp
@@ -26,41 +30,47 @@
     [super tearDown];
 }
 
-#if 0
++ (TLMP4Tag *)blockingMP4TagWithPath:(NSString *)path;
+{
+    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithPath:path];
+    
+    // Basic block until tags have been parsed
+    do {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    } while (![tag isReady]);
+    
+    return tag;
+}
 
 - (void)testHorribleTagParsing
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/Local-horrible.m4a"];
-    if (file == nil) {
+    NSString *file = @"TagLibTests/data/Local-horrible.m4a";
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:file]) {
         TLLog(@"%@", @"sorry, you don't have the file required to run this test");
         return;
     }
     
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
-    TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    TLMP4Tag *tag = [LocalTests blockingMP4TagWithPath:file];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
-    
-    //TLLog(@"%@", tag);
+    STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
 }
 
 - (void)testFireflyTagParsing
 {
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:@"TagLibTests/data/Local-firefly.m4v"];
-    if (file == nil) {
+    NSString *file = @"TagLibTests/data/Local-firefly.m4v";
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:file]) {
         TLLog(@"%@", @"sorry, you don't have the file required to run this test");
         return;
     }
     
-    TLMP4Atoms *atoms = [(TLMP4Atoms *)[TLMP4Atoms alloc] initWithFile:file];
-    STAssertNotNil(atoms, @"%@", @"Failed to parse atoms from file");
-    
-    TLMP4Tag *tag = [(TLMP4Tag *)[TLMP4Tag alloc] initWithFile:file atoms:atoms];
+    TLMP4Tag *tag = [LocalTests blockingMP4TagWithPath:file];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
-
-    //TLLog(@"%@", tag);
+    STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
 }
+
+#if 0
 
 - (void)testStringYear
 {

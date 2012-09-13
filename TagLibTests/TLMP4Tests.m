@@ -58,6 +58,7 @@
 
 - (void)testBasicTagParsing
 {
+    STAssertTrue([self.has_tags isReady], @"%@", @"Tag object was not loaded");
     STAssertFalse([self.has_tags isEmpty], @"%@", @"Failed to parse tags from file");
     STAssertEqualObjects([self.has_tags artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [self.has_tags artist]);
 }

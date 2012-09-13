@@ -19,7 +19,8 @@ typedef enum {
     TLMP4DataTypeInt,
     TLMP4DataTypeGenre,     // TODO: Int -> string, looked up in ID3 table
     TLMP4DataTypeImage,
-    TLMP4DataTypeText
+    TLMP4DataTypeText,
+    TLMP4DataTypeDate
 } TLMP4DataType;
 
 typedef enum {
@@ -36,7 +37,7 @@ typedef enum {
 @property (nonatomic, readonly) TLMP4AtomFlags flags;
 @property (nonatomic, readonly) TLMP4DataType type;
 + (TLMP4AtomInfo *)validateAtom:(NSString *)name withFlags:(NSInteger)flags;
-+ (TLMP4DataType)dataTypeFromFlags:(TLMP4AtomFlags)flags;
++ (TLMP4DataType)likelyDataTypeFromFlags:(TLMP4AtomFlags)flags;
 @end
 
 extern TLMP4AtomInfo *kAlbum;
@@ -66,7 +67,7 @@ extern TLMP4AtomInfo *kDescription;
 extern TLMP4AtomInfo *kLyrics;
 extern TLMP4AtomInfo *kTVNetworkName;
 extern TLMP4AtomInfo *kTVShowName;
-extern TLMP4AtomInfo *kTVEpisodeNumber;
+extern TLMP4AtomInfo *kTVEpisodeID;
 extern TLMP4AtomInfo *kTVSeason;
 extern TLMP4AtomInfo *kTVEpisode;
 extern TLMP4AtomInfo *kPurchaseDate;

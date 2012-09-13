@@ -12,9 +12,18 @@
 - (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
 
 #pragma mark -
-#pragma mark Extra item types on top of TLTag's standard getters/setters.
-// - (NSString *) albumArtist;
-// - (void) setAlbumArtist: (NSString *)albumArtist;
-// - (NSNumber *) totalTracks;
-// - (void) setTotalTracks: (NSNumber *)totalTracks;
-// etc.
+#pragma mark Extra item types on top of TLTag's standard properties.
+@property (copy,nonatomic,readwrite) NSString *encoder;
+@property (copy,nonatomic,readwrite) NSImage *artwork;
+@property (copy,nonatomic,readwrite) NSString *TVShowName;
+@property (copy,nonatomic,readwrite) NSString *TVEpisodeID;
+@property (assign,nonatomic,readwrite) NSInteger TVSeason;
+@property (assign,nonatomic,readwrite) NSInteger TVEpisode;
+@property (copy,nonatomic,readwrite) NSString *albumArtist;
+@property (assign,nonatomic,readwrite) NSInteger totalTracks;
+@property (assign,nonatomic,readwrite) NSInteger totalDisks;
+@property (copy,nonatomic,readwrite) NSString *copyright;
+@property (assign,nonatomic,readwrite) BOOL compilation;
+@property (assign,nonatomic,readwrite) BOOL gaplessPlayback;
+@property (assign,nonatomic,readwrite) NSInteger stik;
+@property (assign,nonatomic,readwrite) NSInteger rating;

@@ -17,6 +17,6 @@
 @property (getter=isReady, assign, nonatomic, readonly) BOOL ready;
 
 // Public class methods
-#include "TLMP4Tag_Methods.h"
+#include "TLMP4Tag_Common.h"
 
 @end

@@ -42,7 +42,7 @@ TLMP4AtomInfo *kDescription;
 TLMP4AtomInfo *kLyrics;
 TLMP4AtomInfo *kTVNetworkName;
 TLMP4AtomInfo *kTVShowName;
-TLMP4AtomInfo *kTVEpisodeNumber;
+TLMP4AtomInfo *kTVEpisodeID;
 TLMP4AtomInfo *kTVSeason;
 TLMP4AtomInfo *kTVEpisode;
 TLMP4AtomInfo *kPurchaseDate;
@@ -91,7 +91,7 @@ static NSMutableArray *atoms = nil;
                                               type:TLMP4DataTypeText];
     kYear = [[TLMP4AtomInfo alloc] initWithName:@"©day"
                                           flags:TLMP4AtomFlagsText
-                                           type:TLMP4DataTypeText];
+                                           type:TLMP4DataTypeDate];
     kTitle = [[TLMP4AtomInfo alloc] initWithName:@"©nam"
                                            flags:TLMP4AtomFlagsText
                                             type:TLMP4DataTypeText];
@@ -158,7 +158,7 @@ static NSMutableArray *atoms = nil;
     kTVShowName = [[TLMP4AtomInfo alloc] initWithName:@"tvsh"
                                                 flags:TLMP4AtomFlagsText
                                                  type:TLMP4DataTypeText];
-    kTVEpisodeNumber = [[TLMP4AtomInfo alloc] initWithName:@"tven"
+    kTVEpisodeID = [[TLMP4AtomInfo alloc] initWithName:@"tven"
                                                      flags:TLMP4AtomFlagsText
                                                       type:TLMP4DataTypeText];
     kTVSeason = [[TLMP4AtomInfo alloc] initWithName:@"tvsn"
@@ -169,7 +169,7 @@ static NSMutableArray *atoms = nil;
                                                 type:TLMP4DataTypeInt];
     kPurchaseDate = [[TLMP4AtomInfo alloc] initWithName:@"purd"
                                                   flags:TLMP4AtomFlagsText
-                                                   type:TLMP4DataTypeText];
+                                                   type:TLMP4DataTypeDate];
     kGaplessPlayback = [[TLMP4AtomInfo alloc] initWithName:@"pgap"
                                                      flags:TLMP4AtomFlagsOldNumber
                                                       type:TLMP4DataTypeBool];
@@ -216,7 +216,7 @@ static NSMutableArray *atoms = nil;
     return nil;
 }
 
-+ (TLMP4DataType)dataTypeFromFlags:(TLMP4AtomFlags)flags;
++ (TLMP4DataType)likelyDataTypeFromFlags:(TLMP4AtomFlags)flags;
 {
     switch (flags) {
         case TLMP4AtomFlagsJPEG:
@@ -227,8 +227,9 @@ static NSMutableArray *atoms = nil;
             return TLMP4DataTypeInt;
         case TLMP4AtomFlagsText:
             return TLMP4DataTypeText;
-        case TLMP4AtomFlagsAll:
         default:
+            TLLog(@"Unknown flags: %d", flags);
+        case TLMP4AtomFlagsAll:
             return TLMP4DataTypeUnknown;
     }
 }
