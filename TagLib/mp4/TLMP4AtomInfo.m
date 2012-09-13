@@ -50,7 +50,7 @@ TLMP4AtomInfo *kGaplessPlayback;
 TLMP4AtomInfo *kStik;
 
 @interface TLMP4AtomInfo ()
-- (id)initWithName:(NSString *)name flags:(NSInteger)flags type:(TLMP4DataType)type;
+- (id)initWithName:(NSString *)name flags:(TLMP4AtomFlags)flags type:(TLMP4DataType)type;
 @end
 
 @implementation TLMP4AtomInfo
@@ -60,7 +60,7 @@ TLMP4AtomInfo *kStik;
 
 static NSMutableArray *atoms = nil;
 
-- (id)initWithName:(NSString *)name flags:(NSInteger)flags type:(TLMP4DataType)type;
+- (id)initWithName:(NSString *)name flags:(TLMP4AtomFlags)flags type:(TLMP4DataType)type;
 {
     self = [super init];
     if (!self) return nil;

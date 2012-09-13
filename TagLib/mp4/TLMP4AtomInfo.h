@@ -33,7 +33,7 @@ typedef enum {
 
 @interface TLMP4AtomInfo : NSObject
 @property (nonatomic, readonly) NSString *name;
-@property (nonatomic, readonly) NSInteger flags;
+@property (nonatomic, readonly) TLMP4AtomFlags flags;
 @property (nonatomic, readonly) TLMP4DataType type;
 + (TLMP4AtomInfo *)validateAtom:(NSString *)name withFlags:(NSInteger)flags;
 + (TLMP4DataType)dataTypeFromFlags:(TLMP4AtomFlags)flags;
