@@ -3,7 +3,6 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/13/11.
-//  Copyright 2011 Scott Perry. All rights reserved.
 //
 
 #import "debugger.h"
