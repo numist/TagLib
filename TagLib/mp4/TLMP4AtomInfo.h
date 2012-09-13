@@ -17,7 +17,7 @@ typedef enum {
     TLMP4DataTypeIntPair,
     TLMP4DataTypeBool,
     TLMP4DataTypeInt,
-    TLMP4DataTypeGenre,     // TODO: Int -> string, looked up in ID3 table
+    TLMP4DataTypeGenre,
     TLMP4DataTypeImage,
     TLMP4DataTypeText,
     TLMP4DataTypeDate
