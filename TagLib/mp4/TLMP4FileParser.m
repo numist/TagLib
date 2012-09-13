@@ -233,7 +233,7 @@
     }
     
     data = [self.tag getILSTData:kPurchaseDate];
-    // TODO: this should probably be an NSDate
+    // TODO: this should probably be an NSDate, perhaps year should have its own TLMP4DataType entry?
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
