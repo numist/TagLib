@@ -49,28 +49,29 @@
 @synthesize handleRefCount = _handleRefCount;
 - (NSFileHandle *)beginReadingFile;
 {
-    @synchronized(self) {
-        if (!self.handle) {
-            TLAssert(!self.handleRefCount);
-            self.handle = [NSFileHandle fileHandleForReadingAtPath:self.path];
-        }
-        if (!self.handle) {
-            TLAssert(!self.handleRefCount);
-            return nil;
-        }
-        self.handleRefCount++;
-    }
-
-    return self.handle;
+//    @synchronized(self) {
+//        if (!self.handle) {
+//            TLAssert(!self.handleRefCount);
+//            self.handle = [NSFileHandle fileHandleForReadingAtPath:self.path];
+//        }
+//        if (!self.handle) {
+//            TLAssert(!self.handleRefCount);
+//            return nil;
+//        }
+//        self.handleRefCount++;
+//    }
+//
+//    return self.handle;
+    return [NSFileHandle fileHandleForReadingAtPath:self.path];
 }
 
 - (id)endReadingFile;
 {
-    @synchronized(self) {
-        if (!--self.handleRefCount) {
-            self.handle = nil;
-        }
-    }
+//    @synchronized(self) {
+//        if (!--self.handleRefCount) {
+//            self.handle = nil;
+//        }
+//    }
     return nil;
 }
 
@@ -81,8 +82,26 @@
         return nil;
     }
     
-    if (![self.atoms count]) {
-        // TODO: bootstrap all root atoms
+    if (!self.atoms) {
+        self.atoms = [[NSMutableDictionary alloc] init];
+        
+        NSFileHandle *file = [self beginReadingFile];
+
+        unsigned long long end = [file seekToEndOfFile];
+        unsigned long long offset = 0;
+        
+        while (offset + 8 < end) {
+            TLMP4Atom *atom = [[TLMP4Atom alloc] initWithOffset:offset parent:self];
+            // NOTE: in the C++ impl, returns incomplete atom set
+            if (!atom) {
+                self.atoms = nil;
+                return nil;
+            }
+            [self.atoms setValue:atom forKey:[atom name]];
+            offset += [atom length];
+        }
+        
+        file = [self endReadingFile];
     }
     
     NSMutableArray *workingPath = [NSMutableArray arrayWithArray:searchPath];

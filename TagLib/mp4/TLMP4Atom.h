@@ -18,13 +18,10 @@
 @property (nonatomic, readonly) uint64_t offset;
 @property (nonatomic, readonly) uint64_t length;
 @property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) NSDictionary *children;
 
-- (id)initWithOffset:(uint64_t)offset
-              length:(uint64_t)length
-                name:(NSString *)name
-              parent:(TLMP4Tag *)parent;
+- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tag *)parent;
 
-- (NSDictionary *)children;
 - (TLMP4AtomFlags)flags;
 
 - (TLMP4Atom *)getChild:(NSString *)name;

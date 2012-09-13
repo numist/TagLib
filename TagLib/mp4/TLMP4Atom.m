@@ -15,8 +15,9 @@
 @interface TLMP4Atom () {
     NSNumber *_flags;
 }
-@property (nonatomic, readwrite) NSMutableDictionary *children;
+@property (nonatomic, readwrite) NSDictionary *children;
 @property (weak, nonatomic, readwrite) TLMP4Tag *parent;
+@property (nonatomic, readwrite) uint64_t dataOffset;
 @end
 
 @implementation TLMP4Atom
@@ -25,16 +26,60 @@
 @synthesize name = _name;
 @synthesize children = _children;
 @synthesize parent = _parent;
+@synthesize dataOffset = _dataOffset;
 
-- (id)initWithOffset:(uint64_t)offsetArg length:(uint64_t)lengthArg name:(NSString *)nameArg parent:(TLMP4Tag *)parentArg;
+- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tag *)parent;
 {
     self = [super init];
-    if (!self || !lengthArg || !nameArg) return nil;
+    if (!self) return nil;
     
-    _offset = offsetArg;
-    _length = lengthArg;
-    _name = nameArg;
-    _parent = parentArg;
+    NSFileHandle *handle = [parent beginReadingFile];
+    
+    NSLog(@"Parsing atom at offset %llu", offset);
+    
+    // Establish EOF boundary and seek to offset
+    [handle seekToEndOfFile];
+    uint64_t fileSize = [handle offsetInFile];
+    [handle seekToFileOffset:offset];
+    
+    // Read atom header
+    NSData *header = [handle readDataOfLength:8];
+    if ([header length] != 8) {
+        TLLog(@"MP4: Couldn't read 8 bytes of data for atom header. (Got %lu bytes)",
+              [header length]);
+        return nil;
+    }
+    
+    uint64_t length = 0;
+    [header getBytes:&length length:4 endianness:OSBigEndian];
+    NSLog(@"Length could be %llu?", length);
+    if (length == 1) {
+        [[handle readDataOfLength:8] getBytes:&length endianness:OSBigEndian];
+        if (length > UINT32_MAX) {
+            TLCheck(length <= UINT32_MAX);
+            TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)", length);
+            return nil;
+        }
+        // The atom has a 64-bit length, but it's actually a 32-bit value
+    }
+    if (length < 8 || length + offset > fileSize) {
+        TLLog(@"MP4: Invalid atom size: %llu", length);
+        return nil;
+    }
+    
+    NSString *name = [[NSString alloc] initWithBytes:[[header subdataWithRange:NSMakeRange(4, 4)] bytes]
+                                          length:4 encoding:NSMacOSRomanStringEncoding];
+    
+    
+    _offset = offset;
+    _length = length;
+    _name = name;
+    _parent = parent;
+    _dataOffset = [handle offsetInFile];
+
+    NSLog(@"Successfully parsed atom %@ at offset %llu", [self name], [self offset]);
+    
+    handle = [parent endReadingFile];
     
     return self;
 }
@@ -44,7 +89,9 @@
 - (NSDictionary *)children;
 {
     // Pointless call to make sure we've loaded children.
-    (void)[self getChild:@""];
+    if (!_children) {
+        (void)[self getChild:@""];
+    }
     return _children;
 }
 
@@ -60,9 +107,37 @@
 
 - (TLMP4Atom *)getChild:(NSString *)nameArg;
 {
-    if (!self.children) {
-        // TODO: Get children of this atom!
-        self.children = [[NSMutableDictionary alloc] init];
+    static NSSet *containers = nil;
+    if (!containers) {
+        containers = [NSSet setWithObjects:@"moov", @"udta", @"mdia", @"meta",
+                      @"ilst", @"stbl", @"minf", @"moof", @"traf", @"trak",
+                      nil];
+    }
+    
+    if (!_children) {
+        NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
+        
+        // Only some atoms have children, apparently they're categorized by name?
+        if (![containers containsObject:self.name]) return nil;
+        
+        uint64_t offset = self.dataOffset;
+        
+        if ([self.name isEqualToString:@"meta"]) {
+            offset += 4;
+        }
+            
+        while (offset < self.offset + self.length) {
+            TLMP4Atom *child = [[TLMP4Atom alloc] initWithOffset:offset parent:self.parent];
+            if (!child) {
+                self.children = nil;
+                TLNotTested();
+                return nil;
+            }
+            [children setValue:child forKey:[child name]];
+            offset += [child length];
+        }
+        
+        self.children = children;
     }
     return [self.children objectForKey:nameArg];
 }
@@ -77,7 +152,10 @@
     id data = nil;
     
     // This is a little strict, but it'll do for now
-    TLAssert(flags < 0 || flags == self.flags);
+    if (flags >= 0 && flags != self.flags) {
+        NSLog(@"atom: %@ incoming flags: %d, my flags:%d", self.name, flags, self.flags);
+        return nil;
+    }
     
     if (type == TLMP4DataTypeAuto) {
         type = [TLMP4AtomInfo dataTypeFromFlags:self.flags];

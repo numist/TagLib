@@ -29,10 +29,12 @@
 
 - (void)main;
 {
-    // Artificially inflate the refCount so we only open the file once.
-    (void)[self.tag beginReadingFile];
-    
     id data;
+    
+    if (![self.tag findAtom:@[@"moov", @"udta", @"meta", @"ilst"]]) {
+        [self finished];
+        return;
+    }
     
     data = [self.tag getILSTData:kAlbum];
     if (data) {
@@ -293,11 +295,12 @@
     
     // TODO: Also set properties: length, bitrate, sampleRate, channels, bitsPerSample.
     
-    // Done. Artificially deflate the refCount back to normal.
-    (void)[self.tag endReadingFile];
+    [self finished];
+}
+
+- (void)finished;
+{
     [self.tag setReady:YES];
-    
-    // TODO: This is probably not right, but it'll work for now
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TLTagDidFinishLoading"
                                                         object:self.tag];
 }
