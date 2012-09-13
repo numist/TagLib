@@ -3,7 +3,6 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/9/11.
-//  Copyright 2011 Scott Perry.
 //  Tag information from: http://atomicparsley.sourceforge.net/mpeg-4files.html
 //
 

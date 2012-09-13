@@ -3,7 +3,6 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.
-//  Copyright 2011 Scott Perry. All rights reserved.
 //
 
 #import "TLTag.h"
@@ -59,5 +58,7 @@ static NSOperationQueue *currentQueue = nil;
     }
     return currentQueue;
 }
+
+// TODO: - (NSString *)description;
 
 @end

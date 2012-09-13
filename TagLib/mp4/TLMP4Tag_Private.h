@@ -3,8 +3,6 @@
 //  TagLib
 //
 //  Created by Scott Perry on 9/11/12.
-//  Copyright 2011 Scott Perry.
-//  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
 #import <Foundation/Foundation.h>

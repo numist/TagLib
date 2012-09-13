@@ -3,7 +3,6 @@
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.
-//  Copyright 2011 Scott Perry.
 //  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
@@ -140,6 +139,7 @@
 
 #pragma mark -
 
+// TODO: make this output more and more useful information
 - (NSString *)description
 {
     NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tag"];
