@@ -53,5 +53,3 @@ enum TLMP4AtomFlags {
     TLMP4AtomFlagsPNG = 14,
     TLMP4AtomFlagsNumber = 21
 };
-
-BOOL TLMP4AtomIsValid(NSString *name);

@@ -20,14 +20,15 @@
 @end
 
 @implementation TLMP4Tag
-@synthesize path, atoms;
+@synthesize path = _path;
+@synthesize atoms = _atoms;
 
 - (TLMP4Tag *)initWithPath:(NSString *)pathArg;
 {
     self = [super init];
     if (!self || !pathArg) return nil;
 
-    path = pathArg;
+    _path = pathArg;
 
     [[[TLMP4FileParser alloc] initTag:self] main];
 
@@ -41,29 +42,30 @@
 
 #pragma mark -
 #pragma mark File access methods
-@synthesize handle, handleRefCount;
+@synthesize handle = _handle;
+@synthesize handleRefCount = _handleRefCount;
 - (NSFileHandle *)beginReadingFile;
 {
-    @synchronized(handle) {
-        if (!handle) {
-            TLAssert(!handleRefCount);
-            handle = [NSFileHandle fileHandleForReadingAtPath:path];
+    @synchronized(self) {
+        if (!self.handle) {
+            TLAssert(!self.handleRefCount);
+            self.handle = [NSFileHandle fileHandleForReadingAtPath:self.path];
         }
-        if (!handle) {
-            TLAssert(!handleRefCount);
+        if (!self.handle) {
+            TLAssert(!self.handleRefCount);
             return nil;
         }
-        handleRefCount++;
+        self.handleRefCount++;
     }
 
-    return handle;
+    return self.handle;
 }
 
 - (id)endReadingFile;
 {
-    @synchronized(handle) {
-        if (!--handleRefCount) {
-            handle = nil;
+    @synchronized(self) {
+        if (!--self.handleRefCount) {
+            self.handle = nil;
         }
     }
     return nil;
@@ -76,13 +78,13 @@
         return nil;
     }
     
-    if (![atoms count]) {
+    if (![self.atoms count]) {
         // TODO: bootstrap all root atoms
     }
     
     NSMutableArray *workingPath = [NSMutableArray arrayWithArray:searchPath];
 
-    TLMP4Atom *match = [atoms objectForKey:[workingPath popFirstObject]];
+    TLMP4Atom *match = [self.atoms objectForKey:[workingPath popFirstObject]];
     
     while ([workingPath count]) {
         match = [match getChild:[workingPath popFirstObject]];

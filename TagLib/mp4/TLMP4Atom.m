@@ -13,22 +13,29 @@
 #import "TLMP4Tag_Private.h"
 
 @interface TLMP4Atom ()
-@property (nonatomic, readonly) NSMutableDictionary *children;
+@property (nonatomic, readwrite) NSMutableDictionary *children;
 @property (weak, nonatomic, readwrite) TLMP4Tag *parent;
+@property (nonatomic, readwrite) uint64_t offset;
+@property (nonatomic, readwrite) uint64_t length;
+@property (nonatomic, readwrite) NSString *name;
 @end
 
 @implementation TLMP4Atom
-@synthesize offset, length, name, children, parent;
+@synthesize offset = _offset;
+@synthesize length = _length;
+@synthesize name = _name;
+@synthesize children = _children;
+@synthesize parent = _parent;
 
 - (id)initWithOffset:(uint64_t)offsetArg length:(uint64_t)lengthArg name:(NSString *)nameArg parent:(TLMP4Tag *)parentArg;
 {
     self = [super init];
     if (!self || !lengthArg || !nameArg) return nil;
     
-    offset = offsetArg;
-    length = lengthArg;
-    name = nameArg;
-    parent = parentArg;
+    self.offset = offsetArg;
+    self.length = lengthArg;
+    self.name = nameArg;
+    self.parent = parentArg;
     
     return self;
 }
@@ -37,16 +44,16 @@
 {
     // Pointless call to make sure we've loaded children.
     (void)[self getChild:@""];
-    return children;
+    return _children;
 }
 
 - (TLMP4Atom *)getChild:(NSString *)nameArg;
 {
-    if (!children) {
+    if (!self.children) {
         // TODO: Get children of this atom!
-        children = [[NSMutableDictionary alloc] init];
+        self.children = [[NSMutableDictionary alloc] init];
     }
-    return [children objectForKey:nameArg];
+    return [self.children objectForKey:nameArg];
 }
 
 - (TLMP4DataType)dataType;
@@ -78,14 +85,14 @@
 // TODO: check
 - (NSString *)description
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atom: %@, length %llu, offset %llu", self->name, self->length, self->offset];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"Atom: %@, length %llu, offset %llu", self.name, self.length, self.offset];
     
-    if ([self->children count]) {
-        [result appendFormat:@" has %lu children: {\n", [self->children count]];
-        for (TLMP4Atom *child in [self->children objectEnumerator]) {
+    if ([self.children count]) {
+        [result appendFormat:@" has %lu children: {\n", [self.children count]];
+        for (TLMP4Atom *child in [self.children objectEnumerator]) {
             [result appendFormat:@"%@\n", [child descriptionWithIndent:@"\t"]];
         }
-        [result appendFormat:@"} End of atom: %@", self->name];
+        [result appendFormat:@"} End of atom: %@", self.name];
     }
     return result;
 }
@@ -93,15 +100,15 @@
 // TODO: check
 - (NSString *)descriptionWithIndent:(NSString *)indent
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"%@Atom: %@, length %llu, offset %llu", indent, self->name, self->length, self->offset];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"%@Atom: %@, length %llu, offset %llu", indent, self.name, self.length, self.offset];
     
-    if ([self->children count]) {
-        [result appendFormat:@" has %lu children: {\n", [self->children count]];
+    if ([self.children count]) {
+        [result appendFormat:@" has %lu children: {\n", [self.children count]];
         NSString *newIndent = [NSString stringWithFormat:@"%@%@", @"\t", indent];
-        for (TLMP4Atom *child in [self->children objectEnumerator]) {
+        for (TLMP4Atom *child in [self.children objectEnumerator]) {
             [result appendFormat:@"%@\n", [child descriptionWithIndent:newIndent]];
         }
-        [result appendFormat:@"%@} End of atom: %@", indent, self->name];
+        [result appendFormat:@"%@} End of atom: %@", indent, self.name];
     }
     return result;
 }

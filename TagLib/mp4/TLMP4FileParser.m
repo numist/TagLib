@@ -16,14 +16,15 @@
 @end
 
 @implementation TLMP4FileParser
-@synthesize tag;
+@synthesize tag = _tag;
+@synthesize handle = _handle;
 
 - (id)initTag:(TLMP4Tag *)target;
 {
     self = [super init];
     if (!self || ![target path]) return nil;
     
-    tag = target;
+    _tag = target;
     
     return self;
 }
@@ -31,16 +32,16 @@
 - (void)main;
 {
     // Artificially inflate the refCount so we only open the file once.
-    (void)[tag beginReadingFile];
+    (void)[self.tag beginReadingFile];
     TLAssert(self.handle);
     
-    TLMP4Atom *ilst = [tag findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
+    TLMP4Atom *ilst = [self.tag findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
     id data;
     
     data = [[ilst getChild:kAlbum] getDataWithType:TLMP4DataTypeText];
     if (data) {
         TLNotTested();
-        [tag setAlbum:(NSString *)data];
+        [self.tag setAlbum:(NSString *)data];
     }
     
     data = [[ilst getChild:kAlbumArtist] getDataWithType:TLMP4DataTypeText];
@@ -53,7 +54,7 @@
     data = [[ilst getChild:kComment] getDataWithType:TLMP4DataTypeText];
     if (data) {
         TLNotTested();
-        [tag setComment:(NSString *)data];
+        [self.tag setComment:(NSString *)data];
     }
     
     data = [[ilst getChild:kYear] getDataWithType:TLMP4DataTypeText];
@@ -66,20 +67,20 @@
     data = [[ilst getChild:kTitle] getDataWithType:TLMP4DataTypeText];
     if (data) {
         TLNotTested();
-        [tag setTitle:(NSString *)data];
+        [self.tag setTitle:(NSString *)data];
     }
     
     // TODO: atom getData must do genre conversion itself
     data = [[ilst getChild:kGenreCode] getDataWithType:TLMP4DataTypeGenre];
     if (data) {
         TLNotTested();
-        [tag setGenre:(NSString *)data];
+        [self.tag setGenre:(NSString *)data];
     }
     
     data = [[ilst getChild:kGenre] getDataWithType:TLMP4DataTypeText];
     if (data) {
         TLNotTested();
-        [tag setGenre:(NSString *)data];
+        [self.tag setGenre:(NSString *)data];
     }
     
     data = [[ilst getChild:kTrackNumber] getDataWithType:TLMP4DataTypeIntPair];
@@ -265,7 +266,7 @@
     // TODO: Also set properties: length, bitrate, sampleRate, channels, bitsPerSample.
     
     // Done. Artificially deflate the refCount back to normal.
-    (void)[tag endReadingFile];
+    (void)[self.tag endReadingFile];
 }
 
 #if 0

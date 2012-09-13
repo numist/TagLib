@@ -25,9 +25,9 @@ typedef enum {
 } TLMP4DataType;
 
 @interface TLMP4Atom : NSObject
-@property(nonatomic, readonly) uint64_t offset;
-@property(nonatomic, readonly) uint64_t length;
-@property(nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) uint64_t offset;
+@property (nonatomic, readonly) uint64_t length;
+@property (nonatomic, readonly) NSString *name;
 
 - (id)initWithOffset:(uint64_t)offset
               length:(uint64_t)length

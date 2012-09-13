@@ -10,19 +10,18 @@
 #import "TLMP4File.h"
 #import "TLMP4Tests.h"
 
-@interface TLMP4Tests () {
-@private
-    TLMP4File *has_tags;
-}
+@interface TLMP4Tests ()
+@property (nonatomic,retain) TLMP4File *has_tags;
 @end
 
 @implementation TLMP4Tests
+@synthesize has_tags;
 
 - (void)setUp
 {
     [super setUp];
     
-    self->has_tags = [(TLMP4File *)[TLMP4File alloc] initWithPath:@"TagLibTests/data/has-tags.m4a"];
+    self.has_tags = [(TLMP4File *)[TLMP4File alloc] initWithPath:@"TagLibTests/data/has-tags.m4a"];
 }
 
 - (void)tearDown
@@ -34,7 +33,7 @@
 
 - (void)testBasicAtomParsing
 {
-    STAssertNotNil(self->has_tags, @"%@", @"failed to parse atoms from file");
+    STAssertNotNil(self.has_tags, @"%@", @"failed to parse atoms from file");
 }
 
 - (void)testBadFile
@@ -48,14 +47,14 @@
 
 - (void)testFindIlst
 {
-    TLMP4Atoms *atoms = [self->has_tags atoms];
+    TLMP4Atoms *atoms = [self.has_tags atoms];
     TLMP4Atom *ilst = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
     STAssertNotNil(ilst, @"%@", @"Atom moov.udta.meta.ilst not found");
 }
 
 - (void)testFindIlstPath
 {
-    TLMP4Atoms *atoms = [self->has_tags atoms];
+    TLMP4Atoms *atoms = [self.has_tags atoms];
     NSArray *result = [atoms getAtomsWithPath:[NSArray arrayWithObjects:@"moov", @"udta", @"meta", @"ilst", nil]];
     STAssertNotNil(result, @"%@", @"Atom moov.udta.meta.ilst not found");
     STAssertTrue([result count] == 4, @"Returned array has %u elements", [result count]);
@@ -67,7 +66,7 @@
 
 - (void)testFindAll
 {
-    TLMP4Atoms *atoms = [self->has_tags atoms];
+    TLMP4Atoms *atoms = [self.has_tags atoms];
     TLMP4Atom *moov = [atoms findAtomAtPath:[NSArray arrayWithObjects:@"moov", nil]];
     STAssertNotNil(moov, @"%@", @"Atom moov not found");
     
@@ -78,7 +77,7 @@
 
 - (void)testBasicTagParsing
 {
-    TLMP4Tag *tag = [self->has_tags tag];
+    TLMP4Tag *tag = [self.has_tags tag];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertEqualObjects([tag artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [tag artist]);
 }
@@ -91,7 +90,7 @@
 
 - (void)testBasicProperties
 {    
-    TLMP4Properties *properties = [self->has_tags properties];
+    TLMP4Properties *properties = [self.has_tags properties];
     
     STAssertTrue([properties length] == 3, @"test file has unexpected length %u", [properties length]);
     STAssertTrue([properties bitrate] == 3, @"test file has unexpected bitrate %u", [properties bitrate]);
