@@ -14,6 +14,12 @@
 @property (copy, nonatomic, readonly) NSString *path;
 @property (getter=isReady, assign, nonatomic, readonly) BOOL ready;
 
+// Media properties
+@property (assign,nonatomic,readonly) NSInteger channels;
+@property (assign,nonatomic,readonly) NSInteger bitsPerSample;
+@property (assign,nonatomic,readonly) NSInteger sampleRate;
+@property (assign,nonatomic,readonly) NSInteger bitRate;
+
 // Public class methods
 #include "TLMP4Tag_Common.h"
 

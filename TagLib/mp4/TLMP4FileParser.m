@@ -329,9 +329,9 @@
     atom = nil;
                        
     if ([[data stringWithRange:NSMakeRange(20, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"mp4a"]) {
-        NSLog(@"Property(channels) = %u", [data unsignedShortAtOffset:40 endianness:OSBigEndian]); // TODO: assign properties
-        NSLog(@"Property(bitsPerSample) = %u", [data unsignedShortAtOffset:42 endianness:OSBigEndian]); // TODO: assign properties
-        NSLog(@"Property(sampleRate) = %u", [data unsignedIntAtOffset:46 endianness:OSBigEndian]); // TODO: assign properties
+        [self.tag setChannels:[data unsignedShortAtOffset:40 endianness:OSBigEndian]];
+        [self.tag setBitsPerSample:[data unsignedShortAtOffset:42 endianness:OSBigEndian]];
+        [self.tag setSampleRate:[data unsignedIntAtOffset:46 endianness:OSBigEndian]];
         
         if ([[data stringWithRange:NSMakeRange(56, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"esds"] &&
             [data unsignedCharAtOffset:64] == 0x03) {
@@ -347,7 +347,7 @@
                     pos +=3;
                 }
                 pos += 10;
-                NSLog(@"Property(bitRate) = %u", ([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000); // TODO: assign properties
+                [self.tag setBitRate:(([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000)];
             }
         }
     }

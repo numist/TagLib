@@ -37,6 +37,12 @@
 @synthesize stik = _stik;
 @synthesize rating = _rating;
 
+// Properties
+@synthesize channels = _channels;
+@synthesize bitsPerSample = _bitsPerSample;
+@synthesize sampleRate = _sampleRate;
+@synthesize bitRate = _bitRate;
+
 - (TLMP4Tag *)initWithPath:(NSString *)pathArg;
 {
     self = [super initWithPath:pathArg];

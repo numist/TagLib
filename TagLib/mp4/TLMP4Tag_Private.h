@@ -28,6 +28,12 @@
 - (NSFileHandle *)beginReadingFile;
 - (id)endReadingFile;
 
+// Media properties
+@property (assign,nonatomic,readwrite) NSInteger channels;
+@property (assign,nonatomic,readwrite) NSInteger bitsPerSample;
+@property (assign,nonatomic,readwrite) NSInteger sampleRate;
+@property (assign,nonatomic,readwrite) NSInteger bitRate;
+
 // Public class methods
 #include "TLMP4Tag_Common.h"
 
