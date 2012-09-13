@@ -85,9 +85,9 @@
     if (!self.atoms) {
         self.atoms = [[NSMutableDictionary alloc] init];
         
-        NSFileHandle *file = [self beginReadingFile];
+        NSFileHandle *handle = [self beginReadingFile];
 
-        unsigned long long end = [file seekToEndOfFile];
+        unsigned long long end = [handle seekToEndOfFile];
         unsigned long long offset = 0;
         
         while (offset + 8 < end) {
@@ -101,7 +101,7 @@
             offset += [atom length];
         }
         
-        file = [self endReadingFile];
+        handle = [self endReadingFile];
     }
     
     NSMutableArray *workingPath = [NSMutableArray arrayWithArray:searchPath];

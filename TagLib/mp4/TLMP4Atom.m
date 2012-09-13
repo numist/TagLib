@@ -47,6 +47,7 @@
     if ([header length] != 8) {
         TLLog(@"MP4: Couldn't read 8 bytes of data for atom header. (Got %lu bytes)",
               [header length]);
+        (void)[parent endReadingFile];
         return nil;
     }
     
@@ -58,12 +59,14 @@
         if (length > UINT32_MAX) {
             TLCheck(length <= UINT32_MAX);
             TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)", length);
+            (void)[parent endReadingFile];
             return nil;
         }
         // The atom has a 64-bit length, but it's actually a 32-bit value
     }
     if (length < 8 || length + offset > fileSize) {
         TLLog(@"MP4: Invalid atom size: %llu", length);
+        (void)[parent endReadingFile];
         return nil;
     }
     
