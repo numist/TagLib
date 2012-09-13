@@ -35,13 +35,13 @@
     
     // Basic block until tags have been parsed
     do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
     } while (![tag isReady]);
     
     return tag;
 }
 
-- (void)testHorribleTagParsing
+- (void)testBasicHorribleTagParsing
 {
     NSString *file = @"TagLibTests/data/Local-horrible.m4a";
     
@@ -55,10 +55,24 @@
     STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
 }
 
-- (void)testFireflyTagParsing
+- (void)testBasicFireflyTagParsing
 {
     NSString *file = @"TagLibTests/data/Local-firefly.m4v";
     
+    if(![[NSFileManager defaultManager] fileExistsAtPath:file]) {
+        TLLog(@"%@", @"sorry, you don't have the file required to run this test");
+        return;
+    }
+    
+    TLMP4Tag *tag = [LocalTests blockingMP4TagWithPath:file];
+    STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
+    STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
+}
+
+- (void)testBasicPoorLenoTagParsing
+{
+    NSString *file = @"TagLibTests/data/Local-poorleno.m4a";
+
     if(![[NSFileManager defaultManager] fileExistsAtPath:file]) {
         TLLog(@"%@", @"sorry, you don't have the file required to run this test");
         return;

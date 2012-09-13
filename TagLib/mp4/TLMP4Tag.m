@@ -36,12 +36,15 @@
 @synthesize gaplessPlayback = _gaplessPlayback;
 @synthesize stik = _stik;
 @synthesize rating = _rating;
+@synthesize purchaseDate = _purchaseDate;
 
 // Properties
 @synthesize channels = _channels;
 @synthesize bitsPerSample = _bitsPerSample;
 @synthesize sampleRate = _sampleRate;
 @synthesize bitRate = _bitRate;
+
+#pragma mark Initializers
 
 - (TLMP4Tag *)initWithPath:(NSString *)pathArg;
 {
@@ -143,7 +146,9 @@
     return [atom getDataWithType:[atomInfo type]];
 }
 
-#pragma mark -
+#pragma mark - Superclass overloads
+
+// TODO: overload isEmpty, refactor class structure so this makes more sense
 
 // TODO: make this output more and more useful information
 - (NSString *)description

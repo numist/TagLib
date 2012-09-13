@@ -27,3 +27,4 @@
 @property (assign,nonatomic,readwrite) BOOL gaplessPlayback;
 @property (assign,nonatomic,readwrite) NSInteger stik;
 @property (assign,nonatomic,readwrite) NSInteger rating;
+@property (copy,nonatomic,readwrite) NSDate *purchaseDate;

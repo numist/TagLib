@@ -27,6 +27,7 @@
 - (id)getDataWithType:(TLMP4DataType)type checkFlags:(TLMP4AtomFlags)flags;
 - (id)getDataWithType:(TLMP4DataType)type;
 - (NSData *)getData;
+- (NSData *)getDataWithRange:(NSRange)range;
 
 - (NSString *) descriptionWithIndent:(NSString *)indent;
 @end

@@ -10,67 +10,159 @@
 #import "TLMP4Tests.h"
 
 @interface TLMP4Tests ()
-@property (nonatomic,retain) TLMP4Tag *has_tags;
++ (TLMP4Tag *)blockingMP4TagWithPath:(NSString *)path;
 @end
 
 @implementation TLMP4Tests
-@synthesize has_tags;
 
-- (void)setUp
+//- (void)setUp
+//{
+//    [super setUp];
+//}
+//
+//- (void)tearDown
+//{
+//    [super tearDown];
+//}
+//
++ (TLMP4Tag *)blockingMP4TagWithPath:(NSString *)path;
 {
-    [super setUp];
-    
-    self.has_tags = [[TLMP4Tag alloc] initWithPath:@"TagLibTests/data/has-tags.m4a"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) return nil;
+
+    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithPath:path];
     
     // Basic block until tags have been parsed
     do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    } while (![self.has_tags isReady]);
-}
-
-- (void)tearDown
-{
-    // Tear-down code here.
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    } while (![tag isReady]);
     
-    [super tearDown];
+    return tag;
 }
 
-- (void)testBadFile
+#pragma mark - Basic file loading
+- (void)testBasicBadFile
 {
-    TLMP4Tag *mp4 = [[TLMP4Tag alloc] initWithPath:@"TagLibTests/data/empty.aiff"];
-    // Basic block until tags have been parsed
-    do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    } while (![self.has_tags isReady]);
-
-    if (![mp4 isEmpty]) {
-        TLLog(@"%@", [mp4 description]);
+    BOOL hasTags = NO;
+    NSString *path = @"TagLibTests/data/empty.aiff";
+    
+    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+    
+    STAssertTrue([mp4 isReady], @"File is not ready?");
+    if (hasTags) {
+        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
+    } else {
+        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
     }
-    STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in a non-MPEG-4 file");
 }
+
+- (void)testBasicCovrJunk
+{
+    BOOL hasTags = YES;
+    NSString *path = @"TagLibTests/data/covr-junk.m4a";
+
+    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+    
+    STAssertTrue([mp4 isReady], @"File is not ready?");
+    if (hasTags) {
+        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
+    } else {
+        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
+    }
+}
+
+- (void)testBasicGnre
+{
+    BOOL hasTags = YES;
+    NSString *path = @"TagLibTests/data/gnre.m4a";
+
+    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+    
+    STAssertTrue([mp4 isReady], @"File is not ready?");
+    if (hasTags) {
+        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
+    } else {
+        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
+    }
+}
+
+- (void)testBasicHasTags
+{
+    BOOL hasTags = YES;
+    NSString *path = @"TagLibTests/data/has-tags.m4a";
+
+    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+    
+    STAssertTrue([mp4 isReady], @"File is not ready?");
+    if (hasTags) {
+        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
+    } else {
+        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
+    }
+}
+
+// TODO: Did this test work on TagLib(C++)?
+//- (void)testBasicIlstIsLast
+//{
+//    BOOL hasTags = YES;
+//    NSString *path = @"TagLibTests/data/ilst-is-last.m4a";
+//
+//    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+//    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+//    
+//    STAssertTrue([mp4 isReady], @"File is not ready?");
+//    if (hasTags) {
+//        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
+//    } else {
+//        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
+//    }
+//}
+
+- (void)testBasicNoTags
+{
+    BOOL hasTags = NO;
+    NSString *path = @"TagLibTests/data/no-tags.m4a";
+
+    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+    
+    STAssertTrue([mp4 isReady], @"File is not ready?");
+    if (hasTags) {
+        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
+    } else {
+        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
+    }
+}
+
+#pragma mark - Atom operations
 
 - (void)testFindIlst
 {
-    TLMP4Atom *ilst = [self.has_tags findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
+    TLMP4Tag *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
+    TLMP4Atom *ilst = [has_tags findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
     STAssertNotNil(ilst, @"%@", @"Atom moov.udta.meta.ilst not found");
 }
 
 - (void)testBasicTagParsing
 {
-    STAssertTrue([self.has_tags isReady], @"%@", @"Tag object was not loaded");
-    STAssertFalse([self.has_tags isEmpty], @"%@", @"Failed to parse tags from file");
-    STAssertEqualObjects([self.has_tags artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [self.has_tags artist]);
+    TLMP4Tag *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
+    STAssertTrue([has_tags isReady], @"%@", @"Tag object was not loaded");
+    STAssertFalse([has_tags isEmpty], @"%@", @"Failed to parse tags from file");
+    STAssertEqualObjects([has_tags artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [has_tags artist]);
 }
 
-//- (void)testBasicProperties
-//{    
-//    TLMP4Properties *properties = [self.has_tags properties];
-//    
-//    STAssertTrue([properties length] == 3, @"test file has unexpected length %u", [properties length]);
-//    STAssertTrue([properties bitrate] == 3, @"test file has unexpected bitrate %u", [properties bitrate]);
-//    STAssertTrue([properties sampleRate] == 44100, @"test file has unexpected sample rate %u", [properties sampleRate]);
-//    STAssertTrue([properties channels] == 2, @"test file has unexpected channels %u", [properties channels]);
-//    STAssertTrue([properties bitsPerSample] == 16, @"test file has unexpected bitsPerSample %u", [properties bitsPerSample]);
-//}
+- (void)testBasicProperties
+{
+    TLMP4Tag *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
+    
+    //STAssertTrue([has_tags length] == 3, @"test file has unexpected length %u", [has_tags length]);
+    STAssertTrue([has_tags bitRate] == 3, @"test file has unexpected bitrate %u", [has_tags bitRate]);
+    STAssertTrue([has_tags sampleRate] == 44100, @"test file has unexpected sample rate %u", [has_tags sampleRate]);
+    STAssertTrue([has_tags channels] == 2, @"test file has unexpected channels %u", [has_tags channels]);
+    STAssertTrue([has_tags bitsPerSample] == 16, @"test file has unexpected bitsPerSample %u", [has_tags bitsPerSample]);
+}
 
 @end

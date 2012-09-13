@@ -12,6 +12,7 @@
 #import "TLMP4Tag_Private.h"
 #import "NSData+GetTypedData.h"
 #import "TLID3v1Genres.h"
+#import "ISO8601DateFormatter.h"
 
 @interface TLMP4Atom ()
 @property (nonatomic, readwrite) NSDictionary *children;
@@ -30,6 +31,7 @@
 - (NSImage *)parseCovr;
 - (NSString *)parseTextWithFlags:(TLMP4AtomFlags)flags;
 - (NSDate *)parseDateWithFlags:(TLMP4AtomFlags)flags;
+- (NSDate *)parseYearWithFlags:(TLMP4AtomFlags)flags;
 
 @end
 
@@ -181,6 +183,8 @@
             return [self parseTextWithFlags:flags];
         case TLMP4DataTypeDate:
             return [self parseDateWithFlags:flags];
+        case TLMP4DataTypeYear:
+            return [self parseYearWithFlags:flags];
         default:
             TLNotReached();
             return nil;
@@ -193,13 +197,21 @@
     return [self getDataWithType:type checkFlags:-1];
 }
 
-- (NSData *)getData;
+- (NSData *)getDataWithRange:(NSRange)range;
 {
+    //TLLog(@"Reading %lu bytes starting at offset %llu", range.length, range.location + self.offset);
+    TLCheck(range.length < 255);
+    
     NSFileHandle *handle = [self.parent beginReadingFile];
-    [handle seekToFileOffset:self.offset];
-    NSData *data = [handle readDataOfLength:self.length];
+    [handle seekToFileOffset:(self.offset + range.location)];
+    NSData *data = [handle readDataOfLength:range.length];
     handle = [self.parent endReadingFile];
     return data;
+}
+
+- (NSData *)getData;
+{
+    return [self getDataWithRange:NSMakeRange(0, self.length)];
 }
 
 #pragma mark - Data parsing
@@ -405,6 +417,19 @@
 {
     NSString *text = [self parseTextWithFlags:flags];
 
+    NSLog(@"called for %@", self.name);
+    
+    [NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
+    ISO8601DateFormatter *format = [[ISO8601DateFormatter alloc] init];
+    
+    NSLog(@"%s:%d: %@ -> %@", __FILE__, __LINE__, text, [format dateFromString:text]);
+    return [format dateFromString:text];
+}
+
+- (NSDate *)parseYearWithFlags:(TLMP4AtomFlags)flags;
+{
+    NSString *text = [self parseTextWithFlags:flags];
+    
     NSDateFormatter *format = [[NSDateFormatter alloc] initWithDateFormat:@"%Y" allowNaturalLanguage:NO];
     
     return [format dateFromString:text];

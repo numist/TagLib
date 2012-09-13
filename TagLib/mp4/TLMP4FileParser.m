@@ -17,6 +17,8 @@
 - (void)getProperties;
 @end
 
+static const uint64_t kWorryLength = 255;
+
 @implementation TLMP4FileParser
 @synthesize tag = _tag;
 @synthesize success = _success;
@@ -238,12 +240,8 @@
     }
     
     data = [self.tag getILSTData:kPurchaseDate];
-    // TODO: this should probably be an NSDate, perhaps year should have its own TLMP4DataType entry?
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setPurchaseDate:(NSString *)data];
+        [self.tag setPurchaseDate:(NSDate *)data];
     }
     
     data = [self.tag getILSTData:kGaplessPlayback];
@@ -267,90 +265,99 @@
     NSData *data;
     TLMP4Atom *atom;
     
-    // Get properties: length, bitrate, sampleRate, channels, bitsPerSample.
+    //
+    // Find first of tracks, to get properties from
+    //
     atom = [self.tag findAtom:@[@"moov"]];
     if (!atom) {
         TLLog(@"%@", @"MP4: Atom 'moov' not found");
         return;
     }
-    
+
     TLMP4Atom *trak = nil;
     for (trak in [atom getChild:@"trak" recursive:YES]) {
         TLMP4Atom *hdlr = [[trak getChild:@"mdia"] getChild:@"hdlr"];
         if (!hdlr) {
-            TLLog(@"%@", @"MP4: Atom 'trak.mdia.hdlr' not found");
-            return;
+            TLLog(@"%@", @"MP4: Atom 'trak.mdia.hdlr' not found -- invalid track?");
+            TLNotTested();
+            trak = nil;
+            continue;
         }
         
-        TLCheck([hdlr length] < 255);
-        data = [hdlr getData];
-
-        if ([[data stringWithRange:NSMakeRange(16, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"soun"]) {
+        data = [hdlr getDataWithRange:NSMakeRange(16, 4)];
+        if ([[data stringWithEncoding:NSMacOSRomanStringEncoding] isEqualToString:@"soun"]) {
             break;
         }
         trak = nil;
     }
+    
+    // If there are no tracks, there are no properties!
     if (!trak) {
-        TLLog(@"%@", @"MP4: No audio tracks");
+        TLLog(@"%@", @"MP4: No tracks");
         return;
     }
     data = nil;
     atom = nil;
     
+    //
+    // Property: length
+    //
     atom = [[trak getChild:@"mdia"] getChild:@"mdhd"];
-    if (!atom) {
-        TLLog(@"%@", @"MP4: Atom 'trak.mdia.mdhd' not found");
-        return;
-    }
-    TLCheck([atom length] < 255);
-    data = [atom getData];
-    // Hint to the compiler that this lvar can be reused—it's not used again after this
-    atom = nil;
-    
-    if ([data unsignedCharAtOffset:8] == 0) {
-        uint32 unit = [data unsignedIntAtOffset:20 endianness:OSBigEndian];
-        uint32 totalLength = [data unsignedIntAtOffset:24 endianness:OSBigEndian];
-        NSLog(@"Property(length) = %u", (uint32_t)(totalLength / unit)); // TODO: assign properties
+    if (atom) {
+        data = [atom getDataWithRange:NSMakeRange(8, 36)];
+        if ([data unsignedCharAtOffset:0] == 0) {
+            uint32 unit = [data unsignedIntAtOffset:12 endianness:OSBigEndian];
+            uint32 totalLength = [data unsignedIntAtOffset:16 endianness:OSBigEndian];
+            NSLog(@"Property(length) = %u", (uint32_t)(totalLength / unit)); // TODO: assign properties
+        } else {
+            uint64 unit = [data unsignedLongLongAtOffset:20 endianness:OSBigEndian];
+            uint64 totalLength = [data unsignedLongLongAtOffset:28 endianness:OSBigEndian];
+            NSLog(@"Property(length) = %llu", (uint64_t)totalLength / unit); // TODO: assign properties
+            TLNotTested();
+        }
     } else {
-        uint64 unit = [data unsignedLongLongAtOffset:28 endianness:OSBigEndian];
-        uint64 totalLength = [data unsignedLongLongAtOffset:36 endianness:OSBigEndian];
-        NSLog(@"Property(length) = %llu", (uint64_t)totalLength / unit); // TODO: assign properties
+        TLLog(@"%@", @"MP4: Atom 'trak.mdia.mdhd' not found");
         TLNotTested();
     }
-    
-    atom = [[[[trak getChild:@"mdia"] getChild:@"minf"] getChild:@"stbl"] getChild:@"stsd"];
-    if (!atom) {
-        TLLog(@"%@", @"MP4: Atom 'trak.mdia.minf.stbl.stsd' not found")
-        return;
-    }
-    TLCheck([atom length] < 255);
-    data = [atom getData];
-    // Hint to the compiler that this lvar can be reused—it's not used again after this
+    data = nil;
     atom = nil;
-                       
-    if ([[data stringWithRange:NSMakeRange(20, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"mp4a"]) {
-        [self.tag setChannels:[data unsignedShortAtOffset:40 endianness:OSBigEndian]];
-        [self.tag setBitsPerSample:[data unsignedShortAtOffset:42 endianness:OSBigEndian]];
-        [self.tag setSampleRate:[data unsignedIntAtOffset:46 endianness:OSBigEndian]];
-        
-        if ([[data stringWithRange:NSMakeRange(56, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"esds"] &&
-            [data unsignedCharAtOffset:64] == 0x03) {
-            uint32 pos = 65;
-            NSData *marker = [NSData dataWithBytes:"\x80\x80\x80" length:3];
-            if ([[data subdataWithRange:NSMakeRange(pos, 3)] isEqualTo:marker]) {
-                pos +=3;
-            }
-            pos += 4;
-            if ([data unsignedCharAtOffset:pos] == 0x04) {
-                pos += 1;
+    
+    //
+    // All the other properties live together in stsd
+    //
+    atom = [[[[trak getChild:@"mdia"] getChild:@"minf"] getChild:@"stbl"] getChild:@"stsd"];
+    if (atom) {
+        data = [atom getDataWithRange:NSMakeRange(0, 90)];
+        if ([[data stringWithRange:NSMakeRange(20, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"mp4a"]) {
+            [self.tag setChannels:[data unsignedShortAtOffset:40 endianness:OSBigEndian]];
+            [self.tag setBitsPerSample:[data unsignedShortAtOffset:42 endianness:OSBigEndian]];
+            [self.tag setSampleRate:[data unsignedIntAtOffset:46 endianness:OSBigEndian]];
+            
+            if ([[data stringWithRange:NSMakeRange(56, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"esds"] &&
+                [data unsignedCharAtOffset:64] == 0x03) {
+                uint32 pos = 65;
+                NSData *marker = [NSData dataWithBytes:"\x80\x80\x80" length:3];
                 if ([[data subdataWithRange:NSMakeRange(pos, 3)] isEqualTo:marker]) {
                     pos +=3;
                 }
-                pos += 10;
-                [self.tag setBitRate:(([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000)];
+                pos += 4;
+                if ([data unsignedCharAtOffset:pos] == 0x04) {
+                    pos += 1;
+                    if ([[data subdataWithRange:NSMakeRange(pos, 3)] isEqualTo:marker]) {
+                        pos +=3;
+                    }
+                    pos += 10;
+                    [self.tag setBitRate:(([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000)];
+                }
             }
         }
+    } else {
+        TLLog(@"%@", @"MP4: Atom 'trak.mdia.minf.stbl.stsd' not found")
+        TLNotTested();
     }
+    data = nil;
+    atom = nil;
+    // Max data position for read: 90
 }
 
 - (void)finished;

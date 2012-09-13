@@ -19,6 +19,7 @@ typedef enum {
     TLMP4DataTypeGenre,
     TLMP4DataTypeImage,
     TLMP4DataTypeText,
+    TLMP4DataTypeYear,
     TLMP4DataTypeDate
 } TLMP4DataType;
 
