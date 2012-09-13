@@ -267,6 +267,11 @@
     
     // Done. Artificially deflate the refCount back to normal.
     (void)[self.tag endReadingFile];
+    [self.tag setReady:YES];
+    
+    // TODO: This is probably not right, but it'll work for now
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TLTagDidFinishLoading"
+                                                        object:self.tag];
 }
 
 #if 0

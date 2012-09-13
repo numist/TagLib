@@ -63,4 +63,23 @@
     }
 }
 
+#pragma mark - NSOperationQueue management methods
+
+static NSOperationQueue *currentQueue = nil;
+
++ (void)setLoadingQueue:(NSOperationQueue *)queue;
+{
+    currentQueue = queue;
+}
+
++ (NSOperationQueue *)loadingQueue;
+{
+    if (!currentQueue) {
+        currentQueue = [[NSOperationQueue alloc] init];
+        // Disks don't really parallelize well
+        [currentQueue setMaxConcurrentOperationCount:1];
+    }
+    return currentQueue;
+}
+
 @end

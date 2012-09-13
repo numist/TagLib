@@ -23,4 +23,7 @@
 
 - (BOOL) isEmpty;
 + (void) copy: (TLTag *)source to: (TLTag *) target overwrite: (BOOL)overwrite;
+
++ (void)setLoadingQueue:(NSOperationQueue *)queue;
++ (NSOperationQueue *)loadingQueue;
 @end

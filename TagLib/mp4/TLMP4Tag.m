@@ -22,6 +22,7 @@
 @implementation TLMP4Tag
 @synthesize path = _path;
 @synthesize atoms = _atoms;
+@synthesize ready = _ready;
 
 - (TLMP4Tag *)initWithPath:(NSString *)pathArg;
 {
@@ -29,8 +30,10 @@
     if (!self || !pathArg) return nil;
 
     _path = pathArg;
+    _ready = NO;
 
-    [[[TLMP4FileParser alloc] initTag:self] main];
+    // Begin loading common tags in the background
+    [[TLTag loadingQueue] addOperation:[[TLMP4FileParser alloc] initTag:self]];
 
     return self;
 }

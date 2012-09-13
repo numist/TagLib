@@ -17,6 +17,7 @@
 #pragma mark -
 #pragma mark Redeclare publicly-readonly ivars
 @property (copy, nonatomic, readwrite) NSString *path;
+@property (getter=isReady, assign, nonatomic, readwrite) BOOL ready;
 
 #pragma mark -
 #pragma mark Protected ivars
