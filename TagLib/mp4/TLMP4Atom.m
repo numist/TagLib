@@ -99,36 +99,21 @@
 
 - (NSDictionary *)children;
 {
-    // Pointless call to make sure we've loaded children.
-    if (!_children) {
-        (void)[self getChild:@""];
-    }
-    return _children;
-}
-
-#pragma mark Subdata getters
-
-- (TLMP4Atom *)getChild:(NSString *)nameArg;
-{
-    static NSSet *containers = nil;
-    if (!containers) {
-        containers = [NSSet setWithObjects:@"moov", @"udta", @"mdia", @"meta",
-                      @"ilst", @"stbl", @"minf", @"moof", @"traf", @"trak",
-                      nil];
-    }
+    // Only some atoms have children, apparently they're categorized by name?
+    static NSArray *containers = nil;
+    if (!containers) containers = @[@"moov", @"udta", @"mdia", @"meta", @"ilst", @"stbl", @"minf", @"moof", @"traf", @"trak"];
+    if (![containers containsObject:self.name]) return nil;
     
+    // Memoize children on demand
     if (!_children) {
         NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
-        
-        // Only some atoms have children, apparently they're categorized by name?
-        if (![containers containsObject:self.name]) return nil;
         
         uint64_t offset = self.dataOffset;
         
         if ([self.name isEqualToString:@"meta"]) {
             offset += 4;
         }
-            
+        
         while (offset < self.offset + self.length) {
             TLMP4Atom *child = [[TLMP4Atom alloc] initWithOffset:offset parent:self.parent];
             if (!child) {
@@ -140,9 +125,31 @@
             offset += [child length];
         }
         
-        self.children = children;
+        _children = children;
     }
+    
+    return _children;
+}
+
+#pragma mark Subdata getters
+
+- (TLMP4Atom *)getChild:(NSString *)nameArg;
+{
     return [self.children objectForKey:nameArg];
+}
+
+- (NSArray *)getChild:(NSString *)name recursive:(BOOL)recursive;
+{
+    if (!recursive) return @[[self getChild:name]];
+    
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    for (NSString *atomName in self.children) {
+        if ([name isEqualToString:atomName]) {
+            [result addObject:[self.children objectForKey:atomName]];
+        }
+        [result addObjectsFromArray:[[self.children objectForKey:atomName] getChild:name recursive:recursive]];
+    }
+    return result;
 }
 
 #pragma mark Data blob getters
@@ -186,25 +193,25 @@
     return [self getDataWithType:type checkFlags:-1];
 }
 
-- (id)getData;
+- (NSData *)getData;
 {
-    TLNotTested();
-    return [self getDataWithType:TLMP4DataTypeAuto];
+    NSFileHandle *handle = [self.parent beginReadingFile];
+    [handle seekToFileOffset:self.offset];
+    NSData *data = [handle readDataOfLength:self.length];
+    handle = [self.parent endReadingFile];
+    return data;
 }
 
 #pragma mark - Data parsing
 
 - (NSArray *)parseDataWithExpectedFlags:(TLMP4AtomFlags)flags freeForm:(BOOL)freeForm;
 {
-    NSFileHandle *handle = [self.parent beginReadingFile];
-    [handle seekToFileOffset:[self dataOffset]];
-    NSData *data = [handle readDataOfLength:(self.length - (self.dataOffset - self.offset))];
-    handle = [self.parent endReadingFile];
+    NSData *data = [self getData];
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
 
     int i = 0;
-    uint32 pos = 0;
+    uint64_t pos = self.dataOffset - self.offset;
     while (pos < [data length]) {
         uint32 length = [data unsignedIntAtOffset:pos endianness:OSBigEndian];
         NSString *name = [data stringWithRange:NSMakeRange(pos + 4, 4) encoding:NSMacOSRomanStringEncoding];
