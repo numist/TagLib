@@ -12,12 +12,11 @@
 #import "NSData+Endian.h"
 #import "TLMP4Tag_Private.h"
 
-@interface TLMP4Atom ()
+@interface TLMP4Atom () {
+    NSNumber *_flags;
+}
 @property (nonatomic, readwrite) NSMutableDictionary *children;
 @property (weak, nonatomic, readwrite) TLMP4Tag *parent;
-@property (nonatomic, readwrite) uint64_t offset;
-@property (nonatomic, readwrite) uint64_t length;
-@property (nonatomic, readwrite) NSString *name;
 @end
 
 @implementation TLMP4Atom
@@ -32,20 +31,32 @@
     self = [super init];
     if (!self || !lengthArg || !nameArg) return nil;
     
-    self.offset = offsetArg;
-    self.length = lengthArg;
-    self.name = nameArg;
-    self.parent = parentArg;
+    _offset = offsetArg;
+    _length = lengthArg;
+    _name = nameArg;
+    _parent = parentArg;
     
     return self;
 }
 
-- (NSDictionary *) children;
+#pragma mark - JIT ivar getters
+
+- (NSDictionary *)children;
 {
     // Pointless call to make sure we've loaded children.
     (void)[self getChild:@""];
     return _children;
 }
+
+- (TLMP4AtomFlags)flags;
+{
+    if (!_flags) {
+        // TODO: get flags
+    }
+    return (TLMP4AtomFlags)[_flags integerValue];
+}
+
+#pragma mark Subdata getters
 
 - (TLMP4Atom *)getChild:(NSString *)nameArg;
 {
@@ -56,25 +67,32 @@
     return [self.children objectForKey:nameArg];
 }
 
-- (TLMP4DataType)dataType;
+- (TLMP4DataType)likelyDataType;
 {
-    // TODO: get dataType from flags
-    TLAssert(0);
+    return [TLMP4AtomInfo dataTypeFromFlags:self.flags];
 }
 
-- (id)getDataWithType:(TLMP4DataType)expectedType;
+- (id)getDataWithType:(TLMP4DataType)type checkFlags:(TLMP4AtomFlags)flags;
 {
     id data = nil;
-
-    if (!expectedType) {
-        expectedType = [self dataType];
-        TLLog(@"Assuming type %d", expectedType);
-        TLNotTested();
+    
+    // This is a little strict, but it'll do for now
+    TLAssert(flags < 0 || flags == self.flags);
+    
+    if (type == TLMP4DataTypeAuto) {
+        type = [TLMP4AtomInfo dataTypeFromFlags:self.flags];
+        // This is a little strict, but it'll do for now
+        TLAssert(type != TLMP4DataTypeUnknown);
     }
     
-    // TODO: implement
+    // TODO: get and cast the data
     TLAssert(0);
     return data;
+}
+
+- (id)getDataWithType:(TLMP4DataType)type;
+{
+    return [self getDataWithType:type checkFlags:-1];
 }
 
 - (id)getData;

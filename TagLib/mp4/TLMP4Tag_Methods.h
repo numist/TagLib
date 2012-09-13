@@ -9,6 +9,7 @@
 - (id)initWithPath:(NSString *)path;
 
 - (TLMP4Atom *)findAtom:(NSArray *)path;
+- (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
 
 #pragma mark -
 #pragma mark Extra item types on top of TLTag's standard getters/setters.

@@ -9,20 +9,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import "TLMP4AtomInfo.h"
+
 // Forward declare parent type
 @class TLMP4Tag;
-
-typedef enum {
-    TLMP4DataTypeUnknown,
-    TLMP4DataTypeAuto,
-    TLMP4DataTypeFreeForm,
-    TLMP4DataTypeIntPair,
-    TLMP4DataTypeBool,
-    TLMP4DataTypeInt,
-    TLMP4DataTypeGenre,     // Int -> string, looked up in ID3 table
-    TLMP4DataTypeImage,
-    TLMP4DataTypeText
-} TLMP4DataType;
 
 @interface TLMP4Atom : NSObject
 @property (nonatomic, readonly) uint64_t offset;
@@ -34,11 +24,14 @@ typedef enum {
                 name:(NSString *)name
               parent:(TLMP4Tag *)parent;
 
-- (NSDictionary *) children;
-- (TLMP4Atom *)getChild:(NSString *)name;
+- (NSDictionary *)children;
+- (TLMP4AtomFlags)flags;
 
-- (TLMP4DataType)dataType;
-- (id)getDataWithType:(TLMP4DataType)expectedType;
+- (TLMP4Atom *)getChild:(NSString *)name;
+- (TLMP4DataType)likelyDataType;
+
+- (id)getDataWithType:(TLMP4DataType)type checkFlags:(TLMP4AtomFlags)flags;
+- (id)getDataWithType:(TLMP4DataType)type;
 - (id)getData;
 
 - (NSString *) descriptionWithIndent:(NSString *)indent;

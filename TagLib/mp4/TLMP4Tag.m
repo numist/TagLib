@@ -74,7 +74,7 @@
     return nil;
 }
 
-#pragma mark -
+#pragma mark - Atom methods
 - (TLMP4Atom *)findAtom:(NSArray *)searchPath;
 {
     if (![searchPath count]) {
@@ -94,6 +94,14 @@
     }
     
     return match;
+}
+
+- (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
+{
+    TLMP4Atom *atom = [self findAtom:@[@"moov", @"udta", @"meta", @"ilst", [atomInfo name]]];
+    if (!atom) return nil;
+    
+    return [atom getDataWithType:[atomInfo type] checkFlags:[atomInfo flags]];
 }
 
 #pragma mark -
