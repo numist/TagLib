@@ -178,17 +178,4 @@
 
 // TODO: overload isEmpty, refactor class structure so this makes more sense
 
-// TODO: make this output more and more useful information
-- (NSString *)description
-{
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tags"];
-    
-    if ([self.atoms count]) {
-        [result appendString:@": {\n"];
-        [result appendString:[self.atoms description]];
-        [result appendString:@"\n} End of atoms"];
-    }
-    return result;
-}
-
 @end

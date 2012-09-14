@@ -62,9 +62,9 @@ static NSOperationQueue *currentQueue = nil;
 - (NSString *)description;
 {
     if ([self artist] && [self album] && [self title]) {
-        return [NSString stringWithFormat:@"TLTags for %@ by %@ from %@", [self title], [self artist], [self album]];
+        return [NSString stringWithFormat:@"%@ from %@ by %@", [self title], [self album], [self artist]];
     } else {
-        return [NSString stringWithFormat:@"TLTags for a file with very few (if any) tags"];
+        return [NSString stringWithFormat:@"Tags object for a file with very few (if any) tags"];
     }
 }
 
