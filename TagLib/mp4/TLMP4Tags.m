@@ -38,6 +38,11 @@
 @synthesize rating = _rating;
 @synthesize purchaseDate = _purchaseDate;
 @synthesize purchaserID = _purchaserID;
+@synthesize composer = _composer;
+@synthesize BPM = _BPM;
+@synthesize grouping = _grouping;
+@synthesize description = _description;
+@synthesize lyrics = _lyrics;
 
 // Properties
 @synthesize channels = _channels;

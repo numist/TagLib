@@ -62,8 +62,6 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kComment];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
         [self.tags setComment:(NSString *)data];
     }
     
@@ -84,8 +82,6 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kGenre];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
         [self.tags setGenre:(NSString *)data];
     }
     
@@ -109,10 +105,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kComposer];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setComposer:(NSString *)data];
+        [self.tags setComposer:(NSString *)data];
     }
     
     data = [self.tags getILSTData:kEncoder];
@@ -122,10 +115,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kBPM];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setBPM:(NSNumber *)data];
+        [self.tags setBPM:[(NSNumber *)data integerValue]];
     }
     
     data = [self.tags getILSTData:kCopyright];
@@ -150,10 +140,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kGrouping];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setGrouping:(NSString *)data];
+        [self.tags setGrouping:(NSString *)data];
     }
     
     data = [self.tags getILSTData:kPodcast];
@@ -198,18 +185,12 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kDescription];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setDescription:(NSString *)data];
+        [self.tags setDescription:(NSString *)data];
     }
     
     data = [self.tags getILSTData:kLyrics];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setLyrics:(NSString *)data];
+        [self.tags setLyrics:(NSString *)data];
     }
     
     data = [self.tags getILSTData:kTVNetworkName];
