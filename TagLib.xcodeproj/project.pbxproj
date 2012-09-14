@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BC10D4EA1601112A00968ADB /* NSMutableArray+StackOps.h in Headers */ = {isa = PBXBuildFile; fileRef = BC10D4E81601112A00968ADB /* NSMutableArray+StackOps.h */; };
 		BC10D4EB1601112A00968ADB /* NSMutableArray+StackOps.m in Sources */ = {isa = PBXBuildFile; fileRef = BC10D4E91601112A00968ADB /* NSMutableArray+StackOps.m */; };
+		BC159B571603A9830055F4B2 /* TLMappedDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = BC159B551603A9830055F4B2 /* TLMappedDataCache.h */; };
+		BC159B581603A9830055F4B2 /* TLMappedDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BC159B561603A9830055F4B2 /* TLMappedDataCache.m */; };
 		BC236CCE13EF462A006C41C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC236CCD13EF462A006C41C0 /* Cocoa.framework */; };
 		BC236CD813EF462A006C41C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC236CD613EF462A006C41C0 /* InfoPlist.strings */; };
 		BC236CE413EF462A006C41C0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC236CE313EF462A006C41C0 /* SenTestingKit.framework */; };
@@ -62,6 +64,8 @@
 /* Begin PBXFileReference section */
 		BC10D4E81601112A00968ADB /* NSMutableArray+StackOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+StackOps.h"; path = "lib/NSMutableArray+StackOps.h"; sourceTree = "<group>"; };
 		BC10D4E91601112A00968ADB /* NSMutableArray+StackOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+StackOps.m"; path = "lib/NSMutableArray+StackOps.m"; sourceTree = "<group>"; };
+		BC159B551603A9830055F4B2 /* TLMappedDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMappedDataCache.h; path = lib/TLMappedDataCache.h; sourceTree = "<group>"; };
+		BC159B561603A9830055F4B2 /* TLMappedDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMappedDataCache.m; path = lib/TLMappedDataCache.m; sourceTree = "<group>"; };
 		BC236CCA13EF462A006C41C0 /* TagLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TagLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC236CCD13EF462A006C41C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BC236CD013EF462A006C41C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -278,6 +282,8 @@
 				BCECCCE113F4554B00B8ACD7 /* NSData+Endian.m */,
 				BCECCCE913F4B6FF00B8ACD7 /* debugger.c */,
 				BCECCCEB13F4BED300B8ACD7 /* debugger.h */,
+				BC159B551603A9830055F4B2 /* TLMappedDataCache.h */,
+				BC159B561603A9830055F4B2 /* TLMappedDataCache.m */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -302,6 +308,7 @@
 				BCDEAC961600E9F3000AC3C1 /* TLMP4Tag_Common.h in Headers */,
 				BC10D4EA1601112A00968ADB /* NSMutableArray+StackOps.h in Headers */,
 				BC527D8B1602687D000DB17B /* ISO8601DateFormatter.h in Headers */,
+				BC159B571603A9830055F4B2 /* TLMappedDataCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +452,7 @@
 				BC6DB57E16004EF300E0F4E4 /* TLMP4FileParser.m in Sources */,
 				BC10D4EB1601112A00968ADB /* NSMutableArray+StackOps.m in Sources */,
 				BC527D8C1602687D000DB17B /* ISO8601DateFormatter.m in Sources */,
+				BC159B581603A9830055F4B2 /* TLMappedDataCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

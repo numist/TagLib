@@ -25,10 +25,7 @@
 
 #pragma mark -
 #pragma mark File access methods
-@property (retain, nonatomic, readwrite) NSFileHandle *handle;
-@property (assign, nonatomic, readwrite) int32_t handleRefCount;
-- (NSFileHandle *)beginReadingFile;
-- (id)endReadingFile;
+- (NSData *)getData;
 
 // Media properties
 @property (copy,nonatomic,readwrite) NSNumber *channels;

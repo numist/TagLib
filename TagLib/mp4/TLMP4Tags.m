@@ -1,9 +1,8 @@
 //
-//  MP4Tag.m
+//  TLMP4Tags.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.
-//  This file is based on LGPL/MPL code written by Lukáš Lalinský.
 //
 
 #import "debugger.h"
@@ -14,6 +13,7 @@
 #import "TLMP4FileParser.h"
 #import "NSMutableArray+StackOps.h"
 #import "TLMP4Atom.h"
+#import "TLMappedDataCache.h"
 
 @interface TLMP4Tags ()
 @end
@@ -74,34 +74,9 @@
 
 #pragma mark -
 #pragma mark File access methods
-@synthesize handle = _handle;
-@synthesize handleRefCount = _handleRefCount;
-- (NSFileHandle *)beginReadingFile;
+- (NSData *)getData;
 {
-//    @synchronized(self) {
-//        if (!self.handle) {
-//            TLAssert(!self.handleRefCount);
-//            self.handle = [NSFileHandle fileHandleForReadingAtPath:self.path];
-//        }
-//        if (!self.handle) {
-//            TLAssert(!self.handleRefCount);
-//            return nil;
-//        }
-//        self.handleRefCount++;
-//    }
-//
-//    return self.handle;
-    return [NSFileHandle fileHandleForReadingAtPath:self.path];
-}
-
-- (id)endReadingFile;
-{
-//    @synchronized(self) {
-//        if (!--self.handleRefCount) {
-//            self.handle = nil;
-//        }
-//    }
-    return nil;
+    return [TLMappedDataCache mappedDataForPath:self.path];
 }
 
 #pragma mark - Atom methods
@@ -111,8 +86,8 @@
     if (!_atoms) {
         NSMutableDictionary *atoms = [[NSMutableDictionary alloc] init];
         
-        NSFileHandle *handle = [self beginReadingFile];
-        unsigned long long end = [handle seekToEndOfFile];
+        NSData *data = [self getData];
+        unsigned long long end = [data length];
         unsigned long long offset = 0;
         
         while (offset + 8 < end) {
@@ -126,7 +101,7 @@
             offset += [atom length];
         }
         
-        handle = [self endReadingFile];
+        data = nil;
         _atoms = atoms;
     }
     

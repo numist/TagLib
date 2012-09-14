@@ -22,6 +22,7 @@
 - (NSArray *)parseDataWithExpectedFlags:(TLMP4AtomFlags)flags freeForm:(BOOL)freeForm;
 - (NSArray *)parseDataWithExpectedFlags:(TLMP4AtomFlags)flags;
 - (NSArray *)parseData;
+- (NSData *)getAtomInternalData;
 
 - (NSArray *)parseFreeForm;
 - (NSArray *)parseIntPairWithFlags:(TLMP4AtomFlags)flags;
@@ -41,42 +42,47 @@
 @synthesize parent = _parent;
 @synthesize dataOffset = _dataOffset;
 
-- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tags *)parent;
+- (id)initWithOffset:(uint64_t)atomOffset parent:(TLMP4Tags *)parent;
 {
     self = [super init];
     if (!self) return nil;
     
-    NSFileHandle *handle = [parent beginReadingFile];
+    NSData *data = [parent getData];
     
     // Establish EOF boundary and seek to offset
-    [handle seekToEndOfFile];
-    uint64_t fileSize = [handle offsetInFile];
-    [handle seekToFileOffset:offset];
+    uint64_t fileSize = [data length];
+    uint64_t offset = atomOffset;
     
     // Read atom header
-    NSData *header = [handle readDataOfLength:8];
-    if ([header length] != 8) {
-        TLLog(@"MP4: Couldn't read 8 bytes of data for atom header. (Got %lu bytes)",
-              [header length]);
-        (void)[parent endReadingFile];
+    if (offset + 8 > fileSize) {
+        TLLog(@"MP4: Truncated file?");
+        data = nil;
         return nil;
     }
+    NSData *header = [data subdataWithRange:NSMakeRange(offset, 8)];
+    offset += 8;
     
     uint64_t length = 0;
     [header getBytes:&length length:4 endianness:OSBigEndian];
     if (length == 1) {
-        [[handle readDataOfLength:8] getBytes:&length endianness:OSBigEndian];
+        if (offset + 8 > fileSize) {
+            TLLog(@"MP4: Truncated file?");
+            data = nil;
+            return nil;
+        }
+        [[data subdataWithRange:NSMakeRange(offset, 8)] getBytes:&length endianness:OSBigEndian];
+        offset += 8;
         if (length > UINT32_MAX) {
             TLCheck(length <= UINT32_MAX);
-            TLLog(@"MP4: 64-bit atoms are not supported. (Got %llu bytes)", length);
-            (void)[parent endReadingFile];
+            TLLog(@"MP4: 64-bit atoms are not tested (or supported, please share this file for testing!). (Got %llu bytes)", length);
+            data = nil;
             return nil;
         }
         // The atom has a 64-bit length, but it's actually a 32-bit value
     }
-    if (length < 8 || length + offset > fileSize) {
+    if (length < 8 || length + atomOffset > fileSize) {
         TLLog(@"MP4: Invalid atom size: %llu", length);
-        (void)[parent endReadingFile];
+        data = nil;
         return nil;
     }
     
@@ -84,13 +90,13 @@
                                           length:4 encoding:NSMacOSRomanStringEncoding];
     
     
-    _offset = offset;
+    _offset = atomOffset;
     _length = length;
     _name = name;
     _parent = parent;
-    _dataOffset = [handle offsetInFile];
+    _dataOffset = offset;
 
-    handle = [parent endReadingFile];
+    data = nil;
     
     return self;
 }
@@ -195,19 +201,27 @@
 
 - (NSData *)getDataWithRange:(NSRange)range;
 {
-    //TLLog(@"Reading %lu bytes starting at offset %llu", range.length, range.location + self.offset);
-    TLCheck(range.length < 255);
+    range.location += self.offset;
     
-    NSFileHandle *handle = [self.parent beginReadingFile];
-    [handle seekToFileOffset:(self.offset + range.location)];
-    NSData *data = [handle readDataOfLength:range.length];
-    handle = [self.parent endReadingFile];
+    NSData *fileData = [self.parent getData];
+    NSData *data = [fileData subdataWithRange:range];
+    
+    fileData = nil;
+    
     return data;
 }
 
 - (NSData *)getData;
 {
     return [self getDataWithRange:NSMakeRange(0, self.length)];
+}
+
+- (NSData *)getAtomInternalData;
+{
+    NSRange range;
+    range.location = self.dataOffset - self.offset;
+    range.length = self.length - range.location;
+    return [self getDataWithRange:range];
 }
 
 #pragma mark - Data parsing
@@ -357,10 +371,11 @@
 
 - (NSImage *)parseCovr;
 {
-    NSFileHandle *handle = [self.parent beginReadingFile];
-    [handle seekToFileOffset:[self dataOffset]];
-    NSData *data = [handle readDataOfLength:(self.length - (self.dataOffset - self.offset))];
-    handle = [self.parent endReadingFile];
+    /* NOTE: NSData -subDataWithRange: insists in multiple places in the docs that it returns a copy of the data.
+     * I'm going to trust it for now and use it to back the NSImage.
+     * If there are weird image bugs, start here to make sure that the subData copy isn't being lost when the file's data is unmapped.
+     */
+    NSData *data = [self getAtomInternalData];
 
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
