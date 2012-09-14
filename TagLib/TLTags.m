@@ -1,5 +1,5 @@
 //
-//  TLTag.m
+//  TLTags.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.

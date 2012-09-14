@@ -1,5 +1,5 @@
 //
-//  ID3v1Genres.m
+//  TLID3v1Genres.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.

@@ -1,5 +1,5 @@
 //
-//  TLTag.h
+//  TLTags.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.

@@ -1,5 +1,5 @@
 //
-//  MP4Atom.m
+//  TLMP4Atom.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/7/11.

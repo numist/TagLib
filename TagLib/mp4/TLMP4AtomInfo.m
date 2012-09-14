@@ -1,5 +1,5 @@
 //
-//  TLMP4AtomNames.m
+//  TLMP4AtomInfo.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/9/11.

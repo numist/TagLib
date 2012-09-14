@@ -1,5 +1,5 @@
 //
-//  TLMP4Tag.h
+//  TLMP4Tags.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.

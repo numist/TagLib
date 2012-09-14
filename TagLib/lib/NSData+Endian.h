@@ -1,5 +1,5 @@
 //
-//  NSData+Swapped.h
+//  NSData+Endian.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/11/11.
