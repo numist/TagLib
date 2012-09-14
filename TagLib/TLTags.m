@@ -19,9 +19,7 @@
 
 - (id)initWithPath:(NSString *)path;
 {
-    self = [super init];
-    if (!self || !path) return nil;
-    return self;
+    return nil;
 }
 
 - (id)init
@@ -59,6 +57,13 @@ static NSOperationQueue *currentQueue = nil;
     return currentQueue;
 }
 
-// TODO: - (NSString *)description;
+- (NSString *)description;
+{
+    if ([self artist] && [self album] && [self title]) {
+        return [NSString stringWithFormat:@"TLTags for %@ by %@ from %@", [self title], [self artist], [self album]];
+    } else {
+        return [NSString stringWithFormat:@"TLTags for a file with very few (if any) tags"];
+    }
+}
 
 @end
