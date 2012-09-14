@@ -35,3 +35,4 @@
 @property (copy,nonatomic,readwrite) NSString *grouping;
 @property (copy,nonatomic,readwrite) NSString *description;
 @property (copy,nonatomic,readwrite) NSString *lyrics;
+@property (assign,nonatomic,readwrite,getter=isPodcast) BOOL podcast;

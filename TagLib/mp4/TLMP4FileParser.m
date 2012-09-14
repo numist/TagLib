@@ -145,10 +145,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kPodcast];
     if (data) {
-        NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
-        TLNotTested();
-        // TODO: mp4-specific tag
-        //        [tag setPodcast:(NSNumber *)data];
+        [self.tags setPodcast:[(NSNumber *)data boolValue]];
     }
     
     data = [self.tags getILSTData:kCategory];

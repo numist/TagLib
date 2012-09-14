@@ -43,6 +43,7 @@
 @synthesize grouping = _grouping;
 @synthesize description = _description;
 @synthesize lyrics = _lyrics;
+@synthesize podcast = _podcast;
 
 // Properties
 @synthesize channels = _channels;
