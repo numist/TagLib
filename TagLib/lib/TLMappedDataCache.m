@@ -7,6 +7,7 @@
 //
 
 #import "TLMappedDataCache.h"
+#import "debugger.h"
 
 static NSCache *cache;
 
@@ -24,6 +25,7 @@ static NSCache *cache;
 
 + (NSData *)mappedDataForPath:(NSString *)path;
 {
+    // Cache hit!
     if ([cache objectForKey:path]) {
         return [cache objectForKey:path];
     }
@@ -31,9 +33,15 @@ static NSCache *cache;
     NSError *error;
     NSData *data = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
     
+    // Bad input?
     if (error || !data) {
+        TLNotTested();
+        TLLog(@"Cache FAIL for %@ (error: %@)", path, error);
         return nil;
     }
+    
+    // Cache miss.
+    TLLog(@"Cache miss for %@", path);
     
     NSUInteger cost = [data length];
     /* Note: This is not strictly true. 
