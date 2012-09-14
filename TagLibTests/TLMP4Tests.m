@@ -159,10 +159,10 @@
     TLMP4Tags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
     
     //STAssertTrue([has_tags length] == 3, @"test file has unexpected length %u", [has_tags length]);
-    STAssertTrue([has_tags bitRate] == 3, @"test file has unexpected bitrate %u", [has_tags bitRate]);
-    STAssertTrue([has_tags sampleRate] == 44100, @"test file has unexpected sample rate %u", [has_tags sampleRate]);
-    STAssertTrue([has_tags channels] == 2, @"test file has unexpected channels %u", [has_tags channels]);
-    STAssertTrue([has_tags bitsPerSample] == 16, @"test file has unexpected bitsPerSample %u", [has_tags bitsPerSample]);
+    STAssertTrue([[has_tags bitRate] unsignedIntegerValue]  == 3, @"test file has unexpected bitrate %u", [has_tags bitRate]);
+    STAssertTrue([[has_tags sampleRate] unsignedIntegerValue] == 44100, @"test file has unexpected sample rate %u", [has_tags sampleRate]);
+    STAssertTrue([[has_tags channels] unsignedShortValue] == 2, @"test file has unexpected channels %u", [has_tags channels]);
+    STAssertTrue([[has_tags bitsPerSample] unsignedShortValue] == 16, @"test file has unexpected bitsPerSample %u", [has_tags bitsPerSample]);
 }
 
 @end

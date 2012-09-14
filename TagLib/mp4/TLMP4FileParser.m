@@ -89,8 +89,8 @@ static const uint64_t kWorryLength = 255;
     if (data) {
         NSArray *arr = (NSArray *)data;
         if ([arr count] == 2) {
-            [self.tags setTrackNumber:[(NSNumber *)arr[0] integerValue]];
-            [self.tags setTotalTracks:[(NSNumber *)arr[1] integerValue]];
+            [self.tags setTrackNumber:(NSNumber *)arr[0]];
+            [self.tags setTotalTracks:(NSNumber *)arr[1]];
         }
     }
     
@@ -98,8 +98,8 @@ static const uint64_t kWorryLength = 255;
     if (data) {
         NSArray *arr = (NSArray *)data;
         if ([arr count] == 2) {
-            [self.tags setDiskNumber:[(NSNumber *)arr[0] integerValue]];
-            [self.tags setTotalDisks:[(NSNumber *)arr[1] integerValue]];
+            [self.tags setDiskNumber:(NSNumber *)arr[0]];
+            [self.tags setTotalDisks:(NSNumber *)arr[1]];
         }
     }
     
@@ -115,7 +115,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kBPM];
     if (data) {
-        [self.tags setBPM:[(NSNumber *)data integerValue]];
+        [self.tags setBPM:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kCopyright];
@@ -125,7 +125,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kCompilation];
     if (data) {
-        [self.tags setCompilation:[(NSNumber *)data boolValue]];
+        [self.tags setCompilation:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kArtwork];
@@ -135,7 +135,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kRating];
     if (data) {
-        [self.tags setRating:[(NSNumber *)data integerValue]];
+        [self.tags setRating:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kGrouping];
@@ -145,7 +145,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kPodcast];
     if (data) {
-        [self.tags setPodcast:[(NSNumber *)data boolValue]];
+        [self.tags setPodcast:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kCategory];
@@ -182,7 +182,7 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kDescription];
     if (data) {
-        [self.tags setDescription:(NSString *)data];
+        [self.tags setMediaDescription:(NSString *)data];
     }
     
     data = [self.tags getILSTData:kLyrics];
@@ -210,12 +210,12 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kTVSeason];
     if (data) {
-        [self.tags setTVSeason:[(NSNumber *)data integerValue]];
+        [self.tags setTVSeason:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kTVEpisode];
     if (data) {
-        [self.tags setTVEpisode:[(NSNumber *)data integerValue]];
+        [self.tags setTVEpisode:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kPurchaseDate];
@@ -225,12 +225,12 @@ static const uint64_t kWorryLength = 255;
     
     data = [self.tags getILSTData:kGaplessPlayback];
     if (data) {
-        [self.tags setGaplessPlayback:[(NSNumber *)data boolValue]];
+        [self.tags setGaplessPlayback:(NSNumber *)data];
     }
     
     data = [self.tags getILSTData:kStik];
     if (data) {
-        [self.tags setStik:[(NSNumber *)data integerValue]];
+        [self.tags setStik:(NSNumber *)data];
     }
 
     data = [self.tags getILSTData:kPurchaserID];
@@ -313,9 +313,9 @@ static const uint64_t kWorryLength = 255;
     if (atom) {
         data = [atom getDataWithRange:NSMakeRange(0, 90)];
         if ([[data stringWithRange:NSMakeRange(20, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"mp4a"]) {
-            [self.tags setChannels:[data unsignedShortAtOffset:40 endianness:OSBigEndian]];
-            [self.tags setBitsPerSample:[data unsignedShortAtOffset:42 endianness:OSBigEndian]];
-            [self.tags setSampleRate:[data unsignedIntAtOffset:46 endianness:OSBigEndian]];
+            [self.tags setChannels:[NSNumber numberWithUnsignedShort:[data unsignedShortAtOffset:40 endianness:OSBigEndian]]];
+            [self.tags setBitsPerSample:[NSNumber numberWithUnsignedShort:[data unsignedShortAtOffset:42 endianness:OSBigEndian]]];
+            [self.tags setSampleRate:[NSNumber numberWithUnsignedInt:[data unsignedIntAtOffset:46 endianness:OSBigEndian]]];
             
             if ([[data stringWithRange:NSMakeRange(56, 4) encoding:NSMacOSRomanStringEncoding] isEqualToString:@"esds"] &&
                 [data unsignedCharAtOffset:64] == 0x03) {
@@ -331,7 +331,7 @@ static const uint64_t kWorryLength = 255;
                         pos +=3;
                     }
                     pos += 10;
-                    [self.tags setBitRate:(([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000)];
+                    [self.tags setBitRate:[NSNumber numberWithUnsignedInt:(([data unsignedIntAtOffset:pos endianness:OSBigEndian] + 500) / 1000)]];
                 }
             }
         }

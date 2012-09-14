@@ -16,8 +16,8 @@
 @property (copy,nonatomic,readwrite) NSString *comment;
 @property (copy,nonatomic,readwrite) NSString *genre;
 @property (copy,nonatomic,readwrite) NSDate *year;
-@property (nonatomic,readwrite) NSInteger trackNumber;
-@property (nonatomic,readwrite) NSInteger diskNumber;
+@property (nonatomic,readwrite) NSNumber *trackNumber;
+@property (nonatomic,readwrite) NSNumber *diskNumber;
 
 - (id)initWithPath:(NSString *)path;
 
