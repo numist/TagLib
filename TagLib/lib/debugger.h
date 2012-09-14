@@ -125,7 +125,7 @@
      * improve logging in Debug builds, and
      * kill the program.
      */
-    #define TLLog(fmt, ...) NSLog(@"%s:%d <%s> %@", __FILE__, __LINE__, __PRETTY_FUNCTION__, [NSString stringWithFormat:(fmt), __VA_ARGS__]);
+    #define TLLog(fmt, ...) NSLog(@"%s:%d <%s> %@", __FILE__, __LINE__, __PRETTY_FUNCTION__, [NSString stringWithFormat:(fmt), ##__VA_ARGS__]);
     #define TLAssert(exp) do { \
                 if (exp); \
                 else { \
