@@ -19,7 +19,9 @@
 
 - (id)initWithPath:(NSString *)path;
 {
-    return nil;
+    self = [super init];
+    if (!self || !path) return nil;
+    return self;
 }
 
 - (id)init
