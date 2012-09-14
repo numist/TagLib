@@ -9,7 +9,7 @@
 
 #import "debugger.h"
 
-@interface TLTag : NSObject
+@interface TLTags : NSObject
 @property (copy,nonatomic,readwrite) NSString *title;
 @property (copy,nonatomic,readwrite) NSString *artist;
 @property (copy,nonatomic,readwrite) NSString *album;

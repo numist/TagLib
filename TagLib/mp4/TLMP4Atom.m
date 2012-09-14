@@ -9,14 +9,14 @@
 #import "TLMP4Atom.h"
 #import "debugger.h"
 #import "NSData+Endian.h"
-#import "TLMP4Tag_Private.h"
+#import "TLMP4Tags_Private.h"
 #import "NSData+GetTypedData.h"
 #import "TLID3v1Genres.h"
 #import "ISO8601DateFormatter.h"
 
 @interface TLMP4Atom ()
 @property (nonatomic, readwrite) NSDictionary *children;
-@property (weak, nonatomic, readwrite) TLMP4Tag *parent;
+@property (weak, nonatomic, readwrite) TLMP4Tags *parent;
 @property (nonatomic, readwrite) uint64_t dataOffset;
 
 - (NSArray *)parseDataWithExpectedFlags:(TLMP4AtomFlags)flags freeForm:(BOOL)freeForm;
@@ -41,7 +41,7 @@
 @synthesize parent = _parent;
 @synthesize dataOffset = _dataOffset;
 
-- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tag *)parent;
+- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tags *)parent;
 {
     self = [super init];
     if (!self) return nil;

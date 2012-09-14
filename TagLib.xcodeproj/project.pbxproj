@@ -21,7 +21,7 @@
 		BC527D8C1602687D000DB17B /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC527D8A1602687D000DB17B /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		BC6DB57D16004EF300E0F4E4 /* TLMP4FileParser.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6DB57B16004EF300E0F4E4 /* TLMP4FileParser.h */; };
 		BC6DB57E16004EF300E0F4E4 /* TLMP4FileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6DB57C16004EF300E0F4E4 /* TLMP4FileParser.m */; };
-		BC6DB58116004FD300E0F4E4 /* TLMP4Tag_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6DB58016004FD300E0F4E4 /* TLMP4Tag_Private.h */; };
+		BC6DB58116004FD300E0F4E4 /* TLMP4Tags_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = BC6DB58016004FD300E0F4E4 /* TLMP4Tags_Private.h */; };
 		BC7DEB3913F76BAA004C24E8 /* NSData+GetTypedData.h in Headers */ = {isa = PBXBuildFile; fileRef = BC7DEB3713F76BAA004C24E8 /* NSData+GetTypedData.h */; };
 		BC7DEB3A13F76BAA004C24E8 /* NSData+GetTypedData.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DEB3813F76BAA004C24E8 /* NSData+GetTypedData.m */; };
 		BCAE786F13EF694800F1B15A /* TLMP4Atom.h in Headers */ = {isa = PBXBuildFile; fileRef = BCAE786D13EF694800F1B15A /* TLMP4Atom.h */; };
@@ -29,10 +29,10 @@
 		BCDEAC961600E9F3000AC3C1 /* TLMP4Tag_Common.h in Headers */ = {isa = PBXBuildFile; fileRef = BCDEAC951600E9F3000AC3C1 /* TLMP4Tag_Common.h */; };
 		BCECCC9913F063F100B8ACD7 /* TLID3v1Genres.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCC9713F063F100B8ACD7 /* TLID3v1Genres.h */; };
 		BCECCC9A13F063F100B8ACD7 /* TLID3v1Genres.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCC9813F063F100B8ACD7 /* TLID3v1Genres.m */; };
-		BCECCCA013F06AD800B8ACD7 /* TLMP4Tag.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCC9E13F06AD800B8ACD7 /* TLMP4Tag.h */; };
-		BCECCCA113F06AD800B8ACD7 /* TLMP4Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */; };
-		BCECCCA413F072DC00B8ACD7 /* TLTag.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCA213F072DC00B8ACD7 /* TLTag.h */; };
-		BCECCCA513F072DC00B8ACD7 /* TLTag.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCA313F072DC00B8ACD7 /* TLTag.m */; };
+		BCECCCA013F06AD800B8ACD7 /* TLMP4Tags.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCC9E13F06AD800B8ACD7 /* TLMP4Tags.h */; };
+		BCECCCA113F06AD800B8ACD7 /* TLMP4Tags.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCC9F13F06AD800B8ACD7 /* TLMP4Tags.m */; };
+		BCECCCA413F072DC00B8ACD7 /* TLTags.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCA213F072DC00B8ACD7 /* TLTags.h */; };
+		BCECCCA513F072DC00B8ACD7 /* TLTags.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCA313F072DC00B8ACD7 /* TLTags.m */; };
 		BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */; };
 		BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */; };
 		BCECCCDA13F436D600B8ACD7 /* covr-junk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BCECCCD513F436D500B8ACD7 /* covr-junk.m4a */; };
@@ -80,7 +80,7 @@
 		BC527D8A1602687D000DB17B /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = "lib/iso-8601-date-formatter/ISO8601DateFormatter.m"; sourceTree = "<group>"; };
 		BC6DB57B16004EF300E0F4E4 /* TLMP4FileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4FileParser.h; path = mp4/TLMP4FileParser.h; sourceTree = "<group>"; };
 		BC6DB57C16004EF300E0F4E4 /* TLMP4FileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4FileParser.m; path = mp4/TLMP4FileParser.m; sourceTree = "<group>"; };
-		BC6DB58016004FD300E0F4E4 /* TLMP4Tag_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tag_Private.h; path = mp4/TLMP4Tag_Private.h; sourceTree = "<group>"; };
+		BC6DB58016004FD300E0F4E4 /* TLMP4Tags_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tags_Private.h; path = mp4/TLMP4Tags_Private.h; sourceTree = "<group>"; };
 		BC7DEB3713F76BAA004C24E8 /* NSData+GetTypedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+GetTypedData.h"; path = "lib/NSData+GetTypedData.h"; sourceTree = "<group>"; };
 		BC7DEB3813F76BAA004C24E8 /* NSData+GetTypedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+GetTypedData.m"; path = "lib/NSData+GetTypedData.m"; sourceTree = "<group>"; };
 		BCAE786D13EF694800F1B15A /* TLMP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Atom.h; path = mp4/TLMP4Atom.h; sourceTree = "<group>"; };
@@ -88,10 +88,10 @@
 		BCDEAC951600E9F3000AC3C1 /* TLMP4Tag_Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tag_Common.h; path = mp4/TLMP4Tag_Common.h; sourceTree = "<group>"; };
 		BCECCC9713F063F100B8ACD7 /* TLID3v1Genres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLID3v1Genres.h; path = mpeg/id3v1/TLID3v1Genres.h; sourceTree = "<group>"; };
 		BCECCC9813F063F100B8ACD7 /* TLID3v1Genres.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLID3v1Genres.m; path = mpeg/id3v1/TLID3v1Genres.m; sourceTree = "<group>"; };
-		BCECCC9E13F06AD800B8ACD7 /* TLMP4Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tag.h; path = mp4/TLMP4Tag.h; sourceTree = "<group>"; };
-		BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4Tag.m; path = mp4/TLMP4Tag.m; sourceTree = "<group>"; };
-		BCECCCA213F072DC00B8ACD7 /* TLTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTag.h; sourceTree = "<group>"; };
-		BCECCCA313F072DC00B8ACD7 /* TLTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTag.m; sourceTree = "<group>"; };
+		BCECCC9E13F06AD800B8ACD7 /* TLMP4Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tags.h; path = mp4/TLMP4Tags.h; sourceTree = "<group>"; };
+		BCECCC9F13F06AD800B8ACD7 /* TLMP4Tags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4Tags.m; path = mp4/TLMP4Tags.m; sourceTree = "<group>"; };
+		BCECCCA213F072DC00B8ACD7 /* TLTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTags.h; sourceTree = "<group>"; };
+		BCECCCA313F072DC00B8ACD7 /* TLTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTags.m; sourceTree = "<group>"; };
 		BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4AtomInfo.h; path = mp4/TLMP4AtomInfo.h; sourceTree = "<group>"; };
 		BCECCCC613F1A03300B8ACD7 /* TLMP4AtomInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4AtomInfo.m; path = mp4/TLMP4AtomInfo.m; sourceTree = "<group>"; };
 		BCECCCD513F436D500B8ACD7 /* covr-junk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "covr-junk.m4a"; path = "data/covr-junk.m4a"; sourceTree = "<group>"; };
@@ -178,8 +178,8 @@
 				BCECCC9C13F069C600B8ACD7 /* mpeg */,
 				BCAE787213EF697C00F1B15A /* mp4 */,
 				BC236CD413EF462A006C41C0 /* Supporting Files */,
-				BCECCCA213F072DC00B8ACD7 /* TLTag.h */,
-				BCECCCA313F072DC00B8ACD7 /* TLTag.m */,
+				BCECCCA213F072DC00B8ACD7 /* TLTags.h */,
+				BCECCCA313F072DC00B8ACD7 /* TLTags.m */,
 			);
 			path = TagLib;
 			sourceTree = "<group>";
@@ -237,10 +237,10 @@
 			children = (
 				BCAE786D13EF694800F1B15A /* TLMP4Atom.h */,
 				BCAE786E13EF694800F1B15A /* TLMP4Atom.m */,
-				BCECCC9E13F06AD800B8ACD7 /* TLMP4Tag.h */,
-				BC6DB58016004FD300E0F4E4 /* TLMP4Tag_Private.h */,
+				BCECCC9E13F06AD800B8ACD7 /* TLMP4Tags.h */,
+				BC6DB58016004FD300E0F4E4 /* TLMP4Tags_Private.h */,
 				BCDEAC951600E9F3000AC3C1 /* TLMP4Tag_Common.h */,
-				BCECCC9F13F06AD800B8ACD7 /* TLMP4Tag.m */,
+				BCECCC9F13F06AD800B8ACD7 /* TLMP4Tags.m */,
 				BC6DB57B16004EF300E0F4E4 /* TLMP4FileParser.h */,
 				BC6DB57C16004EF300E0F4E4 /* TLMP4FileParser.m */,
 				BCECCCC513F1A03300B8ACD7 /* TLMP4AtomInfo.h */,
@@ -291,14 +291,14 @@
 			files = (
 				BCAE786F13EF694800F1B15A /* TLMP4Atom.h in Headers */,
 				BCECCC9913F063F100B8ACD7 /* TLID3v1Genres.h in Headers */,
-				BCECCCA013F06AD800B8ACD7 /* TLMP4Tag.h in Headers */,
-				BCECCCA413F072DC00B8ACD7 /* TLTag.h in Headers */,
+				BCECCCA013F06AD800B8ACD7 /* TLMP4Tags.h in Headers */,
+				BCECCCA413F072DC00B8ACD7 /* TLTags.h in Headers */,
 				BCECCCC713F1A03300B8ACD7 /* TLMP4AtomInfo.h in Headers */,
 				BCECCCE213F4554B00B8ACD7 /* NSData+Endian.h in Headers */,
 				BCECCCEC13F4BED300B8ACD7 /* debugger.h in Headers */,
 				BC7DEB3913F76BAA004C24E8 /* NSData+GetTypedData.h in Headers */,
 				BC6DB57D16004EF300E0F4E4 /* TLMP4FileParser.h in Headers */,
-				BC6DB58116004FD300E0F4E4 /* TLMP4Tag_Private.h in Headers */,
+				BC6DB58116004FD300E0F4E4 /* TLMP4Tags_Private.h in Headers */,
 				BCDEAC961600E9F3000AC3C1 /* TLMP4Tag_Common.h in Headers */,
 				BC10D4EA1601112A00968ADB /* NSMutableArray+StackOps.h in Headers */,
 				BC527D8B1602687D000DB17B /* ISO8601DateFormatter.h in Headers */,
@@ -436,8 +436,8 @@
 			files = (
 				BCAE787013EF694800F1B15A /* TLMP4Atom.m in Sources */,
 				BCECCC9A13F063F100B8ACD7 /* TLID3v1Genres.m in Sources */,
-				BCECCCA113F06AD800B8ACD7 /* TLMP4Tag.m in Sources */,
-				BCECCCA513F072DC00B8ACD7 /* TLTag.m in Sources */,
+				BCECCCA113F06AD800B8ACD7 /* TLMP4Tags.m in Sources */,
+				BCECCCA513F072DC00B8ACD7 /* TLTags.m in Sources */,
 				BCECCCC813F1A03300B8ACD7 /* TLMP4AtomInfo.m in Sources */,
 				BCECCCE313F4554B00B8ACD7 /* NSData+Endian.m in Sources */,
 				BCECCCEA13F4B6FF00B8ACD7 /* debugger.c in Sources */,
@@ -500,8 +500,8 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -546,6 +546,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -567,7 +568,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				COPY_PHASE_STRIP = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
@@ -576,11 +576,11 @@
 		BC236CF613EF462A006C41C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
 				INFOPLIST_FILE = "TagLib/TagLib-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -591,11 +591,11 @@
 		BC236CF713EF462A006C41C0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = "TagLib/TagLib-Prefix.pch";
 				INFOPLIST_FILE = "TagLib/TagLib-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";

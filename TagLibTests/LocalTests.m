@@ -7,10 +7,10 @@
 
 #import "debugger.h"
 #import "LocalTests.h"
-#import "TLMP4Tag.h"
+#import "TLMP4Tags.h"
 
 @interface LocalTests ()
-+ (TLMP4Tag *)blockingMP4TagWithPath:(NSString *)path;
++ (TLMP4Tags *)blockingMP4TagWithPath:(NSString *)path;
 @end
 
 @implementation LocalTests
@@ -29,9 +29,9 @@
     [super tearDown];
 }
 
-+ (TLMP4Tag *)blockingMP4TagWithPath:(NSString *)path;
++ (TLMP4Tags *)blockingMP4TagWithPath:(NSString *)path;
 {
-    TLMP4Tag *tag = [[TLMP4Tag alloc] initWithPath:path];
+    TLMP4Tags *tag = [[TLMP4Tags alloc] initWithPath:path];
     
     // Basic block until tags have been parsed
     do {
@@ -50,7 +50,7 @@
         return;
     }
     
-    TLMP4Tag *tag = [LocalTests blockingMP4TagWithPath:file];
+    TLMP4Tags *tag = [LocalTests blockingMP4TagWithPath:file];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
 }
@@ -64,7 +64,7 @@
         return;
     }
     
-    TLMP4Tag *tag = [LocalTests blockingMP4TagWithPath:file];
+    TLMP4Tags *tag = [LocalTests blockingMP4TagWithPath:file];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
 }
@@ -78,7 +78,7 @@
         return;
     }
     
-    TLMP4Tag *tag = [LocalTests blockingMP4TagWithPath:file];
+    TLMP4Tags *tag = [LocalTests blockingMP4TagWithPath:file];
     STAssertNotNil(tag, @"%@", @"Failed to parse tags from file");
     STAssertFalse([tag isEmpty], @"%@ contains no tags?", file);
 }

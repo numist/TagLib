@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TLMP4Tag_Private.h"
+@class TLMP4Tags;
 
 @interface TLMP4FileParser : NSOperation
-- (id)initTag:(TLMP4Tag *)tag;
+- (id)initTag:(TLMP4Tags *)tag;
 @end

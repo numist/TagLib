@@ -11,7 +11,7 @@
 #import "TLMP4AtomInfo.h"
 
 // Forward declare parent type
-@class TLMP4Tag;
+@class TLMP4Tags;
 
 @interface TLMP4Atom : NSObject
 @property (nonatomic, readonly) uint64_t offset;
@@ -19,7 +19,7 @@
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSDictionary *children;
 
-- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tag *)parent;
+- (id)initWithOffset:(uint64_t)offset parent:(TLMP4Tags *)parent;
 
 - (TLMP4Atom *)getChild:(NSString *)name;
 - (NSArray *)getChild:(NSString *)name recursive:(BOOL)recursive;

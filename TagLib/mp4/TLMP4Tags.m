@@ -10,15 +10,15 @@
 #import "NSData+Endian.h"
 #import "TLID3v1Genres.h"
 #import "TLMP4AtomInfo.h"
-#import "TLMP4Tag_Private.h"
+#import "TLMP4Tags_Private.h"
 #import "TLMP4FileParser.h"
 #import "NSMutableArray+StackOps.h"
 #import "TLMP4Atom.h"
 
-@interface TLMP4Tag ()
+@interface TLMP4Tags ()
 @end
 
-@implementation TLMP4Tag
+@implementation TLMP4Tags
 @synthesize path = _path;
 @synthesize atoms = _atoms;
 @synthesize ready = _ready;
@@ -47,7 +47,7 @@
 
 #pragma mark Initializers
 
-- (TLMP4Tag *)initWithPath:(NSString *)pathArg;
+- (TLMP4Tags *)initWithPath:(NSString *)pathArg;
 {
     self = [super initWithPath:pathArg];
     if (!self || !pathArg) return nil;
@@ -56,7 +56,7 @@
     _ready = NO;
 
     // Begin loading common tags in the background
-    [[TLTag loadingQueue] addOperation:[[TLMP4FileParser alloc] initTag:self]];
+    [[TLTags loadingQueue] addOperation:[[TLMP4FileParser alloc] initTag:self]];
 
     return self;
 }
@@ -175,7 +175,7 @@
 // TODO: make this output more and more useful information
 - (NSString *)description
 {
-    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tag"];
+    NSMutableString *result = [[NSMutableString alloc] initWithFormat:@"TLMP4Tags"];
     
     if ([self.atoms count]) {
         [result appendString:@": {\n"];

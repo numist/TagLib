@@ -7,10 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TLMP4Atom.h"
-#import "TLTag.h"
+#import "TLTags.h"
 
-@interface TLMP4Tag : TLTag
+@class TLMP4Atom;
+@class TLMP4AtomInfo;
+
+@interface TLMP4Tags : TLTags
 
 #pragma mark -
 #pragma mark Redeclare publicly-readonly ivars

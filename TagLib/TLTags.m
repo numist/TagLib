@@ -5,9 +5,9 @@
 //  Created by Scott Perry on 8/8/11.
 //
 
-#import "TLTag.h"
+#import "TLTags.h"
 
-@implementation TLTag
+@implementation TLTags
 @synthesize title = _title;
 @synthesize artist = _artist;
 @synthesize album = _album;
