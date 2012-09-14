@@ -9,6 +9,7 @@
 - (id)initWithPath:(NSString *)path;
 
 - (TLMP4Atom *)findAtom:(NSArray *)path;
+- (NSArray *)getAtom:(NSString *)name recursive:(BOOL)recursive;
 - (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
 
 #pragma mark -

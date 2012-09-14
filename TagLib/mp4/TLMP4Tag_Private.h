@@ -19,7 +19,7 @@
 
 #pragma mark -
 #pragma mark Protected ivars
-@property (retain, nonatomic, readwrite) NSMutableDictionary *atoms;
+@property (retain, nonatomic, readonly) NSDictionary *atoms;
 
 #pragma mark -
 #pragma mark File access methods

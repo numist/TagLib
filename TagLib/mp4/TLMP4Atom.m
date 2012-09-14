@@ -266,8 +266,6 @@
 
 - (NSArray *)parseFreeForm;
 {
-    TLNotTested();
-
     NSArray *data = [self parseDataWithExpectedFlags:1 freeForm:YES];
     TLCheck([data count] > 2);
     NSMutableArray *result = [[NSMutableArray alloc] init];

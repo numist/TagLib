@@ -99,17 +99,13 @@
 }
 
 #pragma mark - Atom methods
-- (TLMP4Atom *)findAtom:(NSArray *)searchPath;
+
+- (NSDictionary *)atoms;
 {
-    if (![searchPath count]) {
-        return nil;
-    }
-    
-    if (!self.atoms) {
-        self.atoms = [[NSMutableDictionary alloc] init];
+    if (!_atoms) {
+        NSMutableDictionary *atoms = [[NSMutableDictionary alloc] init];
         
         NSFileHandle *handle = [self beginReadingFile];
-
         unsigned long long end = [handle seekToEndOfFile];
         unsigned long long offset = 0;
         
@@ -117,14 +113,24 @@
             TLMP4Atom *atom = [[TLMP4Atom alloc] initWithOffset:offset parent:self];
             // NOTE: in the C++ impl, returns incomplete atom set
             if (!atom) {
-                self.atoms = nil;
+                _atoms = [[NSDictionary alloc] init];
                 return nil;
             }
-            [self.atoms setValue:atom forKey:[atom name]];
+            [atoms setValue:atom forKey:[atom name]];
             offset += [atom length];
         }
         
         handle = [self endReadingFile];
+        _atoms = atoms;
+    }
+    
+    return _atoms;
+}
+
+- (TLMP4Atom *)findAtom:(NSArray *)searchPath;
+{
+    if (![searchPath count]) {
+        return nil;
     }
     
     NSMutableArray *workingPath = [NSMutableArray arrayWithArray:searchPath];
@@ -136,6 +142,21 @@
     }
     
     return match;
+}
+
+- (NSArray *)getAtom:(NSString *)name recursive:(BOOL)recursive;
+{
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    
+    for (NSString *n in self.atoms) {
+        TLMP4Atom *atom = [self.atoms objectForKey:n];
+        
+        if ([name isEqualToString:n]) [result addObject:atom];
+        
+        if (recursive) [result addObjectsFromArray:[atom getChild:name recursive:YES]];
+    }
+    
+    return result;
 }
 
 - (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
