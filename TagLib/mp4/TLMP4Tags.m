@@ -5,15 +5,16 @@
 //  Created by Scott Perry on 8/8/11.
 //
 
+#import "TLMP4Tags_Private.h"
+
 #import "debugger.h"
 #import "NSData+Endian.h"
-#import "TLID3v1Genres.h"
-#import "TLMP4AtomInfo.h"
-#import "TLMP4Tags_Private.h"
-#import "TLMP4FileParser.h"
 #import "NSMutableArray+StackOps.h"
-#import "TLMP4Atom.h"
+#import "TLID3v1Genres.h"
 #import "TLMappedDataCache.h"
+#import "TLMP4Atom.h"
+#import "TLMP4AtomInfo.h"
+#import "TLMP4Tags+Parser.h"
 
 @interface TLMP4Tags ()
 @end
@@ -21,7 +22,6 @@
 @implementation TLMP4Tags
 @synthesize path = _path;
 @synthesize atoms = _atoms;
-@synthesize ready = _ready;
 @synthesize encoder = _encoder;
 @synthesize artwork = _artwork;
 @synthesize TVShowName = _TVShowName;
@@ -53,23 +53,27 @@
 
 #pragma mark Initializers
 
-- (TLMP4Tags *)initWithPath:(NSString *)pathArg;
+- (id)initWithPath:(NSString *)pathArg error:(NSError **)error;
 {
-    self = [super initWithPath:pathArg];
+//    self = [super initWithPath:pathArg];
     if (!self || !pathArg) return nil;
+    if (error) {
+        *error = nil;
+    }
 
     _path = pathArg;
-    _ready = NO;
 
-    // Begin loading common tags in the background
-    [[TLTags loadingQueue] addOperation:[[TLMP4FileParser alloc] initTag:self]];
+    NSError *terror;
+    [self loadWithError:&terror];
+    
+    // TODO: did it succeed? how do we know?
 
     return self;
 }
 
 - (id)init;
 {
-    return [self initWithPath:nil];
+    return [self initWithPath:nil error:nil];
 }
 
 #pragma mark -
@@ -140,7 +144,7 @@
     return result;
 }
 
-- (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
+- (id)getILSTData:(TLMP4AtomInfo *)atomInfo error:(NSError **)error;
 {
     TLMP4Atom *atom = [self findAtom:@[@"moov", @"udta", @"meta", @"ilst", [atomInfo name]]];
     if (!atom) return nil;
@@ -151,6 +155,6 @@
 
 #pragma mark - Superclass overloads
 
-// TODO: overload isEmpty, refactor class structure so this makes more sense
+// TODO: overload isEmpty, refactor class structure so this makes more sense?
 
 @end

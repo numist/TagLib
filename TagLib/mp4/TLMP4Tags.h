@@ -14,7 +14,6 @@
 
 @interface TLMP4Tags : TLTags
 @property (copy, nonatomic, readonly) NSString *path;
-@property (getter=isReady, assign, nonatomic, readonly) BOOL ready;
 
 // Media properties
 @property (copy,nonatomic,readonly) NSNumber *channels;

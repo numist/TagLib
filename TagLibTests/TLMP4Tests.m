@@ -25,18 +25,11 @@
 //    [super tearDown];
 //}
 //
-+ (TLMP4Tags *)blockingMP4TagWithPath:(NSString *)path;
++ (TLTags *)blockingMP4TagWithPath:(NSString *)path;
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) return nil;
 
-    TLMP4Tags *tag = [[TLMP4Tags alloc] initWithPath:path];
-    
-    // Basic block until tags have been parsed
-    do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    } while (![tag isReady]);
-    
-    return tag;
+    return [[TLMP4Tags alloc] initWithPath:path error:nil];
 }
 
 #pragma mark - Basic file loading
@@ -45,10 +38,9 @@
     BOOL hasTags = NO;
     NSString *path = @"TagLibTests/data/empty.aiff";
     
-    TLMP4Tags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
     STAssertNotNil(mp4, @"File does not exist?: %@", path);
     
-    STAssertTrue([mp4 isReady], @"File is not ready?");
     if (hasTags) {
         STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
     } else {
@@ -61,10 +53,9 @@
     BOOL hasTags = YES;
     NSString *path = @"TagLibTests/data/covr-junk.m4a";
 
-    TLMP4Tags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
     STAssertNotNil(mp4, @"File does not exist?: %@", path);
     
-    STAssertTrue([mp4 isReady], @"File is not ready?");
     if (hasTags) {
         STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
     } else {
@@ -77,10 +68,9 @@
     BOOL hasTags = YES;
     NSString *path = @"TagLibTests/data/gnre.m4a";
 
-    TLMP4Tags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
     STAssertNotNil(mp4, @"File does not exist?: %@", path);
     
-    STAssertTrue([mp4 isReady], @"File is not ready?");
     if (hasTags) {
         STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
     } else {
@@ -93,10 +83,9 @@
     BOOL hasTags = YES;
     NSString *path = @"TagLibTests/data/has-tags.m4a";
 
-    TLMP4Tags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
     STAssertNotNil(mp4, @"File does not exist?: %@", path);
     
-    STAssertTrue([mp4 isReady], @"File is not ready?");
     if (hasTags) {
         STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
     } else {
@@ -110,10 +99,9 @@
 //    BOOL hasTags = YES;
 //    NSString *path = @"TagLibTests/data/ilst-is-last.m4a";
 //
-//    TLMP4Tag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+//    TLTag *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
 //    STAssertNotNil(mp4, @"File does not exist?: %@", path);
-//    
-//    STAssertTrue([mp4 isReady], @"File is not ready?");
+//
 //    if (hasTags) {
 //        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
 //    } else {
@@ -126,10 +114,9 @@
     BOOL hasTags = NO;
     NSString *path = @"TagLibTests/data/no-tags.m4a";
 
-    TLMP4Tags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
+    TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
     STAssertNotNil(mp4, @"File does not exist?: %@", path);
     
-    STAssertTrue([mp4 isReady], @"File is not ready?");
     if (hasTags) {
         STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
     } else {
@@ -141,28 +128,31 @@
 
 - (void)testFindIlst
 {
-    TLMP4Tags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
-    TLMP4Atom *ilst = [has_tags findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
+    TLTags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
+    TLMP4Tags *mp4 = [has_tags MP4Tags];
+    STAssertNotNil(mp4, @"Object was not an MP4 tags object?");
+    TLMP4Atom *ilst = [mp4 findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
     STAssertNotNil(ilst, @"%@", @"Atom moov.udta.meta.ilst not found");
 }
 
 - (void)testBasicTagParsing
 {
-    TLMP4Tags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
-    STAssertTrue([has_tags isReady], @"%@", @"Tag object was not loaded");
+    TLTags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
     STAssertFalse([has_tags isEmpty], @"%@", @"Failed to parse tags from file");
     STAssertEqualObjects([has_tags artist], @"Test Artist", @"error reading artist, got %@ instead of \"Test Artist\"", [has_tags artist]);
 }
 
 - (void)testBasicProperties
 {
-    TLMP4Tags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
-    
+    TLTags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
+    TLMP4Tags *mp4 = [has_tags MP4Tags];
+    STAssertNotNil(mp4, @"Object was not an MP4 tags object?");
+
     //STAssertTrue([has_tags length] == 3, @"test file has unexpected length %u", [has_tags length]);
-    STAssertTrue([[has_tags bitRate] unsignedIntegerValue]  == 3, @"test file has unexpected bitrate %u", [has_tags bitRate]);
-    STAssertTrue([[has_tags sampleRate] unsignedIntegerValue] == 44100, @"test file has unexpected sample rate %u", [has_tags sampleRate]);
-    STAssertTrue([[has_tags channels] unsignedShortValue] == 2, @"test file has unexpected channels %u", [has_tags channels]);
-    STAssertTrue([[has_tags bitsPerSample] unsignedShortValue] == 16, @"test file has unexpected bitsPerSample %u", [has_tags bitsPerSample]);
+    STAssertTrue([[mp4 bitRate] unsignedIntegerValue]  == 3, @"test file has unexpected bitrate %u", [mp4 bitRate]);
+    STAssertTrue([[mp4 sampleRate] unsignedIntegerValue] == 44100, @"test file has unexpected sample rate %u", [mp4 sampleRate]);
+    STAssertTrue([[mp4 channels] unsignedShortValue] == 2, @"test file has unexpected channels %u", [mp4 channels]);
+    STAssertTrue([[mp4 bitsPerSample] unsignedShortValue] == 16, @"test file has unexpected bitsPerSample %u", [mp4 bitsPerSample]);
 }
 
 @end

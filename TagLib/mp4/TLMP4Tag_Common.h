@@ -6,11 +6,11 @@
 //  This file is intended to be #included within an @interface block for TLMP4Tag
 //
 
-- (id)initWithPath:(NSString *)path;
+- (id)initWithPath:(NSString *)pathArg error:(NSError **)error;
 
 - (TLMP4Atom *)findAtom:(NSArray *)path;
 - (NSArray *)getAtom:(NSString *)name recursive:(BOOL)recursive;
-- (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
+- (id)getILSTData:(TLMP4AtomInfo *)atomInfo error:(NSError **)error;
 
 #pragma mark -
 #pragma mark Extra item types on top of TLTag's standard properties.

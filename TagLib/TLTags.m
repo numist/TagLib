@@ -7,6 +7,10 @@
 
 #import "TLTags.h"
 
+#import "TLMP4Tags.h"
+
+NSString *TLErrorDomain = @"net.numist.taglib";
+
 @implementation TLTags
 @synthesize title = _title;
 @synthesize artist = _artist;
@@ -17,16 +21,47 @@
 @synthesize trackNumber = _trackNumber;
 @synthesize diskNumber = _diskNumber;
 
-- (id)initWithPath:(NSString *)path;
+- (id)init;
 {
-    self = [super init];
-    if (!self || !path) return nil;
-    return self;
+    @throw [NSException exceptionWithName: @"TLTagInitializerException"
+                                  reason: @"TLTag objects are created using +tagsForPath:do:"
+                                userInfo: nil];
+    return nil;
 }
 
-- (id)init
++ (void)tagsForPath:(NSString *)path do:(void(^)(TLTags *, NSError *))completionBlock;
 {
-    return [self initWithPath:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        TLTags *result;
+        NSError *error;
+        NSDictionary *userInfo = @{@"path":path};
+
+        // Does the file even exist?
+        if(![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            error = [NSError errorWithDomain:TLErrorDomain code:kTagLibFileNotFound userInfo:userInfo];
+            return;
+        }
+
+        // Maybe it's an MP4?
+        result = [[TLMP4Tags alloc] initWithPath:path error:&error];
+        if (result) {
+            completionBlock(result, nil);
+            return;
+        }
+
+        // Well, anyone else have any ideas?
+        error = [NSError errorWithDomain:TLErrorDomain code:kTagLibFileNotFound userInfo:userInfo];
+        completionBlock(nil, error);
+        return;
+    });
+}
+
+- (TLMP4Tags *)MP4Tags;
+{
+    if (![self isKindOfClass:[TLMP4Tags class]]) {
+        return nil;
+    }
+    return (TLMP4Tags *)self;
 }
 
 - (BOOL) isEmpty

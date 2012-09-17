@@ -31,14 +31,7 @@
 
 + (TLMP4Tags *)blockingMP4TagWithPath:(NSString *)path;
 {
-    TLMP4Tags *tag = [[TLMP4Tags alloc] initWithPath:path];
-    
-    // Basic block until tags have been parsed
-    do {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    } while (![tag isReady]);
-    
-    return tag;
+    return [[TLMP4Tags alloc] initWithPath:path error:nil];
 }
 
 - (void)testBasicHorribleTagParsing
