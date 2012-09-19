@@ -166,6 +166,34 @@
 
 #pragma mark - Superclass overloads
 
-// TODO: overload isEmpty
+- (BOOL)isEmpty;
+{
+    if (![super isEmpty]) return NO;
+    
+    if ([self encoder]) return NO;
+    if ([self artwork]) return NO;
+    if ([self TVShowName]) return NO;
+    if ([self TVEpisodeID]) return NO;
+    if ([self TVSeason]) return NO;
+    if ([self TVEpisode]) return NO;
+    if ([self albumArtist]) return NO;
+    if ([self totalTracks]) return NO;
+    if ([self totalDisks]) return NO;
+    if ([self copyright]) return NO;
+    if ([self compilation]) return NO;
+    if ([self gaplessPlayback]) return NO;
+    if ([self stik]) return NO;
+    if ([self rating]) return NO;
+    if ([self purchaseDate]) return NO;
+    if ([self purchaserID]) return NO;
+    if ([self composer]) return NO;
+    if ([self BPM]) return NO;
+    if ([self grouping]) return NO;
+    if ([self mediaDescription]) return NO;
+    if ([self lyrics]) return NO;
+    if ([self podcast]) return NO;
+
+    return YES;
+}
 
 @end
