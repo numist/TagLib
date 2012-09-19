@@ -54,7 +54,7 @@
 
 - (id)initWithPath:(NSString *)pathArg error:(NSError **)terror;
 {
-//    self = [super initWithPath:pathArg];
+    self = [super initPrivate];
     if (!self || !pathArg) return nil;
     // Clear terror, in case we succeed.
     if (terror) *terror = nil;

@@ -5,7 +5,7 @@
 //  Created by Scott Perry on 8/8/11.
 //
 
-#import "TLTags.h"
+#import "TLTags_Private.h"
 
 #import "TLMP4Tags_Private.h"
 #import "TLErrorWrapper.h"
@@ -22,10 +22,13 @@
 
 - (id)init;
 {
-    @throw [NSException exceptionWithName: @"TLTagInitializerException"
-                                  reason: @"TLTag objects are created using +tagsForPath:do:"
-                                userInfo: nil];
+    [super doesNotRecognizeSelector:_cmd];
     return nil;
+}
+
+- (id)initPrivate;
+{
+    return [super init];
 }
 
 + (void)tagsForPath:(NSString *)path do:(void(^)(TLTags *, NSError *))completionBlock;

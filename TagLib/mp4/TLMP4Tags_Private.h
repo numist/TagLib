@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "TLTags.h"
+#import "TLTags_Private.h"
 
 @class TLMP4Atom;
 @class TLMP4AtomInfo;

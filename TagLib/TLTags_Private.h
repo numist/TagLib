@@ -1,8 +1,9 @@
 //
-//  TLTags.h
+//  TLTags_Private.h
 //  TagLib
 //
-//  Created by Scott Perry on 8/8/11.
+//  Created by Scott Perry on 09/19/12.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -12,6 +13,8 @@
 @class TLMP4Tags;
 
 @interface TLTags : NSObject
+
+- (id)initPrivate;
 
 #include "TLTags_Common.h"
 
