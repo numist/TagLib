@@ -51,7 +51,6 @@
 #pragma mark - Basic file loading
 - (void)testBasicBadFile
 {
-    BOOL hasTags = NO;
     NSString *path = @"TagLibTests/data/empty.aiff";
     
     TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
