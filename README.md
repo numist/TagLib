@@ -50,6 +50,7 @@ Currently-exposed mp4-specific properties (readonly) include:
 * **bitsPerSample**: NSNumber *
 * **sampleRate**: NSNumber *
 * **bitRate**: NSNumber *
+* **length**: NSNumber *
 
 Testing
 =======
