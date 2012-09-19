@@ -9,14 +9,6 @@
 
 #import "debugger.h"
 
-extern const NSString *TLErrorDomain;
-typedef enum {
-    kTagLibNoError = 0,
-    kTagLibUnhelpfulError = 0,
-    kTagLibFileNotFound = 1,
-    kTagLibParseFailure = 2
-} TagLibErrorCodes;
-
 @class TLMP4Tags;
 
 @interface TLTags : NSObject
