@@ -9,6 +9,6 @@
 #import "TLMP4Tags_Private.h"
 
 @interface TLMP4Tags (Parser)
-- (void)loadWithError:(NSError **)error;
-- (void)getPropertiesWithError:(NSError **)error;
+- (void)load;
+- (void)getProperties;
 @end

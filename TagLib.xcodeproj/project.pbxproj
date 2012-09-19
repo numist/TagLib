@@ -29,6 +29,8 @@
 		BCAE786F13EF694800F1B15A /* TLMP4Atom.h in Headers */ = {isa = PBXBuildFile; fileRef = BCAE786D13EF694800F1B15A /* TLMP4Atom.h */; };
 		BCAE787013EF694800F1B15A /* TLMP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAE786E13EF694800F1B15A /* TLMP4Atom.m */; };
 		BCDEAC961600E9F3000AC3C1 /* TLMP4Tags_Common.h in Headers */ = {isa = PBXBuildFile; fileRef = BCDEAC951600E9F3000AC3C1 /* TLMP4Tags_Common.h */; };
+		BCE0E7FE1609813F0077A793 /* TLErrorWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = BCE0E7FC1609813F0077A793 /* TLErrorWrapper.h */; };
+		BCE0E7FF1609813F0077A793 /* TLErrorWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE0E7FD1609813F0077A793 /* TLErrorWrapper.m */; };
 		BCECCC9913F063F100B8ACD7 /* TLID3v1Genres.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCC9713F063F100B8ACD7 /* TLID3v1Genres.h */; };
 		BCECCC9A13F063F100B8ACD7 /* TLID3v1Genres.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECCC9813F063F100B8ACD7 /* TLID3v1Genres.m */; };
 		BCECCCA013F06AD800B8ACD7 /* TLMP4Tags.h in Headers */ = {isa = PBXBuildFile; fileRef = BCECCC9E13F06AD800B8ACD7 /* TLMP4Tags.h */; };
@@ -90,6 +92,8 @@
 		BCAE786D13EF694800F1B15A /* TLMP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Atom.h; path = mp4/TLMP4Atom.h; sourceTree = "<group>"; };
 		BCAE786E13EF694800F1B15A /* TLMP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLMP4Atom.m; path = mp4/TLMP4Atom.m; sourceTree = "<group>"; };
 		BCDEAC951600E9F3000AC3C1 /* TLMP4Tags_Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tags_Common.h; path = mp4/TLMP4Tags_Common.h; sourceTree = "<group>"; };
+		BCE0E7FC1609813F0077A793 /* TLErrorWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLErrorWrapper.h; path = lib/TLErrorWrapper.h; sourceTree = "<group>"; };
+		BCE0E7FD1609813F0077A793 /* TLErrorWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLErrorWrapper.m; path = lib/TLErrorWrapper.m; sourceTree = "<group>"; };
 		BCECCC9713F063F100B8ACD7 /* TLID3v1Genres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLID3v1Genres.h; path = mpeg/id3v1/TLID3v1Genres.h; sourceTree = "<group>"; };
 		BCECCC9813F063F100B8ACD7 /* TLID3v1Genres.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLID3v1Genres.m; path = mpeg/id3v1/TLID3v1Genres.m; sourceTree = "<group>"; };
 		BCECCC9E13F06AD800B8ACD7 /* TLMP4Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLMP4Tags.h; path = mp4/TLMP4Tags.h; sourceTree = "<group>"; };
@@ -273,6 +277,8 @@
 		BCECCCDF13F454E600B8ACD7 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				BCE0E7FC1609813F0077A793 /* TLErrorWrapper.h */,
+				BCE0E7FD1609813F0077A793 /* TLErrorWrapper.m */,
 				BC527D8716026810000DB17B /* iso-8601-date-formatter */,
 				BC10D4E81601112A00968ADB /* NSMutableArray+StackOps.h */,
 				BC10D4E91601112A00968ADB /* NSMutableArray+StackOps.m */,
@@ -309,6 +315,7 @@
 				BC527D8B1602687D000DB17B /* ISO8601DateFormatter.h in Headers */,
 				BC159B571603A9830055F4B2 /* TLMappedDataCache.h in Headers */,
 				BC62F46B1606D8DD00FCE48F /* TLMP4Tags+Parser.h in Headers */,
+				BCE0E7FE1609813F0077A793 /* TLErrorWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +460,7 @@
 				BC527D8C1602687D000DB17B /* ISO8601DateFormatter.m in Sources */,
 				BC159B581603A9830055F4B2 /* TLMappedDataCache.m in Sources */,
 				BC62F46C1606D8DD00FCE48F /* TLMP4Tags+Parser.m in Sources */,
+				BCE0E7FF1609813F0077A793 /* TLErrorWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

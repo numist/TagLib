@@ -14,26 +14,25 @@
 
 @interface TLMP4Tags : TLTags
 
-#pragma mark -
 #pragma mark Redeclare publicly-readonly ivars
-@property (copy, nonatomic, readwrite) NSString *path;
+@property (copy, nonatomic) NSString *path;
 
-#pragma mark -
 #pragma mark Protected ivars
-@property (retain, nonatomic, readonly) NSDictionary *atoms;
+@property (retain, nonatomic) NSDictionary *atoms;
 
-#pragma mark -
 #pragma mark File access methods
 - (NSData *)getData;
 
-// Media properties
+#pragma mark Media properties
 @property (copy,nonatomic,readwrite) NSNumber *channels;
 @property (copy,nonatomic,readwrite) NSNumber *bitsPerSample;
 @property (copy,nonatomic,readwrite) NSNumber *sampleRate;
 @property (copy,nonatomic,readwrite) NSNumber *bitRate;
 
+#pragma mark Private initializer
 - (id)initWithPath:(NSString *)pathArg error:(NSError **)error;
 
+#pragma mark Format-specific data getters
 - (TLMP4Atom *)findAtom:(NSArray *)path;
 - (NSArray *)getAtom:(NSString *)name recursive:(BOOL)recursive;
 - (id)getILSTData:(TLMP4AtomInfo *)atomInfo;

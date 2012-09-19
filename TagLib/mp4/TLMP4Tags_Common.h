@@ -6,7 +6,6 @@
 //  This file is intended to be #included within an @interface block for TLMP4Tag
 //
 
-#pragma mark -
 #pragma mark Extra item types on top of TLTag's standard properties.
 @property (copy,nonatomic,readwrite) NSString *encoder;
 @property (copy,nonatomic,readwrite) NSImage *artwork;

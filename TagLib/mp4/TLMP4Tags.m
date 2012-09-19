@@ -11,13 +11,11 @@
 #import "NSData+Endian.h"
 #import "NSMutableArray+StackOps.h"
 #import "TLID3v1Genres.h"
-#import "TLMappedDataCache.h"
 #import "TLMP4Atom.h"
 #import "TLMP4AtomInfo.h"
 #import "TLMP4Tags+Parser.h"
-
-@interface TLMP4Tags ()
-@end
+#import "TLErrorWrapper.h"
+#import "TLMappedDataCache.h"
 
 @implementation TLMP4Tags
 @synthesize path = _path;
@@ -53,20 +51,33 @@
 
 #pragma mark Initializers
 
-- (id)initWithPath:(NSString *)pathArg error:(NSError **)error;
+- (id)initWithPath:(NSString *)pathArg error:(NSError **)terror;
 {
 //    self = [super initWithPath:pathArg];
     if (!self || !pathArg) return nil;
-    if (error) {
-        *error = nil;
-    }
+    // Clear terror, in case we succeed.
+    if (terror) *terror = nil;
 
     _path = pathArg;
 
-    NSError *terror;
-    [self loadWithError:&terror];
+    //
+    // Drop the parser into a GCD queue so it's easier to pass errors back up
+    //
+    TLErrorWrapper *wrapper = [[TLErrorWrapper alloc] init];
+    dispatch_queue_t q = dispatch_queue_create("TLMP4ParserQueue", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_queue_set_specific(q, kTLWrappedError, (__bridge void *)wrapper, NULL);
     
-    // TODO: did it succeed? how do we know?
+    dispatch_sync(q, ^{
+        [self load];
+    });
+    
+    NSError *error = [wrapper error];
+    dispatch_release(q);
+    
+    if (error) {
+        if (terror) *terror = error;
+        return nil;
+    }
 
     return self;
 }
@@ -98,7 +109,7 @@
             TLMP4Atom *atom = [[TLMP4Atom alloc] initWithOffset:offset parent:self];
             // NOTE: in the C++ impl, returns incomplete atom set
             if (!atom) {
-                _atoms = [[NSDictionary alloc] init];
+                TLAssert(pendingError);
                 return nil;
             }
             [atoms setValue:atom forKey:[atom name]];
@@ -119,7 +130,7 @@
     }
     
     NSMutableArray *workingPath = [NSMutableArray arrayWithArray:searchPath];
-
+    
     TLMP4Atom *match = [self.atoms objectForKey:[workingPath popFirstObject]];
     
     while ([workingPath count]) {
@@ -155,6 +166,6 @@
 
 #pragma mark - Superclass overloads
 
-// TODO: overload isEmpty, refactor class structure so this makes more sense?
+// TODO: overload isEmpty
 
 @end
