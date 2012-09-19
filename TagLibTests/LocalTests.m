@@ -29,9 +29,27 @@
     [super tearDown];
 }
 
-+ (TLMP4Tags *)blockingMP4TagWithPath:(NSString *)path;
++ (TLTags *)blockingMP4TagWithPath:(NSString *)path;
 {
-    return [[TLMP4Tags alloc] initWithPath:path error:nil];
+    TLAssert([[NSFileManager defaultManager] fileExistsAtPath:path]);
+    
+    __block TLTags *tags = nil;
+    __block NSError *error = nil;
+    
+    // Annoying hack to make object creation block
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+    [TLTags tagsForPath:path do:^(TLTags *t, NSError *e){
+        error = e;
+        tags = t;
+        dispatch_semaphore_signal(sem);
+    }];
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    
+    if (error) {
+        NSLog(@"Error creating tags object: %@", [error localizedDescription]);
+    }
+    
+    return tags;
 }
 
 - (void)testBasicHorribleTagParsing

@@ -27,9 +27,25 @@
 //
 + (TLTags *)blockingMP4TagWithPath:(NSString *)path;
 {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) return nil;
+    TLAssert([[NSFileManager defaultManager] fileExistsAtPath:path]);
 
-    return [[TLMP4Tags alloc] initWithPath:path error:nil];
+    __block TLTags *tags = nil;
+    __block NSError *error = nil;
+    
+    // Annoying hack to make object creation block
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+    [TLTags tagsForPath:path do:^(TLTags *t, NSError *e){
+        error = e;
+        tags = t;
+        dispatch_semaphore_signal(sem);
+    }];
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    
+    if (error) {
+        NSLog(@"Error creating tags object: %@", [error localizedDescription]);
+    }
+    
+    return tags;
 }
 
 #pragma mark - Basic file loading
@@ -39,13 +55,7 @@
     NSString *path = @"TagLibTests/data/empty.aiff";
     
     TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
-    STAssertNotNil(mp4, @"File does not exist?: %@", path);
-    
-    if (hasTags) {
-        STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
-    } else {
-        STAssertTrue([mp4 isEmpty], @"%@", @"Found atoms in non-MPEG-4 file %@", path);
-    }
+    STAssertNil(mp4, @"File parsed ok?: %@", path);
 }
 
 - (void)testBasicCovrJunk
@@ -54,7 +64,7 @@
     NSString *path = @"TagLibTests/data/covr-junk.m4a";
 
     TLTags *mp4 = [TLMP4Tests blockingMP4TagWithPath:path];
-    STAssertNotNil(mp4, @"File does not exist?: %@", path);
+    STAssertNotNil(mp4, @"File parse error?: %@", path);
     
     if (hasTags) {
         STAssertFalse([mp4 isEmpty], @"%@", @"Failed to parse atoms in MPEG-4 file %@", path);
@@ -125,15 +135,6 @@
 }
 
 #pragma mark - Atom operations
-
-- (void)testFindIlst
-{
-    TLTags *has_tags = [TLMP4Tests blockingMP4TagWithPath:@"TagLibTests/data/has-tags.m4a"];
-    TLMP4Tags *mp4 = [has_tags MP4Tags];
-    STAssertNotNil(mp4, @"Object was not an MP4 tags object?");
-    TLMP4Atom *ilst = [mp4 findAtom:@[@"moov", @"udta", @"meta", @"ilst"]];
-    STAssertNotNil(ilst, @"%@", @"Atom moov.udta.meta.ilst not found");
-}
 
 - (void)testBasicTagParsing
 {
