@@ -32,7 +32,13 @@
 @property (copy,nonatomic,readwrite) NSNumber *sampleRate;
 @property (copy,nonatomic,readwrite) NSNumber *bitRate;
 
-// Public class methods
-#include "TLMP4Tag_Common.h"
+- (id)initWithPath:(NSString *)pathArg error:(NSError **)error;
+
+- (TLMP4Atom *)findAtom:(NSArray *)path;
+- (NSArray *)getAtom:(NSString *)name recursive:(BOOL)recursive;
+- (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
+
+// Public properties
+#include "TLMP4Tags_Common.h"
 
 @end

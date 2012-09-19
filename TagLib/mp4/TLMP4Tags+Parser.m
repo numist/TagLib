@@ -26,8 +26,7 @@
         return;
     }
     
-    // TODO: NSError
-    data = [self getILSTData:kAlbum error:&terror];
+    data = [self getILSTData:kAlbum];
     if (data) {
         [self setAlbum:(NSString *)data];
     }
@@ -38,7 +37,7 @@
         return;
     }
     
-    data = [self getILSTData:kArtist error:&terror];
+    data = [self getILSTData:kArtist];
     if (data) {
         [self setArtist:(NSString *)data];
     }
@@ -49,7 +48,7 @@
         return;
     }
     
-    data = [self getILSTData:kAlbumArtist error:&terror];
+    data = [self getILSTData:kAlbumArtist];
     if (data) {
         [self setAlbumArtist:(NSString *)data];
     }
@@ -60,7 +59,7 @@
         return;
     }
     
-    data = [self getILSTData:kComment error:&terror];
+    data = [self getILSTData:kComment];
     if (data) {
         [self setComment:(NSString *)data];
     }
@@ -71,7 +70,7 @@
         return;
     }
     
-    data = [self getILSTData:kYear error:&terror];
+    data = [self getILSTData:kYear];
     if (data) {
         [self setYear:(NSDate *)data];
     }
@@ -82,7 +81,7 @@
         return;
     }
     
-    data = [self getILSTData:kTitle error:&terror];
+    data = [self getILSTData:kTitle];
     if (data) {
         [self setTitle:(NSString *)data];
     }
@@ -93,7 +92,7 @@
         return;
     }
     
-    data = [self getILSTData:kGenreCode error:&terror];
+    data = [self getILSTData:kGenreCode];
     if (data) {
         [self setGenre:(NSString *)data];
     }
@@ -104,7 +103,7 @@
         return;
     }
     
-    data = [self getILSTData:kGenre error:&terror];
+    data = [self getILSTData:kGenre];
     if (data) {
         [self setGenre:(NSString *)data];
     }
@@ -115,7 +114,7 @@
         return;
     }
     
-    data = [self getILSTData:kTrackNumber error:&terror];
+    data = [self getILSTData:kTrackNumber];
     if (data) {
         NSArray *arr = (NSArray *)data;
         if ([arr count] == 2) {
@@ -130,7 +129,7 @@
         }
     }
     
-    data = [self getILSTData:kDiskNumber error:&terror];
+    data = [self getILSTData:kDiskNumber];
     if (data) {
         NSArray *arr = (NSArray *)data;
         if ([arr count] == 2) {
@@ -145,7 +144,7 @@
         }
     }
     
-    data = [self getILSTData:kComposer error:&terror];
+    data = [self getILSTData:kComposer];
     if (data) {
         [self setComposer:(NSString *)data];
     }
@@ -156,7 +155,7 @@
         return;
     }
     
-    data = [self getILSTData:kEncoder error:&terror];
+    data = [self getILSTData:kEncoder];
     if (data) {
         [self setEncoder:(NSString *)data];
     }
@@ -167,7 +166,7 @@
         return;
     }
     
-    data = [self getILSTData:kBPM error:&terror];
+    data = [self getILSTData:kBPM];
     if (data) {
         [self setBPM:(NSNumber *)data];
     }
@@ -178,7 +177,7 @@
         return;
     }
     
-    data = [self getILSTData:kCopyright error:&terror];
+    data = [self getILSTData:kCopyright];
     if (data) {
         [self setCopyright:(NSString *)data];
     }
@@ -189,7 +188,7 @@
         return;
     }
     
-    data = [self getILSTData:kCompilation error:&terror];
+    data = [self getILSTData:kCompilation];
     if (data) {
         [self setCompilation:(NSNumber *)data];
     }
@@ -200,7 +199,7 @@
         return;
     }
     
-    data = [self getILSTData:kArtwork error:&terror];
+    data = [self getILSTData:kArtwork];
     if (data) {
         [self setArtwork:(NSImage *)data];
     }
@@ -211,7 +210,7 @@
         return;
     }
     
-    data = [self getILSTData:kRating error:&terror];
+    data = [self getILSTData:kRating];
     if (data) {
         [self setRating:(NSNumber *)data];
     }
@@ -222,7 +221,7 @@
         return;
     }
     
-    data = [self getILSTData:kGrouping error:&terror];
+    data = [self getILSTData:kGrouping];
     if (data) {
         [self setGrouping:(NSString *)data];
     }
@@ -233,7 +232,7 @@
         return;
     }
     
-    data = [self getILSTData:kPodcast error:&terror];
+    data = [self getILSTData:kPodcast];
     if (data) {
         [self setPodcast:(NSNumber *)data];
     }
@@ -244,7 +243,7 @@
         return;
     }
     
-    data = [self getILSTData:kCategory error:&terror];
+    data = [self getILSTData:kCategory];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
@@ -258,7 +257,7 @@
         //        [tag setCategory:(NSString *)data];
     }
     
-    data = [self getILSTData:kKeyword error:&terror];
+    data = [self getILSTData:kKeyword];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
@@ -272,7 +271,7 @@
         //        [tag setKeyword:(NSString *)data];
     }
     
-    data = [self getILSTData:kPodcastURL error:&terror];
+    data = [self getILSTData:kPodcastURL];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
@@ -286,7 +285,7 @@
         //        [tag setPodcastURL:(NSNumber *)data];
     }
     
-    data = [self getILSTData:kEpisodeGUID error:&terror];
+    data = [self getILSTData:kEpisodeGUID];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
@@ -300,7 +299,7 @@
         //        [tag setEpisodeGUID:(NSNumber *)data];
     }
     
-    data = [self getILSTData:kDescription error:&terror];
+    data = [self getILSTData:kDescription];
     if (data) {
         [self setMediaDescription:(NSString *)data];
     }
@@ -311,7 +310,7 @@
         return;
     }
     
-    data = [self getILSTData:kLyrics error:&terror];
+    data = [self getILSTData:kLyrics];
     if (data) {
         [self setLyrics:(NSString *)data];
     }
@@ -322,7 +321,7 @@
         return;
     }
     
-    data = [self getILSTData:kTVNetworkName error:&terror];
+    data = [self getILSTData:kTVNetworkName];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
@@ -336,7 +335,7 @@
         //        [tag setTVNetworkName:(NSString *)data];
     }
     
-    data = [self getILSTData:kTVShowName error:&terror];
+    data = [self getILSTData:kTVShowName];
     if (data) {
         [self setTVShowName:(NSString *)data];
     }
@@ -347,7 +346,7 @@
         return;
     }
     
-    data = [self getILSTData:kTVEpisodeID error:&terror];
+    data = [self getILSTData:kTVEpisodeID];
     if (data) {
         [self setTVEpisodeID:(NSString *)data];
     }
@@ -358,7 +357,7 @@
         return;
     }
     
-    data = [self getILSTData:kTVSeason error:&terror];
+    data = [self getILSTData:kTVSeason];
     if (data) {
         [self setTVSeason:(NSNumber *)data];
     }
@@ -369,7 +368,7 @@
         return;
     }
     
-    data = [self getILSTData:kTVEpisode error:&terror];
+    data = [self getILSTData:kTVEpisode];
     if (data) {
         [self setTVEpisode:(NSNumber *)data];
     }
@@ -380,7 +379,7 @@
         return;
     }
     
-    data = [self getILSTData:kPurchaseDate error:&terror];
+    data = [self getILSTData:kPurchaseDate];
     if (data) {
         [self setPurchaseDate:(NSDate *)data];
     }
@@ -391,7 +390,7 @@
         return;
     }
     
-    data = [self getILSTData:kGaplessPlayback error:&terror];
+    data = [self getILSTData:kGaplessPlayback];
     if (data) {
         [self setGaplessPlayback:(NSNumber *)data];
     }
@@ -402,7 +401,7 @@
         return;
     }
     
-    data = [self getILSTData:kStik error:&terror];
+    data = [self getILSTData:kStik];
     if (data) {
         [self setStik:(NSNumber *)data];
     }
@@ -413,7 +412,7 @@
         return;
     }
     
-    data = [self getILSTData:kPurchaserID error:&terror];
+    data = [self getILSTData:kPurchaserID];
     if (data) {
         [self setPurchaserID:(NSString *)data];
     }

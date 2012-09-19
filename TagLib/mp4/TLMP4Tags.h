@@ -13,6 +13,7 @@
 @class TLMP4AtomInfo;
 
 @interface TLMP4Tags : TLTags
+
 @property (copy, nonatomic, readonly) NSString *path;
 
 // Media properties
@@ -21,7 +22,7 @@
 @property (copy,nonatomic,readonly) NSNumber *sampleRate;
 @property (copy,nonatomic,readonly) NSNumber *bitRate;
 
-// Public class methods
-#include "TLMP4Tag_Common.h"
+// Public properties
+#include "TLMP4Tags_Common.h"
 
 @end

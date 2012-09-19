@@ -7,7 +7,7 @@
 
 #import "TLTags.h"
 
-#import "TLMP4Tags.h"
+#import "TLMP4Tags_Private.h"
 
 NSString *TLErrorDomain = @"net.numist.taglib";
 

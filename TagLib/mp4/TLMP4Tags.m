@@ -144,7 +144,7 @@
     return result;
 }
 
-- (id)getILSTData:(TLMP4AtomInfo *)atomInfo error:(NSError **)error;
+- (id)getILSTData:(TLMP4AtomInfo *)atomInfo;
 {
     TLMP4Atom *atom = [self findAtom:@[@"moov", @"udta", @"meta", @"ilst", [atomInfo name]]];
     if (!atom) return nil;
