@@ -28,6 +28,7 @@
 @property (copy,nonatomic,readwrite) NSNumber *bitsPerSample;
 @property (copy,nonatomic,readwrite) NSNumber *sampleRate;
 @property (copy,nonatomic,readwrite) NSNumber *bitRate;
+@property (copy,nonatomic,readwrite) NSNumber *length;
 
 #pragma mark Private initializer
 - (id)initWithPath:(NSString *)pathArg error:(NSError **)error;

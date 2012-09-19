@@ -48,6 +48,7 @@
 @synthesize bitsPerSample = _bitsPerSample;
 @synthesize sampleRate = _sampleRate;
 @synthesize bitRate = _bitRate;
+@synthesize length = _length;
 
 #pragma mark Initializers
 

@@ -136,7 +136,7 @@
     TLMP4Tags *mp4 = [has_tags MP4Tags];
     STAssertNotNil(mp4, @"Object was not an MP4 tags object?");
 
-    //STAssertTrue([has_tags length] == 3, @"test file has unexpected length %u", [has_tags length]);
+    STAssertTrue([[mp4 length] unsignedIntegerValue] == 3, @"test file has unexpected length %u", [mp4 length]);
     STAssertTrue([[mp4 bitRate] unsignedIntegerValue]  == 3, @"test file has unexpected bitrate %u", [mp4 bitRate]);
     STAssertTrue([[mp4 sampleRate] unsignedIntegerValue] == 44100, @"test file has unexpected sample rate %u", [mp4 sampleRate]);
     STAssertTrue([[mp4 channels] unsignedShortValue] == 2, @"test file has unexpected channels %u", [mp4 channels]);

@@ -297,11 +297,11 @@
         if ([data unsignedCharAtOffset:0] == 0) {
             uint32 unit = [data unsignedIntAtOffset:12 endianness:OSBigEndian];
             uint32 totalLength = [data unsignedIntAtOffset:16 endianness:OSBigEndian];
-            NSLog(@"Property(length) = %u", (uint32_t)(totalLength / unit)); // TODO: assign properties
+            [self setLength:[NSNumber numberWithUnsignedInt:(totalLength / unit)]];
         } else {
             uint64 unit = [data unsignedLongLongAtOffset:20 endianness:OSBigEndian];
             uint64 totalLength = [data unsignedLongLongAtOffset:28 endianness:OSBigEndian];
-            NSLog(@"Property(length) = %llu", (uint64_t)totalLength / unit); // TODO: assign properties
+            [self setLength:[NSNumber numberWithUnsignedLongLong:(totalLength / unit)]];
             TLNotTested();
         }
     } else {

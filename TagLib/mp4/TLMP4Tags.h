@@ -21,6 +21,7 @@
 @property (copy,nonatomic,readonly) NSNumber *bitsPerSample;
 @property (copy,nonatomic,readonly) NSNumber *sampleRate;
 @property (copy,nonatomic,readonly) NSNumber *bitRate;
+@property (copy,nonatomic,readonly) NSNumber *length;
 
 // Public properties
 #include "TLMP4Tags_Common.h"
