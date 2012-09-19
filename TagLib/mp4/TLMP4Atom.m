@@ -13,6 +13,8 @@
 #import "NSData+GetTypedData.h"
 #import "TLID3v1Genres.h"
 #import "ISO8601DateFormatter.h"
+#import "TLErrorWrapper.h"
+#import "TLMP4Tags+Parser.h"
 
 @interface TLMP4Atom ()
 @property (nonatomic, readwrite) NSDictionary *children;
@@ -55,7 +57,7 @@
     
     // Read atom header
     if (offset + 8 > fileSize) {
-        TLLog(@"MP4: Truncated file?");
+        setError(kTLErrorCorruptFile, @"Truncated file");
         data = nil;
         return nil;
     }
@@ -66,22 +68,22 @@
     [header getBytes:&length length:4 endianness:OSBigEndian];
     if (length == 1) {
         if (offset + 8 > fileSize) {
-            TLLog(@"MP4: Truncated file?");
+            setError(kTLErrorCorruptFile, @"Truncated file");
             data = nil;
             return nil;
         }
         [[data subdataWithRange:NSMakeRange(offset, 8)] getBytes:&length endianness:OSBigEndian];
         offset += 8;
         if (length > UINT32_MAX) {
-            TLCheck(length <= UINT32_MAX);
-            TLLog(@"MP4: 64-bit atoms are not tested (or supported, please share this file for testing!). (Got %llu bytes)", length);
+            DebugBreak();
+            setError(kTLErrorUnimplemented, @"64-bit atoms are not supported");
             data = nil;
             return nil;
         }
         // The atom has a 64-bit length, but it's actually a 32-bit value
     }
     if (length < 8 || length + atomOffset > fileSize) {
-        TLLog(@"MP4: Invalid atom size: %llu", length);
+        setError(kTLErrorCorruptFile, @"Invalid atom size");
         data = nil;
         return nil;
     }
@@ -123,7 +125,7 @@
         while (offset < self.offset + self.length) {
             TLMP4Atom *child = [[TLMP4Atom alloc] initWithOffset:offset parent:self.parent];
             if (!child) {
-                self.children = nil;
+                TLAssert(pendingError);
                 TLNotTested();
                 return nil;
             }
@@ -241,19 +243,22 @@
         
         if (freeForm && i < 2) {
             if (i == 0 && ![name isEqualToString:@"mean"]) {
-                TLLog(@"MP4: Unexpected atom \"%@\", expecting \"mean\"", name);
+                NSString *errorDetail = [NSString stringWithFormat:@"Unexpected atom \"%@\", expecting \"mean\"", name];
+                setError(kTLErrorCorruptFile, errorDetail);
                 return nil;
             } else if (i == 1 && ![name isEqualToString:@"name"]) {
-                TLLog(@"MP4: Unexpected atom \"%@\", expecting \"name\"", name);
+                NSString *errorDetail = [NSString stringWithFormat:@"Unexpected atom \"%@\", expecting \"name\"", name];
+                setError(kTLErrorCorruptFile, errorDetail);
                 return nil;
             }
             [result addObject:[data subdataWithRange:NSMakeRange(pos + 12, length - 12)]];
         } else {
             if (![name isEqualToString:@"data"]) {
-                TLLog(@"MP4: Unexpected atom \"%@\", expecting \"data\"", name);
+                NSString *errorDetail = [NSString stringWithFormat:@"Unexpected atom \"%@\", expecting \"data\"", name];
+                setError(kTLErrorCorruptFile, errorDetail);
                 return nil;
             }
-            // ???: huh, I wonder what's in NSMakeRange(pos + 12, 4)?
+            // huh, I wonder what's in NSMakeRange(pos + 12, 4)?
             if (flags < 0 || (uint32)flags == atomFlags) {
                 [result addObject:[data subdataWithRange:NSMakeRange(pos + 16, length - 16)]];
             }
@@ -285,7 +290,10 @@
     NSMutableArray *result = [[NSMutableArray alloc] init];
     
     // Avoid an out of bounds exception
-    if ([data count] < 2) return nil;
+    if ([data count] < 2) {
+        setError(kTLErrorCorruptFile, @"Freeform atom contained fewer than 2 data blobs");
+        return nil;
+    }
     
     NSString *name = [NSString stringWithFormat:@"----:%@:%@",
                       [[data objectAtIndex:0] stringWithEncoding:NSMacOSRomanStringEncoding],
@@ -314,6 +322,7 @@
         }
     }
     
+    setError(kTLErrorCorruptFile, @"Incorrect data length for int pair");
     return nil;
 }
 
@@ -327,7 +336,7 @@
         if ([datum length]) {
             uint8 value = [datum unsignedCharAtOffset:0];
             TLCheck(value <= 1);
-            if (value == 1) {
+            if (value) {
                 return [NSNumber numberWithBool:YES];
             } else {
                 return [NSNumber numberWithBool:NO];
@@ -335,6 +344,7 @@
         }
     }
     
+    setError(kTLErrorCorruptFile, @"No data for boolean atom");
     return nil;
 }
 
@@ -354,6 +364,7 @@
         }
     }
     
+    setError(kTLErrorCorruptFile, @"No data for integer atom");
     return nil;
 }
 
@@ -366,6 +377,7 @@
         return [TLID3v1Genres genreForIndex:[genreCode shortValue] - 1];
     }
     
+    setError(kTLErrorCorruptFile, @"Invalid genre code");
     return nil;
 }
 
@@ -387,7 +399,8 @@
         uint32 flags = [data unsignedIntAtOffset:(pos + 8) endianness:OSBigEndian];
         
         if (![name isEqualToString:@"data"]) {
-            TLLog(@"MP4: Unexpected atom \"%@\", expecting \"data\"", name);
+            NSString *errorDetail = [NSString stringWithFormat:@"Unexpected atom \"%@\", expecting \"data\"", name];
+            setError(kTLErrorCorruptFile, errorDetail);
             return nil;
         }
         
@@ -396,7 +409,10 @@
 
         if ((flags == TLMP4AtomFlagsJPEG || flags == TLMP4AtomFlagsPNG) && length > 16) {
             NSImage *art = [[NSImage alloc] initWithData:[data subdataWithRange:NSMakeRange(pos + 16, length - 16)]];
-            TLCheck([art isValid]);
+            if (![art isValid]) {
+                TLNotTested();
+                setError(kTLErrorCorruptFile, @"Artwork is corrupt");
+            }
             [result addObject:art];
         }
         
@@ -419,12 +435,14 @@
         }
     }
 
+    setError(kTLErrorCorruptFile, @"No suitable data for text");
     return nil;
 }
 
 - (NSDate *)parseDateWithFlags:(TLMP4AtomFlags)flags;
 {
     NSString *text = [self parseTextWithFlags:flags];
+    if (pendingError) return nil;
 
     [NSTimeZone setDefaultTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+0]];
     ISO8601DateFormatter *format = [[ISO8601DateFormatter alloc] init];

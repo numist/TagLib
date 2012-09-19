@@ -8,8 +8,7 @@
 #import "TLTags.h"
 
 #import "TLMP4Tags_Private.h"
-
-NSString *TLErrorDomain = @"net.numist.taglib";
+#import "TLErrorWrapper.h"
 
 @implementation TLTags
 @synthesize title = _title;
@@ -34,11 +33,11 @@ NSString *TLErrorDomain = @"net.numist.taglib";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
         TLTags *result;
         NSError *error;
-        NSDictionary *userInfo = @{@"path":path};
 
         // Does the file even exist?
         if(![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            error = [NSError errorWithDomain:TLErrorDomain code:kTagLibFileNotFound userInfo:userInfo];
+            error = newErrorWithPath(kTLErrorFileNotFound, path);
+            completionBlock(nil, error);
             return;
         }
 
@@ -50,8 +49,7 @@ NSString *TLErrorDomain = @"net.numist.taglib";
         }
 
         // Well, anyone else have any ideas?
-        error = [NSError errorWithDomain:TLErrorDomain code:kTagLibFileNotFound userInfo:userInfo];
-        completionBlock(nil, error);
+        completionBlock(nil, newErrorWithPath(kTLErrorFileNotRecognized, path));
         return;
     });
 }

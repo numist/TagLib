@@ -12,429 +12,245 @@
 #import "TLMP4Atom.h"
 #import "NSData+GetTypedData.h"
 #import "TLMP4Tags_Private.h"
+#import "TLErrorWrapper.h"
 
 @implementation TLMP4Tags (Parser)
 
-- (void)loadWithError:(NSError **)error;
+- (void)load;
 {
     id data;
-    NSError *terror;
     
-    if (![self findAtom:@[@"moov", @"udta", @"meta", @"ilst"]]) {
-        TLLog(@"%@", @"Atom moov.udta.meta.ilst not found.");
-        // TODO: NSError
-        return;
-    }
+    if (![self findAtom:@[@"moov", @"udta", @"meta", @"ilst"]]) return;
     
     data = [self getILSTData:kAlbum];
     if (data) {
         [self setAlbum:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kArtist];
     if (data) {
         [self setArtist:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kAlbumArtist];
     if (data) {
         [self setAlbumArtist:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kComment];
     if (data) {
         [self setComment:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kYear];
     if (data) {
         [self setYear:(NSDate *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kTitle];
     if (data) {
         [self setTitle:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kGenreCode];
     if (data) {
         [self setGenre:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kGenre];
     if (data) {
         [self setGenre:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kTrackNumber];
     if (data) {
         NSArray *arr = (NSArray *)data;
         if ([arr count] == 2) {
-            if (terror) {
-                if (error) {
-                    *error = terror;
-                }
-                return;
-            }
             [self setTrackNumber:(NSNumber *)arr[0]];
             [self setTotalTracks:(NSNumber *)arr[1]];
         }
+        if (pendingError) return;
     }
     
     data = [self getILSTData:kDiskNumber];
     if (data) {
         NSArray *arr = (NSArray *)data;
         if ([arr count] == 2) {
-            if (terror) {
-                if (error) {
-                    *error = terror;
-                }
-                return;
-            }
             [self setDiskNumber:(NSNumber *)arr[0]];
             [self setTotalDisks:(NSNumber *)arr[1]];
         }
+        if (pendingError) return;
     }
     
     data = [self getILSTData:kComposer];
     if (data) {
         [self setComposer:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kEncoder];
     if (data) {
         [self setEncoder:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kBPM];
     if (data) {
         [self setBPM:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kCopyright];
     if (data) {
         [self setCopyright:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kCompilation];
     if (data) {
         [self setCompilation:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kArtwork];
     if (data) {
         [self setArtwork:(NSImage *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kRating];
     if (data) {
         [self setRating:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kGrouping];
     if (data) {
         [self setGrouping:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kPodcast];
     if (data) {
         [self setPodcast:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kCategory];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
-        if (terror) {
-            if (error) {
-                *error = terror;
-            }
-            return;
-        }
-        // TODO: mp4-specific tag
-        //        [tag setCategory:(NSString *)data];
+        // [self setCategory:(NSString *)data];
     }
+    if (pendingError) return;
     
     data = [self getILSTData:kKeyword];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
-        if (terror) {
-            if (error) {
-                *error = terror;
-            }
-            return;
-        }
-        // TODO: mp4-specific tag
-        //        [tag setKeyword:(NSString *)data];
+        // [self setKeyword:(NSString *)data];
     }
+    if (pendingError) return;
     
     data = [self getILSTData:kPodcastURL];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
-        if (terror) {
-            if (error) {
-                *error = terror;
-            }
-            return;
-        }
-        // TODO: mp4-specific tag
-        //        [tag setPodcastURL:(NSNumber *)data];
+        // [self setPodcastURL:(NSNumber *)data];
     }
+    if (pendingError) return;
     
     data = [self getILSTData:kEpisodeGUID];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
-        if (terror) {
-            if (error) {
-                *error = terror;
-            }
-            return;
-        }
-        // TODO: mp4-specific tag
-        //        [tag setEpisodeGUID:(NSNumber *)data];
+        // [self setEpisodeGUID:(NSNumber *)data];
     }
+    if (pendingError) return;
     
     data = [self getILSTData:kDescription];
     if (data) {
         [self setMediaDescription:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kLyrics];
     if (data) {
         [self setLyrics:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kTVNetworkName];
     if (data) {
         NSLog(@"%s:%d: %@", __FILE__, __LINE__, data);
         TLNotTested();
-        if (terror) {
-            if (error) {
-                *error = terror;
-            }
-            return;
-        }
-        // TODO: mp4-specific tag
-        //        [tag setTVNetworkName:(NSString *)data];
+        // [self setTVNetworkName:(NSString *)data];
     }
+    if (pendingError) return;
     
     data = [self getILSTData:kTVShowName];
     if (data) {
         [self setTVShowName:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kTVEpisodeID];
     if (data) {
         [self setTVEpisodeID:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kTVSeason];
     if (data) {
         [self setTVSeason:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kTVEpisode];
     if (data) {
         [self setTVEpisode:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kPurchaseDate];
     if (data) {
         [self setPurchaseDate:(NSDate *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kGaplessPlayback];
     if (data) {
         [self setGaplessPlayback:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kStik];
     if (data) {
         [self setStik:(NSNumber *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     data = [self getILSTData:kPurchaserID];
     if (data) {
         [self setPurchaserID:(NSString *)data];
     }
-    if (terror) {
-        if (error) {
-            *error = terror;
-        }
-        return;
-    }
+    if (pendingError) return;
     
     // Get properties for the media
-    [self getPropertiesWithError:&terror];
-    if (terror) {
-        *error = terror;
-        return;
-    }
-    
-    if (error) *error = nil;
+    [self getProperties];
+
     return;
 }
 
-- (void)getPropertiesWithError:(NSError **)error;
+- (void)getProperties;
 {
     NSData *data;
     TLMP4Atom *atom;
@@ -444,8 +260,7 @@
     //
     atom = [self findAtom:@[@"moov"]];
     if (!atom) {
-        TLLog(@"%@", @"MP4: Atom 'moov' not found");
-        // TODO: NSError: Corrupt file
+        setError(kTLErrorCorruptFile, @"Atom 'moov' not found");
         return;
     }
     
@@ -468,7 +283,6 @@
     
     // If there are no tracks, there are no properties!
     if (!trak) {
-        TLLog(@"%@", @"MP4: No tracks");
         return;
     }
     data = nil;
@@ -527,14 +341,12 @@
             }
         }
     } else {
-        TLLog(@"%@", @"MP4: Atom 'trak.mdia.minf.stbl.stsd' not found")
+        TLLog(@"%@", @"MP4: Atom 'trak.mdia.minf.stbl.stsd' not found");
         TLNotTested();
     }
     data = nil;
     atom = nil;
     // Max data position for read: 90
-    
-    if (error) *error = nil;
     
     return;
 }
