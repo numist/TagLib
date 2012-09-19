@@ -1,5 +1,5 @@
 //
-//  ID3v1Genres.m
+//  TLID3v1Genres.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/8/11.
@@ -7,6 +7,7 @@
 //  This file is based on LGPL/MPL code written by Scott Wheeler.
 //
 
+#import "debugger.h"
 #import "TLID3v1Genres.h"
 
 static NSString *genres[] = {

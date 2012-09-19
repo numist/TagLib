@@ -1,55 +1,76 @@
 //
-//  TLMP4AtomNames.h
+//  TLMP4AtomInfo.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/9/11.
-//  Copyright 2011 Scott Perry.
 //  Tag information from: http://atomicparsley.sourceforge.net/mpeg-4files.html
 //
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kAlbum;				// flags: 1 type: text
-extern NSString * const kArtist;            // flags: 1 type: text
-extern NSString * const kAlbumArtist;       // flags: 1 type: text
-extern NSString * const kComment;           // flags: 1 type: text
-extern NSString * const kYear;              // flags: 1 type: text
-extern NSString * const kTitle;             // flags: 1 type: text
-extern NSString * const kGenre;             // flags: 1 type: text
-extern NSString * const kGenreCode;         // flags: 0 type: uint8
-extern NSString * const kTrackNumber;       // flags: 0 type: uint8
-extern NSString * const kDiskNumber;        // flags: 0 type: uint8
-extern NSString * const kComposer;          // flags: 1 type: text
-extern NSString * const kEncoder;           // flags: 1 type: text
-extern NSString * const kBPM;               // flags: 21 type: uint8
-extern NSString * const kCopyright;         // flags: 1 type: text
-extern NSString * const kCompilation;       // flags: 21 type: uint8
-extern NSString * const kArtwork;           // flags: 13 type: jpeg | flags: 14 type: png
-extern NSString * const kRating;            // flags: 21 type: uint8
-extern NSString * const kGrouping;          // flags: 1 type: text
-extern NSString * const kPodcast;           // flags: 21 type: uint8
-extern NSString * const kCategory;          // flags: 1 type: text
-extern NSString * const kKeyword;           // flags: 1 type: text
-extern NSString * const kPodcastURL;        // flags: 21 | 0 (Apple changed from 21 to the current 0 around iTunes 6.0.3) type: uint8
-extern NSString * const kEpisodeGUID;       // flags: 21 | 0 (Apple changed from 21 to the current 0 around iTunes 6.0.3) type: uint8
-extern NSString * const kDescription;       // flags: 1 type: text
-extern NSString * const kLyrics;            // flags: 1 type: text (Lyrics is the only text atom that doesnt't fall under a 255byte limit)
-extern NSString * const kTVNetworkName;     // flags: 1 type: text
-extern NSString * const kTVShowName;        // flags: 1 type: text
-extern NSString * const kTVEpisodeNumber;   // flags: 1 type: text
-extern NSString * const kTVSeason;          // flags: 21 type: uint8
-extern NSString * const kTVEpisode;         // flags: 21 type: uint8
-extern NSString * const kPurchaseDate;      // flags: 1 type: text
-extern NSString * const kGaplessPlayback;   // flags: 21 type: uint8
-extern NSString * const kStik;              // flags: 21 type: uint8
+#import "debugger.h"
 
-enum TLMP4AtomFlags {
+typedef enum {
+    TLMP4DataTypeUnknown,
+    TLMP4DataTypeAuto,
+    TLMP4DataTypeFreeForm,
+    TLMP4DataTypeIntPair,
+    TLMP4DataTypeBool,
+    TLMP4DataTypeInt,
+    TLMP4DataTypeGenre,
+    TLMP4DataTypeImage,
+    TLMP4DataTypeText,
+    TLMP4DataTypeDate
+} TLMP4DataType;
+
+typedef enum {
     TLMP4AtomFlagsAll = -1,
-    TLMP4AtomFlagsNewNumber = 0,
+    TLMP4AtomFlagsNumber = 0,
     TLMP4AtomFlagsText = 1,
     TLMP4AtomFlagsJPEG = 13,
     TLMP4AtomFlagsPNG = 14,
-    TLMP4AtomFlagsNumber = 21
-};
+    TLMP4AtomFlagsOldNumber = 21
+} TLMP4AtomFlags;
 
-BOOL TLMP4AtomIsValid(NSString *name);
+@interface TLMP4AtomInfo : NSObject
+@property (nonatomic, readonly) NSString *name;
+@property (nonatomic, readonly) TLMP4AtomFlags flags;
+@property (nonatomic, readonly) TLMP4DataType type;
++ (TLMP4AtomInfo *)validateAtom:(NSString *)name withFlags:(NSInteger)flags;
++ (TLMP4DataType)likelyDataTypeFromFlags:(TLMP4AtomFlags)flags;
+@end
+
+extern TLMP4AtomInfo *kAlbum;
+extern TLMP4AtomInfo *kArtist;
+extern TLMP4AtomInfo *kAlbumArtist;
+extern TLMP4AtomInfo *kComment;
+extern TLMP4AtomInfo *kYear;
+extern TLMP4AtomInfo *kTitle;
+extern TLMP4AtomInfo *kGenre;
+extern TLMP4AtomInfo *kGenreCode;
+extern TLMP4AtomInfo *kTrackNumber;
+extern TLMP4AtomInfo *kDiskNumber;
+extern TLMP4AtomInfo *kComposer;
+extern TLMP4AtomInfo *kEncoder;
+extern TLMP4AtomInfo *kBPM;
+extern TLMP4AtomInfo *kCopyright;
+extern TLMP4AtomInfo *kCompilation;
+extern TLMP4AtomInfo *kArtwork;
+extern TLMP4AtomInfo *kRating;
+extern TLMP4AtomInfo *kGrouping;
+extern TLMP4AtomInfo *kPodcast;
+extern TLMP4AtomInfo *kCategory;
+extern TLMP4AtomInfo *kKeyword;
+extern TLMP4AtomInfo *kPodcastURL;
+extern TLMP4AtomInfo *kEpisodeGUID;
+extern TLMP4AtomInfo *kDescription;
+extern TLMP4AtomInfo *kLyrics;
+extern TLMP4AtomInfo *kTVNetworkName;
+extern TLMP4AtomInfo *kTVShowName;
+extern TLMP4AtomInfo *kTVEpisodeID;
+extern TLMP4AtomInfo *kTVSeason;
+extern TLMP4AtomInfo *kTVEpisode;
+extern TLMP4AtomInfo *kPurchaseDate;
+extern TLMP4AtomInfo *kGaplessPlayback;
+extern TLMP4AtomInfo *kStik;
+extern TLMP4AtomInfo *kPurchaserID;

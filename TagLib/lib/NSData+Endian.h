@@ -1,9 +1,8 @@
 //
-//  NSData+Swapped.h
+//  NSData+Endian.h
 //  TagLib
 //
 //  Created by Scott Perry on 8/11/11.
-//  Copyright 2011 Scott Perry. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

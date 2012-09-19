@@ -1,0 +1,3 @@
+[submodule "TagLib/lib/iso-8601-date-formatter"]
+	path = TagLib/lib/iso-8601-date-formatter
+	url = git://github.com/boredzo/iso-8601-date-formatter.git

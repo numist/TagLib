@@ -1,13 +1,12 @@
 //
-//  NSData+Swapped.m
+//  NSData+Endian.m
 //  TagLib
 //
 //  Created by Scott Perry on 8/11/11.
-//  Copyright 2011 Scott Perry. All rights reserved.
 //
 
-#import "NSData+Endian.h"
 #import "debugger.h"
+#import "NSData+Endian.h"
 
 @implementation NSData (Endian)
 
